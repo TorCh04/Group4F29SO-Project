@@ -1,0 +1,177 @@
+/* Apply inline-block on all elements and sub elements unless specified otherwise */
+/* #region */
+html {
+  box-sizing: border-box;
+  /* Might replace with JS later */
+  scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+/* #endregion */
+
+
+/* --------------- COLORS --------------- */
+/* #region */
+:root {
+  --background: #1A1A2A;
+  --primary: #356F9E;
+  --secondary: #37309A;
+  --accent: #A5B4F8;
+  --text: #DAD6F8;
+  --mutedText: #7781B5;
+  --backgroundContrastGrey: #242435;
+  --backgroundContastBlue: #201F41;
+  --backgroundContrastGreen: #1F2B41;
+  --backgroundContrastred: #411F1F;
+  --white: #FFFFFF;
+}
+/* #endregion */
+
+
+/* --------------- FONTS --------------- */
+/* #region */
+.title {
+  font-family: 'Inter', system-ui;
+  font-size: clamp(52px, 8vw, 64px); /* Scales between 52px and 64px based on viewport width */
+  font-weight: 500; 
+  margin: 0;
+  padding: 0;
+}
+
+.subtitle {
+  font-family: 'Afacad', system-ui;
+  font-size: clamp(20px, 4vw, 24px); /* Scales between 52px and 64px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  font-family: 'Afacad', system-ui;
+  font-size: clamp(21px, 4vw, 25px); /* Scales between 52px and 64px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
+
+.body {
+  font-family: 'Roboto', system-ui;
+  font-size: clamp(15px, 3vw, 18px); /* Scales between 15px and 18px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
+/* #endregion */
+
+
+/* --------------- GENERAL STYLES --------------- */
+/* #region */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+}
+
+section {
+  position: relative;
+  overflow: hidden; /* Prevent polygons from overflowing their containers */
+  padding: 50px 0px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1296px;
+  margin: 0 auto;
+}
+/* #endregion */
+
+
+/* ----------------------------------------------- */
+/* --------------- SPECIFIC STYLES --------------- */
+/* ----------------------------------------------- */
+/* #region */
+
+/* NAVBAR SECTION */
+.homepage__navbar {
+  background-color: var(--backgroundContrastGrey);
+  width: 100vw;
+  max-height: 95px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homepage__navbar__container {
+  padding: 14px;
+  width: 98vw;
+  max-width: 1500px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+/* HERO SECTION */
+#hero-background {
+  background-color: var(--background);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.hero__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1165px;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px;
+}
+
+.hero__title {
+  color: var(--white);
+}
+
+.hero__subtitle {
+  color: var(--mutedText);
+}
+
+
+.hero__button__container {
+  display: flex;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 30px;
+  max-width: 280px;
+}
+
+.hero__button {
+  background-color: var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.hero__button__alt {
+  background-color: var(--secondary);
+}
+
+/* #endregion */
