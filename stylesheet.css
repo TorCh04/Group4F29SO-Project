@@ -60,6 +60,13 @@ html {
   margin: 0;
   padding: 0;
 }
+
+.login__heading {
+  font-family: 'Roboto', system-ui;
+  font-size: clamp(27px, 5vw, 30px); /* Scales between 15px and 18px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
 /* #endregion */
 
 
