@@ -34,7 +34,7 @@ html {
 /* #region */
 .title {
   font-family: 'Inter', system-ui;
-  font-size: clamp(52px, 8vw, 64px); /* Scales between 52px and 64px based on viewport width */
+  font-size: clamp(32px, 6vw, 64px); /* Scales between 32px and 64px based on viewport width */
   font-weight: 500; 
   margin: 0;
   padding: 0;
@@ -42,14 +42,14 @@ html {
 
 .subtitle {
   font-family: 'Afacad', system-ui;
-  font-size: clamp(20px, 4vw, 24px); /* Scales between 52px and 64px based on viewport width */
+  font-size: clamp(16px, 4vw, 24px); /* Scales between 16px and 64px based on viewport width */
   margin: 0;
   padding: 0;
 }
 
 .button {
   font-family: 'Afacad', system-ui;
-  font-size: clamp(21px, 4vw, 25px); /* Scales between 52px and 64px based on viewport width */
+  font-size: clamp(16px, 3.5vw, 25px); /* Scales between 16px and 64px based on viewport width */
   margin: 0;
   padding: 0;
 }
@@ -78,7 +78,7 @@ img {
 
 section {
   position: relative;
-  overflow: hidden; /* Prevent polygons from overflowing their containers */
+  overflow: hidden;
   padding: 50px 0px;
 }
 
@@ -98,7 +98,7 @@ section {
 /* NAVBAR SECTION */
 .homepage__navbar {
   background-color: var(--backgroundContrastGrey);
-  width: 100vw;
+  width: 100%;
   max-height: 95px;
   display: flex;
   justify-content: center;
@@ -113,20 +113,26 @@ section {
   justify-content: flex-start;
   align-items: center;
 }
+
 /* HERO SECTION */
 #hero-background {
   background-color: var(--background);
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
 }
 
 .hero__center {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  flex: 1;
+  width: 100%;
 }
 
 .hero__container {
@@ -134,7 +140,7 @@ section {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 90%;
   max-width: 1165px;
 }
 
@@ -175,3 +181,34 @@ section {
 }
 
 /* #endregion */
+
+/* HERO MEDIA QUERIES */
+@media (max-width: 850px) {
+  #hero-background {
+    overflow-y: scroll;
+  }
+
+  .hero__container {
+    flex-direction: column; /* Stack text on top of the image */
+    align-items: center; /* Center align in column layout */
+    gap: 30px; /* Add spacing between stacked sections */
+    padding-top: 8vh;
+    padding-bottom: 8vh;
+  }
+
+  .hero__content {
+    max-width: 100%; /* Allow text to take full width */
+    text-align: center; /* Center align text for better aesthetics */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__image img {
+    max-width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .hero__button__container {
+    justify-content: center;
+  }
+}
