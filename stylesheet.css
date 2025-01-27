@@ -22,7 +22,7 @@ html {
   --text: #DAD6F8;
   --mutedText: #7781B5;
   --backgroundContrastGrey: #242435;
-  --backgroundContastBlue: #201F41;
+  --backgroundContrastBlue: #201F41;
   --backgroundContrastGreen: #1F2B41;
   --backgroundContrastred: #411F1F;
   --white: #FFFFFF;
@@ -62,10 +62,12 @@ html {
 }
 
 .login__heading {
-  font-family: 'Roboto', system-ui;
-  font-size: clamp(27px, 5vw, 30px); /* Scales between 15px and 18px based on viewport width */
+  font-family: 'Inter', system-ui;
+  font-size: clamp(27px, 5vw, 30px); /* Scales between 27px and 30px based on viewport width */
+  font-weight: 600; 
   margin: 0;
   padding: 0;
+  color: var(--text);
 }
 /* #endregion */
 
@@ -103,6 +105,7 @@ section {
 /* #region */
 
 /* NAVBAR SECTION */
+/* #region */
 .homepage__navbar {
   background-color: var(--backgroundContrastGrey);
   width: 100%;
@@ -121,7 +124,14 @@ section {
   align-items: center;
 }
 
+.logo {
+  width: 134px;
+  height: 67px;
+}
+/* #endregion */
+
 /* HERO SECTION */
+/* #region */
 #hero-background {
   background-color: var(--background);
   display: flex;
@@ -186,10 +196,208 @@ section {
 .hero__button__alt {
   background-color: var(--secondary);
 }
+/* #endregion */
+
+/* LOGIN SECTION */
+/* #region */
+#login-background {
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.login__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+}
+
+.login__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+  max-height: 500px;
+  height: 70%;
+  background-color: var(--backgroundContrastBlue);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.login__structure {
+  width: 100%;
+}
+
+.login__logo__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  max-height: 190px;
+  height: 60%;
+}
+
+.login__form__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  max-height: 220px;
+  height: 60%;
+  height: 40%;
+  width: 100%;
+}
+
+.login__input {
+  background-color: var(--background);
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 15px 10px 15px;
+  border-radius: 10px;
+  color: var(--mutedText);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(14px, 3vw, 16px); /* Scales between 14px and 16px based on viewport width */
+}
+
+.login__input::placeholder {
+  color: var(--mutedText);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(14px, 3vw, 16px); /* Scales between 14px and 16px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
+
+.login__input__grouping {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 7px;
+}
+
+.login__extra__links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  max-width: 280px;
+}
+
+.login__checkbox {
+  appearance: none; /* Hide the default checkbox */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: absolute; /* Position it absolutely within the label */
+}
+
+.login__checkbox__label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: var(--mutedText);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(8px, 2.5vw, 10px); /* Scales between 8px and 10px based on viewport width */
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+}
+
+.login__checkbox__custom {
+  width: 10px;
+  height: 10px;
+  border: solid 1px;
+  border-color: var(--mutedText);
+  background-color: var(--mutedText);
+  margin-right: 7px; /* Space between the custom checkbox and the text */
+  border-radius: 2px;
+  display: inline-block;
+  position: relative;
+}
+
+.login__checkbox:checked + .login__checkbox__custom::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.login__forgot__password {
+  color: var(--accent);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(8px, 2.5vw, 10px); /* Scales between 8px and 10px based on viewport width */
+  font-style: italic;
+  text-decoration: none;
+}
+
+.login__submit__grouping {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  width: 100%;
+}
+
+.login__button {
+  color: var(--text);
+  background-color: var(--primary);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(16px, 3.5vw, 18px); /* Scales between 16px and 18px based on viewport width */
+  font-weight: 500; 
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px 15px 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.login__submit__grouping p {
+  color: var(--mutedText);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(9px, 2.5vw, 11px); /* Scales between 9px and 11px based on viewport width */
+  margin: 0;
+  padding: 0;
+}
+
+.login__submit__grouping p a {
+  color: var(--secondary);
+  font-family: 'Inter', system-ui;
+  font-size: clamp(9px, 2.5vw, 11px); /* Scales between 9px and 11px based on viewport width */
+  font-weight: 600;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+/* #endregion */
 
 /* #endregion */
 
+/* ----------------------------------------------- */
+/* ---------------- MEDIA QUERIES ---------------- */
+/* ----------------------------------------------- */
+/* #region */
+
 /* HERO MEDIA QUERIES */
+/* #region */
 @media (max-width: 850px) {
   #hero-background {
     overflow-y: scroll;
@@ -219,3 +427,6 @@ section {
     justify-content: center;
   }
 }
+/* #endregion */
+
+/* #endregion */
