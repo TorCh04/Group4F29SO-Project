@@ -255,9 +255,18 @@ section {
   align-items: center;
   gap: 20px;
   max-height: 220px;
-  height: 60%;
   height: 40%;
   width: 100%;
+}
+
+#register__container__override {
+  max-height: 760px;
+  height: 100%;
+}
+
+#register__form__override {
+  max-height: 500px;
+  height: 100%;
 }
 
 .login__input {
