@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+// import PrivateRoute from './components/PrivateRoute';
 import Nopage from './pages/Nopage';
-import Test from './pages/Test';
 import './App.css';
 
 // Function to update the <body> class based on the current route
@@ -27,18 +28,24 @@ function BodyClassUpdater() {
     return null;
 }
 
+
 export default function App() {
     return (
-        <BrowserRouter>
-            {/* This component updates <body> based on the route */}
-            <BodyClassUpdater />
-            <Routes>
-                <Route index element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/test" element={<Test />} />
-                <Route path="*" element={<Nopage />} />
-            </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        {/* This component updates <body> based on the route */}
+        <BodyClassUpdater />
+        <Routes>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Protected routes */}
+            {/* <Route element={<PrivateRoute />}> */}
+                <Route path="/dashboard" element={<Dashboard />} />
+            {/* </Route> */}
+            
+            <Route path="*" element={<Nopage />} />
+        </Routes>
+      </BrowserRouter>
     );
-}
+  }

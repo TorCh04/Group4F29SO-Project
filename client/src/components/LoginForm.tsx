@@ -1,26 +1,56 @@
-import { Link } from "react-router-dom";
+import { useState } from 'react';
 import logo from "../assets/logo_vertical.svg";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/login', { email, password });
+            if (response.status === 200) {
+                // Store token in localStorage
+                localStorage.setItem('token', response.data.token);
+                navigate('/dashboard');
+            }
+        } catch (err) {
+            setError('Invalid email or password');
+            console.error('Login error:', err);
+        }
+    };
+
     return (
-        // <!-- LOGIN CONTENT -->
         <div className="login__center">
             <div className="login__container">
-                {/* <!-- Logo --> */}
                 <div className="login__logo__container">
                     <img src={logo} alt="Moogle Logo" />
                     <h2 className="login__heading">Login</h2>
                 </div>
-                {/* <!-- Login Form --> */}
                 <div className="login__structure">
-                    <form className="login__form__container">
-                        {/* <!-- Main Inputs --> */}
-                        <input type="text" placeholder="Email" className="login__input" />
+                    <form className="login__form__container" onSubmit={handleSubmit}>
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            className="login__input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                         <div className="login__input__grouping">
-                            <input type="text" placeholder="Password" className="login__input" />
-                            {/* <!-- Extra Links --> */}
+                            <input 
+                                type="password" 
+                                placeholder="Password" 
+                                className="login__input"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
                             <div className="login__extra__links">
-                                {/* <!-- Remember Me Checkbox --> */}
                                 <div className="login__remember__me">
                                     <label className="login__checkbox__label">
                                         <input type="checkbox" className="login__checkbox" />
@@ -28,15 +58,13 @@ export default function LoginForm() {
                                         Remember me
                                     </label>
                                 </div>
-                                {/* <!-- Forgot Password --> */}
                                 <a href="#" className="login__forgot__password">Forgot Password?</a>
                             </div>
                         </div>
                         <div className="login__submit__grouping">
-                            {/* <!-- Submit Button --> */}
                             <input type="submit" value="Login" className="login__button" />
-                            {/* <!-- Register Link --> */}
-                            <p>Don't have an account? <Link to="/register" className="register__link">Register here</Link></p>
+                            {error && <p className="error__message">{error}</p>}
+                            <p>Don't have an account? <a href="/register" className="register__link">Register here</a></p>
                         </div>
                     </form>
                 </div>
