@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import DevicesPage from './pages/DevicesPage';
 // import PrivateRoute from './components/PrivateRoute';
 import Nopage from './pages/Nopage';
 import './App.css';
@@ -19,7 +20,7 @@ function BodyClassUpdater() {
             "/login": "login-background",
             "/register": "login-background", // Shares the same background as login
             "/test": "test-background",
-            "/DevicesPage": "login-background",
+            "/DevicesPage": "DevicePages-background",
         };
 
         // Set <root> class or default to "default-background"
@@ -39,6 +40,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/DevicesPage" element={<DevicesPage />} />
 
             {/* Protected routes */}
             {/* <Route element={<PrivateRoute />}> */}
