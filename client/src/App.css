@@ -409,6 +409,15 @@ section {
 }
 /* #endregion */
 
+/* DevicePages */
+/* #region */
+.DevicePages-background {
+  background-color: var(--background);
+
+}
+
+
+
 /* #endregion */
 
 /* ----------------------------------------------- */
