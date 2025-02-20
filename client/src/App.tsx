@@ -19,6 +19,7 @@ function BodyClassUpdater() {
             "/login": "login-background",
             "/register": "login-background", // Shares the same background as login
             "/test": "test-background",
+            "/DevicesPage": "login-background",
         };
 
         // Set <root> class or default to "default-background"

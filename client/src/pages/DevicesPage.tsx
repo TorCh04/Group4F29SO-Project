@@ -1,10 +1,12 @@
 import Header from '../components/Header'
+import LoginForm from '../components/LoginForm'
 
-export default function Homepage() {
+export default function DevicesPage() {
     return (
-        <div>
+        <>
             <Header />
-        </div>
+            <LoginForm />
+        </>
     )
 };
 
