@@ -4,9 +4,10 @@ import '../App.css';
 interface DeviceBoxProps {
     initialName: string;
     initialImage: string;
+    onOpenSettings: () => void;
 }
 
-export default function DeviceBox({ initialName, initialImage }: DeviceBoxProps) {
+export default function DeviceBox({ initialName, initialImage, onOpenSettings }: DeviceBoxProps) {
     const [isSliderOn, setIsSliderOn] = useState(false); // State for slider
     const [text, setText] = useState(initialName); // State for text under the image
     const [image, setImage] = useState(initialImage); // State for image
@@ -43,7 +44,7 @@ export default function DeviceBox({ initialName, initialImage }: DeviceBoxProps)
 
             {/* Settings Link in Bottom-Right Corner */}
             <div className="settings-container">
-                <a href="/settings" className="settings-link">Settings</a>
+                <a href="#" className="settings-link" onClick={onOpenSettings}>Settings</a>
             </div>
         </div>
     );

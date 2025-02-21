@@ -4,6 +4,7 @@ import AddDeviceBox from '../components/AddDeviceBox';
 import AddDeviceModal from '../components/AddDeviceModal';
 import AddScheduleBox from '../components/AddScheduleBox';
 import ScheduleBox from '../components/ScheduleBox';
+import SettingsModal from '../components/SettingsModal';
 import '../App.css';
 import axios from 'axios';
 
@@ -12,6 +13,7 @@ export default function DevicesPage() {
     const [schedules, setSchedules] = useState<{ room: string, device: string, action: string, time: string }[]>([]);
     const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
     const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
     const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
 
@@ -49,12 +51,12 @@ export default function DevicesPage() {
         setIsDeviceModalOpen(false);
     };
 
-    const handleOpenScheduleModal = () => {
-        setIsScheduleModalOpen(true);
+    const handleOpenSettingsModal = () => {
+        setIsSettingsModalOpen(true);
     };
 
-    const handleCloseScheduleModal = () => {
-        setIsScheduleModalOpen(false);
+    const handleCloseSettingsModal = () => {
+        setIsSettingsModalOpen(false);
     };
 
     return (
@@ -63,7 +65,7 @@ export default function DevicesPage() {
                 <h1 className="device-title">Smart Devices</h1>
                 <div className="device-box-container">
                     {devices.map((device, index) => (
-                        <DeviceBox key={index} initialName={device.name} initialImage={device.image} />
+                        <DeviceBox key={index} initialName={device.name} initialImage={device.image} onOpenSettings={handleOpenSettingsModal} />
                     ))}
                     <AddDeviceBox onAddDevice={handleOpenDeviceModal} />
                     {isDeviceModalOpen && (
@@ -84,6 +86,9 @@ export default function DevicesPage() {
                     <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
                 </div>
             </div>
+            {isSettingsModalOpen && (
+                <SettingsModal onClose={handleCloseSettingsModal} />
+            )}
         </div>
     );
 }
