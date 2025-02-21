@@ -5,6 +5,7 @@ import AddDeviceModal from '../components/AddDeviceModal';
 import AddScheduleBox from '../components/AddScheduleBox';
 import ScheduleBox from '../components/ScheduleBox';
 import '../App.css';
+import axios from 'axios';
 
 export default function DevicesPage() {
     const [devices, setDevices] = useState<{ name: string, image: string }[]>([]);
@@ -14,8 +15,13 @@ export default function DevicesPage() {
     const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
     const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
 
-    const handleAddDevice = (deviceName: string, deviceImage: string) => {
-        setDevices([...devices, { name: deviceName, image: deviceImage }]);
+    const handleAddDevice = async (deviceName: string, deviceImage: string) => {
+        try {
+            const response = await axios.post('http://localhost:8080/devices', { name: deviceName, image: deviceImage });
+            setDevices([...devices, response.data.device]);
+        } catch (error) {
+            console.error('Error adding device:', error);
+        }
     };
 
     const handleAddSchedule = (room: string, device: string, action: string, time: string) => {

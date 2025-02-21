@@ -39,6 +39,14 @@ userSchema.pre('save', async function(next) {
 
 const User = mongoose.model('User', userSchema);
 
+// Device schema and model
+const deviceSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  image: { type: String, required: true }
+});
+
+const Device = mongoose.model('Device', deviceSchema);
+
 // JWT token verification middleware
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -140,6 +148,19 @@ app.get('/dashboard', verifyToken, async (req, res) => {
   } catch (error) {
     console.error('Error fetching dashboard data:', error);
     res.status(500).json({ message: 'Server error while fetching dashboard data' });
+  }
+});
+
+// Add a new device endpoint
+app.post('/devices', async (req, res) => {
+  try {
+    const { name, image } = req.body;
+    const device = new Device({ name, image });
+    await device.save();
+    res.status(201).json({ message: 'Device added successfully', device });
+  } catch (error) {
+    console.error('Error adding device:', error);
+    res.status(500).json({ message: 'Server error while adding device' });
   }
 });
 
