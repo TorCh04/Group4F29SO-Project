@@ -2,23 +2,40 @@ import React, { useState } from 'react';
 import DeviceBox from '../components/DeviceBox';
 import AddDeviceBox from '../components/AddDeviceBox';
 import AddDeviceModal from '../components/AddDeviceModal';
+import AddScheduleBox from '../components/AddScheduleBox';
+import ScheduleBox from '../components/ScheduleBox';
 import '../App.css';
 
 export default function DevicesPage() {
     const [devices, setDevices] = useState<{ name: string, image: string }[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [schedules, setSchedules] = useState<{ room: string, device: string, action: string, time: string }[]>([]);
+    const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
+    const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
+    const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
 
     const handleAddDevice = (deviceName: string, deviceImage: string) => {
         setDevices([...devices, { name: deviceName, image: deviceImage }]);
     };
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
+    const handleAddSchedule = (room: string, device: string, action: string, time: string) => {
+        setSchedules([...schedules, { room, device, action, time }]);
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
+    const handleOpenDeviceModal = () => {
+        setIsDeviceModalOpen(true);
+    };
+
+    const handleCloseDeviceModal = () => {
+        setIsDeviceModalOpen(false);
+    };
+
+    const handleOpenScheduleModal = () => {
+        setIsScheduleModalOpen(true);
+    };
+
+    const handleCloseScheduleModal = () => {
+        setIsScheduleModalOpen(false);
     };
 
     return (
@@ -29,17 +46,25 @@ export default function DevicesPage() {
                     {devices.map((device, index) => (
                         <DeviceBox key={index} initialName={device.name} initialImage={device.image} />
                     ))}
-                    <AddDeviceBox onAddDevice={handleOpenModal} />
-                    {isModalOpen && (
+                    <AddDeviceBox onAddDevice={handleOpenDeviceModal} />
+                    {isDeviceModalOpen && (
                         <AddDeviceModal
                             predefinedDevices={predefinedDevices}
                             onAddDevice={handleAddDevice}
-                            onClose={handleCloseModal}
+                            onClose={handleCloseDeviceModal}
                         />
                     )}
                 </div>
             </div>
-            {/* Add more subsections here */}
+            <div className="device-section">
+                <h1 className="device-title">Smart Schedules</h1>
+                <div className="device-box-container">
+                    {schedules.map((schedule, index) => (
+                        <ScheduleBox key={index} initialTitle={`${schedule.room} - ${schedule.device} - ${schedule.action} at ${schedule.time}`} />
+                    ))}
+                    <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
+                </div>
+            </div>
         </div>
     );
 }

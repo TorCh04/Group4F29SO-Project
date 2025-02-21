@@ -470,6 +470,11 @@ section {
   color: white;
 }
 
+.schedule-title {
+  font-size: 24px; /* Set the font size for the title */
+  color: white;
+}
+
 .slider-container {
   position: absolute;
   bottom: 10px;
