@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DeviceBox from '../components/DeviceBox';
 import AddDeviceBox from '../components/AddDeviceBox';
 import AddDeviceModal from '../components/AddDeviceModal';
@@ -14,6 +14,19 @@ export default function DevicesPage() {
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
     const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
+
+    useEffect(() => {
+        const fetchDevices = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/devices');
+                setDevices(response.data.devices);
+            } catch (error) {
+                console.error('Error fetching devices:', error);
+            }
+        };
+
+        fetchDevices();
+    }, []);
 
     const handleAddDevice = async (deviceName: string, deviceImage: string) => {
         try {
