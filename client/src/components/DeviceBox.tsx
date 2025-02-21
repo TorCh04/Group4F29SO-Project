@@ -4,35 +4,31 @@ import lightSwitchImage from '../assets/light_switch.svg';
 import outletImage from '../assets/outlet.svg';
 import '../App.css';
 
-export default function DeviceBox() {
+interface DeviceBoxProps {
+    initialName: string;
+}
+
+export default function DeviceBox({ initialName }: DeviceBoxProps) {
     const [isSliderOn, setIsSliderOn] = useState(false); // State for slider
-    const [text, setText] = useState("Roomba"); // State for text under the image
-    const [image, setImage] = useState(roombaImage); // State for image
+    const [text, setText] = useState(initialName); // State for text under the image
+    const [image, setImage] = useState(getImage(initialName)); // State for image
 
     const toggleSlider = () => {
         setIsSliderOn(!isSliderOn);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const deviceName = e.target.value;
-        setText(deviceName);
-
-        // Change image based on input value
+    function getImage(deviceName: string) {
         switch (deviceName.toLowerCase()) {
             case 'roomba':
-                setImage(roombaImage);
-                break;
+                return roombaImage;
             case 'light switch':
-                setImage(lightSwitchImage);
-                break;
+                return lightSwitchImage;
             case 'outlet':
-                setImage(outletImage);
-                break;
+                return outletImage;
             default:
-                setImage(roombaImage);
-                break;
+                return roombaImage;
         }
-    };
+    }
 
     return (
         <div className={`device-box ${isSliderOn ? 'device-box-on' : 'device-box-off'}`}>
@@ -46,15 +42,6 @@ export default function DeviceBox() {
             <p>
                 {text}
             </p>
-
-            {/* Input Field to Change Text and Image */}
-            <input
-                type="text"
-                value={text}
-                onChange={handleInputChange}
-                className="device-input"
-                placeholder="Enter device name"
-            />
 
             {/* Slider Switch in Bottom-Left Corner */}
             <div className="slider-container">
