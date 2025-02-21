@@ -538,6 +538,39 @@ section {
   padding: 20px;
 }
 
+.add-device-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+  background-color: var(--backgroundContrastGrey);
+  order: 1; /* Ensure this box is always last */
+}
+
+.add-device-box .device-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.add-device-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+}
+
+.add-device-button:hover {
+  background-color: var(--secondary);
+}
+
 /* #endregion */
 
 /* ----------------------------------------------- */

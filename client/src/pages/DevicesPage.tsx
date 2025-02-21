@@ -17,7 +17,10 @@ export default function DevicesPage() {
         <>
             <h1 className="device-title">Smart Devices</h1>
             <div className="device-box-container">
-                <div className="add-device-box">
+                {devices.map((deviceName, index) => (
+                    <DeviceBox key={index} initialName={deviceName} />
+                ))}
+                <div className="device-box add-device-box">
                     <input
                         type="text"
                         value={newDeviceName}
@@ -27,9 +30,6 @@ export default function DevicesPage() {
                     />
                     <button onClick={handleAddDevice} className="add-device-button">Add Device</button>
                 </div>
-                {devices.map((deviceName, index) => (
-                    <DeviceBox key={index} initialName={deviceName} />
-                ))}
             </div>
         </>
     );
