@@ -34,6 +34,11 @@ export default function DeviceBox() {
                     <span className="slider-span"></span>
                 </label>
             </div>
+
+            {/* Settings Link in Bottom-Right Corner */}
+            <div className="settings-container">
+                <a href="/settings" className="settings-link">Settings</a>
+            </div>
         </div>
     );
 }

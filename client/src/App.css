@@ -416,6 +416,14 @@ section {
   background-color: var(--background);
 }
 
+.device-title {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 32px;
+  color: white;
+  padding: 1em 2em 1em 1em;
+}
+
 .device-box {
   border: 2px solid black;
   width: 300px;
@@ -496,6 +504,22 @@ section {
 
 .slider-input:not(:checked) + .slider-span::before {
   transform: translateX(0);
+}
+
+.settings-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.settings-link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.settings-link:hover {
+  text-decoration: underline;
 }
 
 /* #endregion */
