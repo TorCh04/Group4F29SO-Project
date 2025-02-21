@@ -536,6 +536,7 @@ section {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
+  margin-top: 20px; /* Add margin-top to create space under the title */
 }
 
 .add-device-box {
@@ -633,6 +634,18 @@ section {
   border: none;
   font-size: 20px;
   cursor: pointer;
+}
+
+.devices-page {
+  padding: 20px;
+}
+
+.page-title {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 32px;
+  color: white;
+  padding: 1em 0;
 }
 
 /* #endregion */
