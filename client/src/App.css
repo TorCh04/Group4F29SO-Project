@@ -544,10 +544,43 @@ section {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  border: 2px dashed #ccc;
   border-radius: 15px;
   background-color: var(--backgroundContrastGrey);
   order: 1; /* Ensure this box is always last */
+}
+
+.add-device-button {
+  padding: 0;
+  border: none;
+  background: none; /* Remove background */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-device-button:hover {
+  background: none; /* Ensure no background on hover */
+}
+
+.plus-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.add-device-text {
+  margin-top: 5px;
+  font-size: 14px;
+  color: white;
+}
+
+.device-select {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 .add-device-box .device-input {
@@ -558,7 +591,7 @@ section {
   font-size: 16px;
 }
 
-.add-device-button {
+.confirm-add-device-button {
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
@@ -567,7 +600,7 @@ section {
   cursor: pointer;
 }
 
-.add-device-button:hover {
+.confirm-add-device-button:hover {
   background-color: var(--secondary);
 }
 

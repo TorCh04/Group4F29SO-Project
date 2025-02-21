@@ -26,7 +26,7 @@ export default function DeviceBox({ initialName }: DeviceBoxProps) {
             case 'outlet':
                 return outletImage;
             default:
-                return roombaImage;
+                return outletImage;
         }
     }
 

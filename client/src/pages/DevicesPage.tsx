@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import DeviceBox from '../components/DeviceBox';
+import AddDeviceBox from '../components/AddDeviceBox';
 import '../App.css';
 
 export default function DevicesPage() {
     const [devices, setDevices] = useState([]);
-    const [newDeviceName, setNewDeviceName] = useState('');
+    const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
 
-    const handleAddDevice = () => {
-        if (newDeviceName.trim() !== '') {
-            setDevices([...devices, newDeviceName]);
-            setNewDeviceName('');
-        }
+    const handleAddDevice = (deviceName: string) => {
+        setDevices([...devices, deviceName]);
     };
 
     return (
@@ -20,16 +18,7 @@ export default function DevicesPage() {
                 {devices.map((deviceName, index) => (
                     <DeviceBox key={index} initialName={deviceName} />
                 ))}
-                <div className="device-box add-device-box">
-                    <input
-                        type="text"
-                        value={newDeviceName}
-                        onChange={(e) => setNewDeviceName(e.target.value)}
-                        placeholder="Enter device name"
-                        className="device-input"
-                    />
-                    <button onClick={handleAddDevice} className="add-device-button">Add Device</button>
-                </div>
+                <AddDeviceBox predefinedDevices={predefinedDevices} onAddDevice={handleAddDevice} />
             </div>
         </>
     );
