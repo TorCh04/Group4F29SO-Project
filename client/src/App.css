@@ -620,9 +620,10 @@ section {
 
 .modal-content {
   background-color: white;
-  padding: 20px;
+  padding: 40px; /* Increase padding for more space inside the modal */
   border-radius: 10px;
-  width: 300px;
+  height: 50em;
+  width: 40em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -640,12 +641,60 @@ section {
   padding: 20px;
 }
 
-.page-title {
-  margin-top: 10px;
-  text-align: left;
-  font-size: 32px;
+.device-buttons-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Create a 2 by 2 grid */
+  gap: 20px; /* Increase gap between buttons */
+  margin-bottom: 20px; /* Increase margin-bottom */
+}
+
+.device-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content */
+  width: 150px; /* Set width */
+  height: 150px; /* Set height to make it square */
+  border-radius: 10px; /* Increase border-radius */
+  border: none;
+  background-color: var(--primary);
   color: white;
-  padding: 1em 0;
+  cursor: pointer;
+  text-align: center; /* Center the text */
+  font-size: 20px; /* Increase font size */
+  flex-direction: column; /* Arrange content vertically */
+}
+
+.device-button:hover {
+  background-color: var(--secondary);
+}
+
+.device-button-image {
+  width: 40px; /* Increase image size */
+  height: 40px; /* Increase image size */
+  margin-bottom: 10px; /* Add margin below the image */
+}
+
+.device-input {
+  width: 100%; /* Make input full width */
+  padding: 15px; /* Increase padding */
+  border-radius: 10px; /* Increase border-radius */
+  border: 1px solid #ccc;
+  font-size: 18px; /* Increase font size */
+  margin-bottom: 20px; /* Increase margin-bottom */
+}
+
+.confirm-add-device-button {
+  padding: 15px 30px; /* Increase padding */
+  border-radius: 10px; /* Increase border-radius */
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  font-size: 18px; /* Increase font size */
+}
+
+.confirm-add-device-button:hover {
+  background-color: var(--secondary);
 }
 
 /* #endregion */

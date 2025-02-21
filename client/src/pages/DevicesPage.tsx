@@ -23,7 +23,7 @@ export default function DevicesPage() {
 
     return (
         <div className="devices-page">
-            <h1 className="page-title">Smart Devices</h1>
+            <h1 className="device-title">Smart Devices</h1>
             <div className="device-box-container">
                 {devices.map((deviceName, index) => (
                     <DeviceBox key={index} initialName={deviceName} />

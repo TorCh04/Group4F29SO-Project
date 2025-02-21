@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import roombaImage from '../assets/roomba.svg';
+import lightSwitchImage from '../assets/light_switch.svg';
+import outletImage from '../assets/outlet.svg';
 import '../App.css';
 
 interface AddDeviceModalProps {
@@ -8,29 +11,26 @@ interface AddDeviceModalProps {
 }
 
 export default function AddDeviceModal({ predefinedDevices, onAddDevice, onClose }: AddDeviceModalProps) {
-    const [newDeviceName, setNewDeviceName] = useState('');
     const [customDeviceName, setCustomDeviceName] = useState('');
-    const [isCustom, setIsCustom] = useState(false);
 
-    const handleAddDevice = () => {
-        const deviceName = isCustom ? customDeviceName : newDeviceName;
+    const handleAddDevice = (deviceName: string) => {
         if (deviceName.trim() !== '') {
             onAddDevice(deviceName);
-            setNewDeviceName('');
             setCustomDeviceName('');
-            setIsCustom(false);
             onClose();
         }
     };
 
-    const handleDeviceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
-        if (value === 'Other') {
-            setIsCustom(true);
-            setNewDeviceName('');
-        } else {
-            setIsCustom(false);
-            setNewDeviceName(value);
+    const getImage = (deviceName: string) => {
+        switch (deviceName.toLowerCase()) {
+            case 'roomba':
+                return roombaImage;
+            case 'light switch':
+                return lightSwitchImage;
+            case 'outlet':
+                return outletImage;
+            default:
+                return outletImage;
         }
     };
 
@@ -39,27 +39,28 @@ export default function AddDeviceModal({ predefinedDevices, onAddDevice, onClose
             <div className="modal-content">
                 <button onClick={onClose} className="close-modal-button">X</button>
                 <h2>Add Device</h2>
-                <select
-                    value={newDeviceName}
-                    onChange={handleDeviceChange}
-                    className="device-select"
-                >
-                    <option value="">Select a device</option>
+                <div className="device-buttons-container">
                     {predefinedDevices.map((device, index) => (
-                        <option key={index} value={device}>{device}</option>
+                        <button
+                            key={index}
+                            onClick={() => handleAddDevice(device)}
+                            className="device-button"
+                        >
+                            <img src={getImage(device)} alt={device} className="device-button-image" />
+                            {device}
+                        </button>
                     ))}
-                    <option value="Other">Other</option>
-                </select>
-                {isCustom && (
-                    <input
-                        type="text"
-                        value={customDeviceName}
-                        onChange={(e) => setCustomDeviceName(e.target.value)}
-                        placeholder="Enter device name"
-                        className="device-input"
-                    />
-                )}
-                <button onClick={handleAddDevice} className="confirm-add-device-button">Add Device</button>
+                </div>
+                <input
+                    type="text"
+                    value={customDeviceName}
+                    onChange={(e) => setCustomDeviceName(e.target.value)}
+                    placeholder="Enter custom device name"
+                    className="device-input"
+                />
+                <button onClick={() => handleAddDevice(customDeviceName)} className="confirm-add-device-button">
+                    Add Custom Device
+                </button>
             </div>
         </div>
     );
