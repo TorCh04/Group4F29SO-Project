@@ -1,34 +1,19 @@
 import React, { useState } from 'react';
-import roombaImage from '../assets/roomba.svg';
-import lightSwitchImage from '../assets/light_switch.svg';
-import outletImage from '../assets/outlet.svg';
 import '../App.css';
 
 interface DeviceBoxProps {
     initialName: string;
+    initialImage: string;
 }
 
-export default function DeviceBox({ initialName }: DeviceBoxProps) {
+export default function DeviceBox({ initialName, initialImage }: DeviceBoxProps) {
     const [isSliderOn, setIsSliderOn] = useState(false); // State for slider
     const [text, setText] = useState(initialName); // State for text under the image
-    const [image, setImage] = useState(getImage(initialName)); // State for image
+    const [image, setImage] = useState(initialImage); // State for image
 
     const toggleSlider = () => {
         setIsSliderOn(!isSliderOn);
     };
-
-    function getImage(deviceName: string) {
-        switch (deviceName.toLowerCase()) {
-            case 'roomba':
-                return roombaImage;
-            case 'light switch':
-                return lightSwitchImage;
-            case 'outlet':
-                return outletImage;
-            default:
-                return outletImage;
-        }
-    }
 
     return (
         <div className={`device-box ${isSliderOn ? 'device-box-on' : 'device-box-off'}`}>

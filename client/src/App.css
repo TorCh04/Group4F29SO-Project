@@ -407,13 +407,26 @@ section {
 .login__submit__grouping .error__message {
   color: var(--infoRed);
 }
+
+
 /* #endregion */
 
 /* DevicePages */
 /* #region */
 
+.error-message {
+  color: var(--infoRed); /* Use the infoRed color for error messages */
+  font-size: 16px; /* Set the font size */
+  margin-top: 10px; /* Add some margin at the top */
+}
+
 .DevicePages-background {
   background-color: var(--background);
+}
+
+.device-section {
+  margin-bottom: 40px; /* Add margin to separate sections */
+  padding-left: 20px; /* Adjust padding to align with the grid */
 }
 
 .device-title {
@@ -421,18 +434,18 @@ section {
   text-align: left;
   font-size: 32px;
   color: white;
-  padding: 1em 2em 1em 1em;
+  padding: 1em 0 0em 1em; /* Adjust padding to align with the grid */
 }
 
 .device-box {
-  width: 300px;
-  height: 400px;
+  width: 200px; /* Decrease the width */
+  height: 220px; /* Decrease the height */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  margin: 20px 0 20px 20px;
+  margin: 0px; /* Remove margin */
   transition: background-color 0.4s;
   border-radius: 15px;
 }
@@ -453,7 +466,7 @@ section {
 .device-box p {
   margin-top: 10px;
   text-align: center;
-  font-size: 32px;
+  font-size: 24px; /* Decrease the font size */
   color: white;
 }
 
@@ -533,8 +546,8 @@ section {
 
 .device-box-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the min-width if needed */
+  gap: 10px; /* Reduce the gap between the boxes */
   padding: 20px;
   margin-top: 20px; /* Add margin-top to create space under the title */
 }
@@ -619,41 +632,63 @@ section {
 }
 
 .modal-content {
-  background-color: white;
-  padding: 40px; /* Increase padding for more space inside the modal */
+  background-color: var(--background); 
+  padding: 0px;
   border-radius: 10px;
   height: 50em;
   width: 40em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white; /* Ensure text is readable on the dark background */
+}
+
+.modal-header {
+  width: 100%;
+  background-color: var(--backgroundContrastBlue);
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;
+  padding: 2em 1em 2em 1em; /* Adjust padding as needed */
+  margin-bottom: 2em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative; /* Add position relative to position the close button */
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: white;
+  font-size: 32px;
 }
 
 .close-modal-button {
-  align-self: flex-end;
+  position: absolute; /* Position the close button absolutely */
+  right: 10px; /* Adjust the position as needed */
   background: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
-}
-
-.devices-page {
-  padding: 20px;
+  color: white; /* Ensure the close button is visible */
 }
 
 .device-buttons-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Create a 2 by 2 grid */
   gap: 20px; /* Increase gap between buttons */
-  margin-bottom: 20px; /* Increase margin-bottom */
+  margin: 0px 30px 30px 30px; /* Increase margin-bottom */
+  width: 100%; /* Make the container take full width */
+  height: 100%; /* Make the container take full height */
+  padding: 20px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 .device-button {
   display: flex;
   align-items: center;
   justify-content: center; /* Center the content */
-  width: 150px; /* Set width */
-  height: 150px; /* Set height to make it square */
+  width: 100%; /* Make the button take full width of the grid cell */
+  height: 100%; /* Make the button take full height of the grid cell */
   border-radius: 10px; /* Increase border-radius */
   border: none;
   background-color: var(--primary);
@@ -668,6 +703,10 @@ section {
   background-color: var(--secondary);
 }
 
+.device-button.selected {
+  background-color: var(--mutedText); /* Change color for selected button */
+}
+
 .device-button-image {
   width: 40px; /* Increase image size */
   height: 40px; /* Increase image size */
@@ -675,22 +714,24 @@ section {
 }
 
 .device-input {
-  width: 100%; /* Make input full width */
+  width: 95%; /* Make input full width */
   padding: 15px; /* Increase padding */
   border-radius: 10px; /* Increase border-radius */
   border: 1px solid #ccc;
   font-size: 18px; /* Increase font size */
-  margin-bottom: 20px; /* Increase margin-bottom */
+  margin-bottom: 10px; /* Increase margin-bottom */
+  margin-top: 10px; /* Increase margin-top */
 }
 
 .confirm-add-device-button {
   padding: 15px 30px; /* Increase padding */
   border-radius: 10px; /* Increase border-radius */
   border: none;
-  background-color: var(--primary);
+  background-color: var(--infoGreen); /* Make the button green */
   color: white;
   cursor: pointer;
-  font-size: 18px; /* Increase font size */
+  font-size: 20px; /* Increase font size */
+  flex-direction: column; /* Arrange content vertically */
 }
 
 .confirm-add-device-button:hover {
