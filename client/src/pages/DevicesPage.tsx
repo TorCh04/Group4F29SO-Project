@@ -6,13 +6,12 @@ import '../App.css';
 export default function DevicesPage() {
     const [devices, setDevices] = useState<string[]>([]);
     const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
-
     const handleAddDevice = (deviceName: string) => {
         setDevices([...devices, deviceName]);
     };
 
     return (
-        <div>
+        <div className="device-box-container">
             {devices.map((deviceName, index) => (
                 <DeviceBox key={index} initialName={deviceName} />
             ))}
