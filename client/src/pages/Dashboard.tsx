@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 
 interface User {
   email: string;
@@ -10,49 +10,52 @@ interface User {
 }
 
 export default function Dashboard() {
-const [userData, setUserData] = useState<User | null>(null);
-const [error, setError] = useState<string>('');
-const navigate = useNavigate();
+  const [userData, setUserData] = useState<User | null>(null);
+  const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
 
-useEffect(() => {
-    const fetchDashboardData = async () => {
-    const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
 
-    if (!token) {
+      if (!token) {
         navigate('/login');
         return;
-    }
+      }
 
-    try {
+      try {
         const response = await axios.get('http://localhost:8080/dashboard', {
-        headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` }
         });
         setUserData(response.data.userData);
-    } catch (err) {
+      } catch (err) {
         console.error("Failed to fetch dashboard data:", err);
         setError('Failed to fetch dashboard data. Please log in again.');
-        localStorage.removeItem('token'); 
-        navigate('/login'); 
-    }
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
     };
 
-    fetchDashboardData();
-}, [navigate]);
+    fetchUserData();
+  }, [navigate]);
 
-if (error) return <div>{error}</div>;
-
-// Logout function
-const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-};
+  if (error) return <div>{error}</div>;
 
   return (
-    <>
-      <Header />
-      <h1>Welcome, {userData?.firstName}!</h1>
-      <p>Email: {userData?.email}</p>
-      <button onClick={handleLogout}>Logout</button>
-    </>
+    <div className="dashboard-layout">
+      <Sidebar />
+      <div className="dashboard-content">
+        <header>
+          <h1>Welcome, {userData?.firstName}!</h1>
+          <p>Email: {userData?.email}</p>
+          <button onClick={() => {
+            localStorage.removeItem('token');
+            navigate('/login');
+          }}>Logout</button>
+        </header>
+        {/* This will render the nested dashboard pages */}
+        <Outlet />
+      </div>
+    </div>
   );
 }

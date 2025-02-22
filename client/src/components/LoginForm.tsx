@@ -2,6 +2,7 @@ import { useState } from 'react';
 import logo from "../assets/logo_vertical.svg";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+// import './LoginForm.css'
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export default function LoginForm() {
             if (response.status === 200) {
                 // Store token in localStorage
                 localStorage.setItem('token', response.data.token);
-                navigate('/dashboard');
+                navigate('/devices');
             }
         } catch (err) {
             setError('Invalid email or password');
