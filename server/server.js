@@ -143,6 +143,10 @@ app.get('/dashboard', verifyToken, async (req, res) => {
   }
 });
 
+//Leaderboard
+const leaderboardRoutes = require("./leaderboard_stats"); // Import leaderboard routes
+app.use("/api", leaderboardRoutes);
+
 // Start server
 const PORT = 8080;
 app.listen(PORT, () => {
