@@ -2,8 +2,9 @@
 
 .profile__center {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
     height: 100vh;
     background-color: var(--background);
 }
@@ -12,8 +13,9 @@
     background-color: var(--backgroundContrastGrey);
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 250px;
     color: var(--text);
+    margin-left: 30px;
 }
 
 .profile__heading {
@@ -23,6 +25,7 @@
     text-align: left;
     margin-bottom: 10px;
     color: var(--mutedText);
+    margin-left: 30px;
 }
 
 .profile__section {
