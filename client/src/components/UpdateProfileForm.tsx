@@ -25,7 +25,7 @@ export default function UpdateProfileForm() {
 
     return (
         <div className="profile__center">
-            <h2 className="profile__heading">Update Profile</h2>
+            <h3 className="profile__heading">Update Profile</h3>
             <div className="profile__container">
                 
 

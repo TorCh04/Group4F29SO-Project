@@ -35,9 +35,10 @@
 .profile__subheading {
     font-family: 'Inter', system-ui;
     font-size: clamp(25px, 4vw, 28px);
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 300;
+    font-size: 20px;
     color: var(--text);
+    margin: 0%;
 }
 
 .profile__input {
@@ -46,14 +47,14 @@
     margin: 5px 0;
     background-color: var(--background);
     border: none;
-    color: white;
+    color: var(--mutedText);
     border-radius: 5px;
     font-family: 'Inter', system-ui;
     font-size: clamp(14px, 3vw, 16px);
 }
 
 .profile__button {
-    width: 100%;
+    width: 30%;
     padding: 8px;
     background-color: var(--secondary);
     color: var(--text);
@@ -67,3 +68,4 @@
 .profile__button:hover {
     background-color: #4a2fb4;
 }
+
