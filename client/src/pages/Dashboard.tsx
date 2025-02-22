@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
+import './styles/Dashboard.css';
 
 interface User {
   email: string;
@@ -41,20 +42,17 @@ export default function Dashboard() {
 
   if (error) return <div>{error}</div>;
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard__structure">
       <Sidebar />
-      <div className="dashboard-content">
-        <header>
-          <h1>Welcome, {userData?.firstName}!</h1>
-          <p>Email: {userData?.email}</p>
-          <button onClick={() => {
-            localStorage.removeItem('token');
-            navigate('/login');
-          }}>Logout</button>
-        </header>
-        {/* This will render the nested dashboard pages */}
-        <Outlet />
+      <div className="dashboard__content">
+        {/* Pass userData and logout to nested routes */}
+        <Outlet context={{ userData, logout }} />
       </div>
     </div>
   );

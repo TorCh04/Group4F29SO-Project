@@ -1,0 +1,25 @@
+/* MAIN CONTENT SEPARATOR */
+.dashboard__structure {
+    display: flex;
+    flex-direction: row;
+    ;
+}
+
+/* SIDEBAR SECTION */
+/* #region */
+.sidebar__container {
+    background-color: var(--backgroundContrastGrey);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 30px;
+    gap: 30px;
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* #endregion */

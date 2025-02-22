@@ -17,20 +17,34 @@ export default function RegisterForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
-            return;
+          setError('Passwords do not match');
+          return;
         }
-
+      
         try {
-            const response = await axios.post('http://localhost:8080/register', formData);
-            if (response.status === 201) {
-                navigate('/login');
+          const registerResponse = await axios.post('http://localhost:8080/register', formData);
+          if (registerResponse.status === 201) {
+            // Registration succeeded. Now attempt auto-login.
+            try {
+              const loginResponse = await axios.post('http://localhost:8080/login', {
+                email: formData.email,
+                password: formData.password
+              });
+              if (loginResponse.status === 200) {
+                // Store token and navigate to dashboard
+                localStorage.setItem('token', loginResponse.data.token);
+                navigate('/devices');
+              }
+            } catch (loginError) {
+              setError('Auto-login failed. Please try logging in manually.');
+              console.error('Login error:', loginError);
             }
-        } catch (err) {
-            setError('Registration failed - please check your details');
-            console.error('Registration error:', err);
+          }
+        } catch (registerError) {
+          setError('Registration failed - please check your details');
+          console.error('Registration error:', registerError);
         }
-    };
+      };
 
     return (
         <div className="login__center">
