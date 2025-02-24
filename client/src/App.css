@@ -704,6 +704,39 @@ section {
   flex-direction: column; /* Arrange content vertically */
 }
 
+.device-button-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.device-settings-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.device-button-settings:hover {
+  background-color: var(--secondary);
+}
+
+.device-button-settings.selected {
+  background-color: var(--mutedText);
+}
+
+
 .device-button:hover {
   background-color: var(--secondary);
 }
@@ -742,6 +775,7 @@ section {
 .confirm-add-device-button:hover {
   background-color: var(--secondary);
 }
+
 
 /* #endregion */
 
