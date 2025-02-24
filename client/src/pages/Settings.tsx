@@ -20,7 +20,7 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-    <UpdatePassword/>
+    {/* <UpdatePassword/> */}
     <header>
       <h1>Welcome, {userData?.firstName}!</h1>
       <p>Email: {userData?.email}</p>

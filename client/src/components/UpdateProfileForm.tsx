@@ -27,13 +27,11 @@ export default function UpdateProfileForm() {
         <div className="profile__center">
             <h3 className="profile__heading">Update Profile</h3>
             <div className="profile__container">
-                
-
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Name</h3>
-                    <input 
-                        type="text" 
-                        placeholder="New Name" 
+                    <input
+                        type="text"
+                        placeholder="New Name"
                         className="profile__input"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -43,44 +41,44 @@ export default function UpdateProfileForm() {
 
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Email</h3>
-                    <input 
-                        type="email" 
-                        placeholder="New Email" 
+                    <input
+                        type="email"
+                        placeholder="New Email"
                         className="profile__input"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <input 
-                        type="email" 
-                        placeholder="Confirm Email" 
+                    <input
+                        type="email"
+                        placeholder="Confirm Email"
                         className="profile__input"
                     />
                     <button className="profile__button" onClick={() => {/* handle email update */}}>Submit</button>
                 </div>
             </div>
+
+            {/* Update Password Form */}
             <h3 className="profile__heading">Security Settings</h3>
             <div className="profile__container">
-                
-
                 <div className="profile__section">
                     <h3 className="profile__subheading">Current Password</h3>
-                    <input 
-                        type="text" 
-                        placeholder="Current Password" 
+                    <input
+                        type="password"
+                        placeholder="Current Password"
                         className="profile__input"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <input 
-                        type="text" 
-                        placeholder="New Password" 
+                    <input
+                        type="password"
+                        placeholder="New Password"
                         className="profile__input"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <input 
-                        type="text" 
-                        placeholder="Confirm Password" 
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
                         className="profile__input"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -88,6 +86,26 @@ export default function UpdateProfileForm() {
                     <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
                 </div>
             </div>
+
+            <h3 className="profile__heading">Privacy Settings</h3>
+            <div className="profile__container">
+                <div className="profile__section">
+                    <div className="privacy">
+                        <label className="privacy__checkbox__label">
+                            Disable Leaderboard
+                            <input type="checkbox" className="privacy__checkbox" />
+                            Friends can see my Email
+                            <input type="checkbox" className="privacy__checkbox" />
+                            
+                            
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
 
 
