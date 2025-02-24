@@ -1,7 +1,9 @@
 import { useOutletContext } from 'react-router-dom';
 import logo from '../assets/logo_vertical.svg';
 import UpdateProfileForm from '../components/UpdateProfileForm';
+import UpdatePassword from '../components/UpdatePassword';
 import  '../pages/styles/Settings.css';
+
 
 interface DashboardContext {
   userData: {
@@ -18,6 +20,7 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
+    <UpdatePassword/>
     <header>
       <h1>Welcome, {userData?.firstName}!</h1>
       <p>Email: {userData?.email}</p>

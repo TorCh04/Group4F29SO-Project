@@ -3,7 +3,7 @@
 .profile__center {
     display: flex;
     flex-direction: column;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: left;
     height: 100vh;
     background-color: var(--background);
