@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
-import DevicesPage from './pages/DevicesPage';
-// import PrivateRoute from './components/PrivateRoute';
 import Nopage from './pages/Nopage';
 import './App.css';
 
@@ -42,10 +41,16 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/DevicesPage" element={<DevicesPage />} />
 
-            {/* Protected routes */}
-            {/* <Route element={<PrivateRoute />}> */}
-                <Route path="/dashboard" element={<Dashboard />} />
-            {/* </Route> */}
+        {/* Protected routes */}
+        <Route element={<PrivateRoute />}>
+          {/* Nest dashboard pages under DashboardLayout */}
+          <Route element={<Dashboard />}>
+            <Route path="devices" element={<SmartDevices />} />
+            <Route path="energy" element={<EnergyTracker />} />
+            <Route path="leaderboard" element={<Leaderboard />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
             
             <Route path="*" element={<Nopage />} />
         </Routes>

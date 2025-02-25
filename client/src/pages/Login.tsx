@@ -1,11 +1,23 @@
-import Header from '../components/Header'
-import LoginForm from '../components/LoginForm'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import LoginForm from '../components/LoginForm';
+import './styles/Login.css';
 
 export default function Login() {
-    return (
-        <>
-            <Header />
-            <LoginForm />
-        </>
-    )
-};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/devices');
+    }
+  }, [navigate]);
+
+  return (
+    <>
+      <Header />
+      <LoginForm />
+    </>
+  );
+}

@@ -1,0 +1,126 @@
+/* NAVBAR SECTION */
+/* #region */
+.homepage__navbar {
+    background-color: var(--backgroundContrastGrey);
+    width: 100%;
+    max-height: 95px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage__navbar__container {
+    padding: 14px;
+    width: 98vw;
+    max-width: 1500px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    width: 134px;
+    height: 67px;
+}
+/* #endregion */
+
+/* HERO SECTION */
+/* #region */
+.hero-background {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+}
+  
+.hero__center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+}
+  
+.hero__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1165px;
+}
+  
+.hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+}
+
+.hero__title {
+    color: var(--white);
+}
+
+.hero__subtitle {
+    color: var(--mutedText);
+}
+
+
+.hero__button__container {
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    gap: 30px;
+    max-width: 280px;
+}
+
+.hero__button {
+    background-color: var(--primary);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+.hero__button__alt {
+    background-color: var(--secondary);
+}
+/* #endregion */
+
+/* HERO MEDIA QUERIES */
+/* #region */
+@media (max-width: 850px) {
+    .hero-background {
+        overflow-y: scroll;
+    }
+  
+    .hero__container {
+        flex-direction: column; /* Stack text on top of the image */
+        align-items: center; /* Center align in column layout */
+        gap: 30px; /* Add spacing between stacked sections */
+        padding-top: 8vh;
+        padding-bottom: 8vh;
+    }
+  
+    .hero__content {
+        max-width: 100%; /* Allow text to take full width */
+        text-align: center; /* Center align text for better aesthetics */
+        justify-content: center;
+        align-items: center;
+    }
+  
+    .hero__image img {
+        max-width: 100%; /* Make image responsive */
+        height: auto; /* Maintain aspect ratio */
+    }
+  
+    .hero__button__container {
+        justify-content: center;
+    }
+  }
+  /* #endregion */

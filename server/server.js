@@ -150,33 +150,3 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching dashboard data' });
   }
 });
-
-// Add a new device endpoint
-app.post('/devices', async (req, res) => {
-  try {
-    const { name, image } = req.body;
-    const device = new Device({ name, image });
-    await device.save();
-    res.status(201).json({ message: 'Device added successfully', device });
-  } catch (error) {
-    console.error('Error adding device:', error);
-    res.status(500).json({ message: 'Server error while adding device' });
-  }
-});
-
-// Fetch all devices endpoint
-app.get('/devices', async (req, res) => {
-  try {
-    const devices = await Device.find();
-    res.status(200).json({ devices });
-  } catch (error) {
-    console.error('Error fetching devices:', error);
-    res.status(500).json({ message: 'Server error while fetching devices' });
-  }
-});
-
-// Start server
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});

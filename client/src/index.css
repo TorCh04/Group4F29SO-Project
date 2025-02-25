@@ -1,1 +1,119 @@
+/* Apply inline-block on all elements and sub elements unless specified otherwise */
+/* #region */
+html {
+    box-sizing: border-box;
+    /* Might replace with JS later */
+    scroll-behavior: smooth;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  /* #endregion */
+  
+  
+  /* --------------- COLORS --------------- */
+  /* #region */
+  :root {
+    --background: #1A1A2A;
+    --primary: #356F9E;
+    --secondary: #37309A;
+    --accent: #A5B4F8;
+    --text: #DAD6F8;
+    --mutedText: #7781B5;
+    --backgroundContrastGrey: #242435;
+    --backgroundContrastBlue: #201F41;
+    --backgroundContrastGreen: #1F2B41;
+    --backgroundContrastred: #411F1F;
+    --white: #FFFFFF;
+    --infoRed: #BE4646;
+    --infoGreen: #46BE5C;
+  }
+  /* #endregion */
+  
+  
+  /* --------------- FONTS --------------- */
+  /* #region */
+  .title {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(32px, 6vw, 64px); /* Scales between 32px and 64px based on viewport width */
+    font-weight: 500; 
+    margin: 0;
+    padding: 0;
+  }
+  
+  .subtitle {
+    font-family: 'Afacad', system-ui;
+    font-size: clamp(16px, 4vw, 24px); /* Scales between 16px and 64px based on viewport width */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .button {
+    font-family: 'Afacad', system-ui;
+    font-size: clamp(16px, 3.5vw, 25px); /* Scales between 16px and 64px based on viewport width */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .body {
+    font-family: 'Roboto', system-ui;
+    font-size: clamp(15px, 3vw, 18px); /* Scales between 15px and 18px based on viewport width */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .login__heading {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(27px, 5vw, 30px); /* Scales between 27px and 30px based on viewport width */
+    font-weight: 600; 
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+  }
 
+  .sidebar__item {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(25px, 4vw, 28px); /* Scales between 27px and 30px based on viewport width */
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .sidebar__settings {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(21px, 3.5vw, 24px); /* Scales between 27px and 30px based on viewport width */
+    margin: 0;
+    padding: 0;
+    color: var(--mutedText);
+    text-decoration: none;
+  }
+  /* #endregion */
+  
+  
+  /* --------------- GENERAL STYLES --------------- */
+  /* #region */
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  section {
+    position: relative;
+    overflow: hidden;
+    padding: 50px 0px;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1296px;
+    margin: 0 auto;
+  }
+/* #endregion */
