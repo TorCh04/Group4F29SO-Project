@@ -5,6 +5,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
+import SmartDevices from './pages/SmartDevices';
+import EnergyTracker from './pages/EnergyTracker';
+import Leaderboard from './pages/Leaderboard';
+import Settings from './pages/Settings';
 import Nopage from './pages/Nopage';
 import './App.css';
 
