@@ -1,0 +1,267 @@
+body, html {
+    background-color: #101323; /* Change this to any color */
+    margin: 0;
+    padding: 0;
+  }
+
+/* Main Leaderboard region */
+/* #region */
+.leaderboard-container {
+    width: 80vw;  /* 80% of the viewport width */
+    max-width: 1100px; /* Prevents it from being too wide on large screens */
+    height: 95vh; /* Adjust height to leave space around it */
+    max-height: 750px; /* Prevents it from taking up too much vertical space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+    background-color: #1e273d; 
+    color: white;
+    border-radius: 12px; /* Rounded edges */
+    border: 5px solid #1a1a2a   ; /* Subtle border to separate from background */
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 100px); /* Shifted slightly to the right */
+    transform: translate(-50%, -50%);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 3vw, 16px); 
+  }
+
+  /* Leaderboard row - Increase spacing */
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background-color: #111827;
+    transition: 0.3s;
+  }
+
+/* #endregion */
+  
+/*  Top three section */
+/* #region */
+/* Top 3 leaderboard container */
+.top-three-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Base style for top 3 */
+  .top-three-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 120px;
+    min-height: 160px;
+    font-weight: bold;
+  }
+
+  /* 🥇 Top 1 - Gold */
+  .top-one {
+    background-color: #FFD700; /* Gold */
+    color: rgb(255, 255, 255);
+    border: 2px solid #EAC117;
+    transform: translateY(-15px);
+  }
+  
+  /* 🥈 Top 2 - Silver */
+  .top-two {
+    background-color: #C0C0C0; /* Silver */
+    color: rgb(255, 255, 255);
+    border: 2px solid #B0B0B0;
+  }
+  
+  /* 🥉 Top 3 - Bronze */
+  .top-three {
+    background-color: #CD7F32; /* Bronze */
+    color: white;
+    border: 2px solid #B87333;
+  }
+
+  .top-three-card .user-name {
+    margin-bottom: -2px; /* Move name closer to points */
+  }
+/* #endregion */
+
+/* Scrollable bottom section*/
+/* #region */
+  /* Keep the top section fixed */
+  .top-section {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Top 3 section stays when scrolling */
+  .top-three-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  /* Scrollable leaderboard section */
+  .leaderboard-list {
+    width: 100%;
+    max-width: 800px;
+    background-color: #111723;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 4px, solid, #111723;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.15);
+    max-height: 300px; /* Ensure it remains scrollable */
+    overflow-y: auto; /* Enables scrolling */
+  }
+
+/* Custom Scrollbar - WebKit Browsers (Chrome, Edge, Safari) */
+.leaderboard-list::-webkit-scrollbar {
+    width: 7px; /* Thin scrollbar */
+  }
+  
+  /* Remove the arrows */
+  .leaderboard-list::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  .leaderboard-list::-webkit-scrollbar-track {
+    background: #2C2F36;
+    border-radius: 10px;
+  }
+  
+  .leaderboard-list::-webkit-scrollbar-thumb {
+    background: #bdc3e0;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .leaderboard-list::-webkit-scrollbar-thumb:hover {
+    background: #a1a7c1;
+  }
+  
+/* Leaderboard row - Align everything inline */
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background-color: #1e273d;
+    transition: 0.3s;
+  }
+  
+  /* Rank number - Adds spacing */
+  .rank-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 2rem;
+    text-align: center;
+    margin-right: 15px; /* Space between rank and avatar */
+  }
+  
+  /* User info - Avatar, Name, and Score in a row */
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between avatar and text */
+    flex: 1;
+  }
+  
+  /* User avatar */
+  .user-avatar {
+    width: 40px; /* Adjust size */
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  /* User text - Name and Score in the same row */
+  .user-text {
+    display: flex;
+    align-items: center; /* Ensures inline text */
+    gap: 10px;
+    font-size: 14px;
+  }
+  
+  /* Progress bar container - Smaller size */
+  .progress-bar-container {
+    width: 50%; /* Make progress bar smaller */
+    background-color: #374151;
+    border-radius: 6px;
+    height: 5px; /* Reduce height */
+    margin-left: 20px;
+    margin-top: 4px;
+  }
+  
+  /* Progress bar fill */
+  .progress-bar-fill {
+    background-color: #bdc3e0;
+    height: 6px;
+    border-radius: 6px;
+    transition: width 0.4s ease-in-out;
+  }
+
+/* #endregion */
+
+/* Users section */
+/* #region */
+  /* Avatar - Ensure smooth rendering */
+.user-avatar {
+    width: 50px; /* Adjust size for better quality */
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-right: 1rem; /* Increase spacing from text */
+    margin-left: 1rem;
+    image-rendering: auto; /* Makes the image less pixelated */
+  }
+
+  /* User avatar */
+  .user-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-top: 0.5rem;
+  }
+
+  
+  /* User details */
+  .user-name {
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .user-score {
+    font-size: 0.9rem;
+    color: #ebeff3;
+  }
+
+/* #endregion */
+
+/* Logged in User */
+/* #region */
+  /* Highlight the logged-in user */
+  .logged-in-user {
+    background-color: #FFD700 !important;
+    color: black !important;
+    font-weight: bold;
+  }
+/* #endregion */
+
+  
+  

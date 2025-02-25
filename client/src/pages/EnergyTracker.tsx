@@ -1,3 +1,10 @@
+import TrackerMain from '../components/TrackerMain.tsx';
+import './styles/EnergyTracker.css';
+
 export default function SmartDevices() {
-    return <p>This is the Energy Tracker page content.</p>;
+      return (
+        <>
+        <TrackerMain />
+      </>
+      )
   }
