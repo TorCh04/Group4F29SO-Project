@@ -90,15 +90,18 @@ export default function UpdateProfileForm() {
             <h3 className="profile__heading">Privacy Settings</h3>
             <div className="profile__container">
                 <div className="profile__section">
-                    <div className="privacy">
-                        <label className="privacy__checkbox__label">
-                            Disable Leaderboard
-                            <input type="checkbox" className="privacy__checkbox" />
-                            Friends can see my Email
-                            <input type="checkbox" className="privacy__checkbox" />
-                            
-                            
-                        </label>
+                    <div className="privacy__extra__links">
+                            <label className="privacy__checkbox__label">
+                                Disable Leaderboard
+                                <input type="checkbox" className="login__checkbox" />
+                                <span className="login__checkbox__custom"></span>
+                            </label>
+                            <label className="privacy__checkbox__label">
+                                Friends can see my email
+                                <input type="checkbox" className="login__checkbox" />
+                                <span className="login__checkbox__custom"></span>
+                            </label>
+
                     </div>
                 </div>
             </div>
