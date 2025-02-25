@@ -23,7 +23,7 @@ export default function LoginForm() {
             setError('Invalid email or password');
             console.error('Login error:', err);
         }
-    };
+    };  
 
     return (
         <div className="login__center">

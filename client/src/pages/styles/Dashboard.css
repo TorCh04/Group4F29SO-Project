@@ -5,6 +5,10 @@
     ;
 }
 
+.dashboard__content {
+    width: 100%;
+}
+
 /* SIDEBAR SECTION */
 /* #region */
 .sidebar__container {
