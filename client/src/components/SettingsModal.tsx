@@ -75,6 +75,7 @@ export default function SettingsModal({ deviceId, initialName, initialImage, onC
                             Outlet
                         </button>
                     </div>
+                    <br></br>
                     <button onClick={handleSaveClick} className="confirm-add-device-button">Save</button>
                 </div>
             </div>
