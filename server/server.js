@@ -150,3 +150,9 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching dashboard data' });
   }
 });
+
+// Start server
+const PORT = 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

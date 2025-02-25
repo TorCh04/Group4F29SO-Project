@@ -1,27 +1,9 @@
 import { useState } from 'react';
-import logo from "../assets/logo_vertical.svg";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const navigate = useNavigate();
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8080/login', { email });
-            if (response.status === 200) {
-                // Store token in localStorage
-                localStorage.setItem('token', response.data.token);
-                navigate('/devices');
-            }
-        } catch (err) {
-            console.error('Login error:', err);
-        }
-    };
 
     return (
         <div className="profile__center">

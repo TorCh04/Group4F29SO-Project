@@ -13,7 +13,7 @@ export default function Hero() {
                         <Link to="/login" className="button hero__button hero__button__alt">Login</Link>
 
 
-                        <Link to="/DevicesPage" className="button hero__button hero__button__alt">Temp</Link>
+                        {/* <Link to="/DevicesPage" className="button hero__button hero__button__alt">Temp</Link> */}
 
 
                     </div>
