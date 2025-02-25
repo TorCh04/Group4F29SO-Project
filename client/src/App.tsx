@@ -5,10 +5,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
-import SmartDevices from './pages/SmartDevices';
-import EnergyTracker from './pages/EnergyTracker';
-import Leaderboard from './pages/Leaderboard';
-import Settings from './pages/Settings';
 import Nopage from './pages/Nopage';
 import './App.css';
 
@@ -23,6 +19,7 @@ function BodyClassUpdater() {
             "/login": "login-background",
             "/register": "login-background", // Shares the same background as login
             "/test": "test-background",
+            "/DevicesPage": "DevicePages-background",
         };
 
         // Set <root> class or default to "default-background"
@@ -42,6 +39,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/DevicesPage" element={<DevicesPage />} />
 
         {/* Protected routes */}
         <Route element={<PrivateRoute />}>

@@ -39,6 +39,14 @@ userSchema.pre('save', async function(next) {
 
 const User = mongoose.model('User', userSchema);
 
+// Device schema and model
+const deviceSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  image: { type: String, required: true }
+});
+
+const Device = mongoose.model('Device', deviceSchema);
+
 // JWT token verification middleware
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -141,14 +149,4 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     console.error('Error fetching dashboard data:', error);
     res.status(500).json({ message: 'Server error while fetching dashboard data' });
   }
-});
-
-//Leaderboard
-const leaderboardRoutes = require("./leaderboard_stats"); // Import leaderboard routes
-app.use("/api", leaderboardRoutes);
-
-// Start server
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
