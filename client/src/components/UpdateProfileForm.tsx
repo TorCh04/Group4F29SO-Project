@@ -25,6 +25,17 @@ export default function UpdateProfileForm() {
 
     return (
         <div className="profile__center">
+            <h3 className="profile__heading">Profile</h3>
+            <div className="profile__container">
+                <div className="profile__section">
+                    <h3 className="profile__subheading">First Name Last Name</h3>
+                </div>
+                <div className="profile__section">
+                    <h3 className="profile__subheading">Email</h3>
+                </div>
+            </div>
+
+
             <h3 className="profile__heading">Update Profile</h3>
             <div className="profile__container">
                 <div className="profile__section">
