@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import plusIcon from '../assets/plus.svg';
 import AddScheduleModal from './AddScheduleModal';
-import '../App.css';
 
 interface AddScheduleBoxProps {
     rooms: string[];

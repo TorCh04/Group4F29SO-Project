@@ -4,7 +4,6 @@ import lightSwitchImage from '../assets/light_switch.svg';
 import outletImage from '../assets/outlet.svg';
 import plusIcon from '../assets/plus.svg';
 import CustomDeviceModal from './CustomDeviceModal';
-import '../App.css';
 
 interface AddDeviceModalProps {
     predefinedDevices: string[];

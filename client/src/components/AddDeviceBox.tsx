@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import plusIcon from '../assets/plus.svg';
-import '../App.css';
 
 interface AddDeviceBoxProps {
     predefinedDevices: string[];

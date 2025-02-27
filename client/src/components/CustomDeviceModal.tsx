@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import roombaImage from '../assets/roomba.svg';
 import lightSwitchImage from '../assets/light_switch.svg';
 import outletImage from '../assets/outlet.svg';
-import '../App.css';
 
 interface CustomDeviceModalProps {
     onAddDevice: (deviceName: string, deviceImage: string) => void;

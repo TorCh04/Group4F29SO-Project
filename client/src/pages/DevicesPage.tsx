@@ -5,7 +5,7 @@ import AddDeviceModal from '../components/AddDeviceModal';
 import AddScheduleBox from '../components/AddScheduleBox';
 import ScheduleBox from '../components/ScheduleBox';
 import SettingsModal from '../components/SettingsModal';
-import '../App.css';
+import './styles/Devices.css';
 import axios from 'axios';
 
 export default function DevicesPage() {
