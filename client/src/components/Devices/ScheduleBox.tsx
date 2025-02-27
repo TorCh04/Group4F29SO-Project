@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
+import ScheduleSettingsModal from './ScheduleSettingsModal';
 
 interface ScheduleBoxProps {
     initialTitle: string;
+    initialRoom: string;
+    initialDevice: string;
+    initialAction: string;
+    initialTime: string;
+    onRemove: () => void;
 }
 
-export default function ScheduleBox({ initialTitle }: ScheduleBoxProps) {
+export default function ScheduleBox({
+    initialTitle,
+    onRemove
+}: ScheduleBoxProps) {
     const [isSliderOn, setIsSliderOn] = useState(false);
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+
+    const handleOpenSettingsModal = () => {
+        setIsSettingsModalOpen(true);
+    };
+
+    const handleCloseSettingsModal = () => {
+        setIsSettingsModalOpen(false);
+    };
 
     return (
         <div className={`device-box ${isSliderOn ? 'device-box-on' : 'device-box-off'}`}>
@@ -22,8 +40,14 @@ export default function ScheduleBox({ initialTitle }: ScheduleBoxProps) {
                 </label>
             </div>
             <div className="settings-container">
-                <a href="/settings" className="settings-link">Settings</a>
+                <a href="#" className="settings-link" onClick={handleOpenSettingsModal}>Settings</a>
             </div>
+            {isSettingsModalOpen && (
+                <ScheduleSettingsModal
+                    onClose={handleCloseSettingsModal}
+                    onRemove={onRemove}
+                />
+            )}
         </div>
     );
 }
