@@ -8,14 +8,32 @@
     min-height: 130vh;
     background-color: var(--background);
 }
+.settings__heading {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(36px, 4vw, 39px);
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 10px;
+    color: var(--text);
+    margin-left: 30px;
+}
 
-.profile__container {
+.settings__container {
     background-color: var(--backgroundContrastGrey);
     padding: 20px;
     border-radius: 10px;
-    width: 250px;
+    width: 350px;
     color: var(--text);
     margin-left: 30px;
+}
+
+.profile__container {
+    background-color: var(--backgroundContrastBlue);
+    border-radius: 10px;
+    width: 300px;
+    padding-top: 10px;
+    margin-left: 30px;
+    overflow: visible;
 }
 
 .profile__heading {
@@ -34,9 +52,8 @@
 
 .profile__subheading {
     font-family: 'Inter', system-ui;
-    font-size: clamp(25px, 4vw, 28px);
+    font-size: clamp(20px, 4vw, 23px);
     font-weight: 300;
-    font-size: 20px;
     color: var(--text);
     margin: 0%;
 }
@@ -51,6 +68,14 @@
     border-radius: 5px;
     font-family: 'Inter', system-ui;
     font-size: clamp(14px, 3vw, 16px);
+}
+
+.profile__info {
+    color: var(--text);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 4vw, 17px);
+    font-weight: 300;
+    padding: 0;
 }
 
 .profile__button {
@@ -69,6 +94,15 @@
     background-color: #4a2fb4;
 }
 
+.privacy__container {
+    background-color: var(--backgroundContrastGrey);
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    color: var(--text);
+    margin-left: 30px;
+    height: 90px;
+}
 
 .privacy__extra__links {
     display: flex;
@@ -79,31 +113,30 @@
     max-width: 280px;
 }
 
-
-
 .privacy__checkbox__label {
-    display: inline-block;
-    align-items: center;
+    display: block; /* Or display: inline-block; */
+    align-items: flex-start; /* Or align-items: center; */
     position: relative;
     cursor: pointer;
-    color: var(--mutedText);
+    color: var(--text);
     font-family: 'Inter', system-ui;
-    font-size: clamp(8px, 2.5vw, 10px); /* Scales between 8px and 10px based on viewport width */
+    font-size: clamp(14px, 2.5vw, 17px); /* Scales between 8px and 10px based on viewport width */
     font-style: italic;
-    margin: 0;
+    margin-bottom: 10px;
     padding: 0;
+    max-width: fit-content;
 }
 
 .privacy__checkbox {
-    appearance: none; /* Hide the default checkbox */
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none; /* Hide the default checkbox */
     position: absolute; /* Position it absolutely within the label */
 }
 
 .privacy__checkbox__custom {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border: solid 1px;
     border-color: var(--mutedText);
     background-color: var(--mutedText);
@@ -112,6 +145,20 @@
     display: inline-block;
     position: relative;
 }
+
+.privacy__checkbox:checked + .privacy__checkbox__custom::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+
 
 .circle__img {
 border-radius: 50%;
