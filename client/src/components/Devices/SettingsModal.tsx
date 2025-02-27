@@ -24,9 +24,7 @@ export default function SettingsModal({ deviceId, initialName, initialImage, onC
 
     const handleSaveClick = async () => {
         try {
-            // Make an API call to update the device in the database
             await axios.put(`http://localhost:8080/devices/${deviceId}`, { name, image });
-            // Call the onSave callback to update the parent component
             onSave(name, image);
             onClose();
         } catch (error) {

@@ -5,34 +5,22 @@ interface ScheduleBoxProps {
 }
 
 export default function ScheduleBox({ initialTitle }: ScheduleBoxProps) {
-    const [isSliderOn, setIsSliderOn] = useState(false); // State for slider
-    const [title, setTitle] = useState(initialTitle); // State for title
-
-    const toggleSlider = () => {
-        setIsSliderOn(!isSliderOn);
-    };
+    const [isSliderOn, setIsSliderOn] = useState(false);
 
     return (
         <div className={`device-box ${isSliderOn ? 'device-box-on' : 'device-box-off'}`}>
-            {/* Title */}
-            <p className="schedule-title">
-                {title}
-            </p>
-
-            {/* Slider Switch in Bottom-Left Corner */}
+            <p className="schedule-title">{initialTitle}</p>
             <div className="slider-container">
                 <label className="slider-label">
                     <input
                         type="checkbox"
                         checked={isSliderOn}
-                        onChange={toggleSlider}
+                        onChange={() => setIsSliderOn(!isSliderOn)}
                         className="slider-input"
                     />
                     <span className="slider-span"></span>
                 </label>
             </div>
-
-            {/* Settings Link in Bottom-Right Corner */}
             <div className="settings-container">
                 <a href="/settings" className="settings-link">Settings</a>
             </div>

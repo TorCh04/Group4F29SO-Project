@@ -10,104 +10,85 @@ import axios from 'axios';
 import SideBar from '../components/SideBar';
 
 export default function DevicesPage() {
-    const [devices, setDevices] = useState<{ _id: string, name: string, image: string }[]>([]);
-    const [schedules, setSchedules] = useState<{ _id: string, room: string, device: string, action: string, time: string }[]>([]);
-    const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
-    const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
-    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-    const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
-    const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
+  const [devices, setDevices] = useState<{ _id: string, name: string, image: string }[]>([]);
+  const [schedules, setSchedules] = useState<{ _id: string, room: string, device: string, action: string, time: string }[]>([]);
+  const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const predefinedDevices = ['Roomba', 'Light Switch', 'Outlet'];
+  const rooms = ['Living Room', 'Bedroom', 'Kitchen'];
 
-    useEffect(() => {
-        const fetchDevices = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/devices');
-                setDevices(response.data.devices);
-            } catch (error) {
-                console.error('Error fetching devices:', error);
-            }
-        };
-
-        const fetchSchedules = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/schedules');
-                setSchedules(response.data.schedules);
-            } catch (error) {
-                console.error('Error fetching schedules:', error);
-            }
-        };
-
-        fetchDevices();
-        fetchSchedules();
-    }, []);
-
-    const handleAddDevice = async (deviceName: string, deviceImage: string) => {
-        try {
-            const response = await axios.post('http://localhost:8080/devices', { name: deviceName, image: deviceImage });
-            setDevices([...devices, response.data.device]);
-        } catch (error) {
-            console.error('Error adding device:', error);
-        }
+  useEffect(() => {
+    const fetchDevices = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/devices');
+        setDevices(response.data.devices);
+      } catch (error) {
+        console.error('Error fetching devices:', error);
+      }
     };
 
-    const handleAddSchedule = async (room: string, device: string, action: string, time: string) => {
-        try {
-            const response = await axios.post('http://localhost:8080/schedules', { room, device, action, time });
-            setSchedules([...schedules, response.data.schedule]);
-        } catch (error) {
-            console.error('Error adding schedule:', error);
-        }
+    const fetchSchedules = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/schedules');
+        setSchedules(response.data.schedules);
+      } catch (error) {
+        console.error('Error fetching schedules:', error);
+      }
     };
 
-    const handleOpenDeviceModal = () => {
-        setIsDeviceModalOpen(true);
-    };
+    fetchDevices();
+    fetchSchedules();
+  }, []);
 
-    const handleCloseDeviceModal = () => {
-        setIsDeviceModalOpen(false);
-    };
+  const handleAddDevice = async (deviceName: string, deviceImage: string) => {
+    try {
+      const response = await axios.post('http://localhost:8080/devices', { name: deviceName, image: deviceImage });
+      setDevices([...devices, response.data.device]);
+    } catch (error) {
+      console.error('Error adding device:', error);
+    }
+  };
 
-    const handleOpenSettingsModal = () => {
-        setIsSettingsModalOpen(true);
-    };
+  const handleAddSchedule = async (room: string, device: string, action: string, time: string) => {
+    try {
+      const response = await axios.post('http://localhost:8080/schedules', { room, device, action, time });
+      setSchedules([...schedules, response.data.schedule]);
+    } catch (error) {
+      console.error('Error adding schedule:', error);
+    }
+  };
 
-    const handleCloseSettingsModal = () => {
-        setIsSettingsModalOpen(false);
-    };
-
-    return (
-        <div className="devices-page">
-            <SideBar /> {/* Adds the side bar to page */}
-            <div className="main-content">
-                <div className="device-section">
-                    <h1 className="device-title">Smart Devices</h1>
-                    <div className="device-box-container">
-                        <AddDeviceBox onAddDevice={handleOpenDeviceModal} />
-                        {devices.map((device, index) => (
-                            <DeviceBox key={index} initialName={device.name} initialImage={device.image} onOpenSettings={handleOpenSettingsModal} />
-                        ))}
-                        {isDeviceModalOpen && (
-                            <AddDeviceModal
-                                predefinedDevices={predefinedDevices}
-                                onAddDevice={handleAddDevice}
-                                onClose={handleCloseDeviceModal}
-                            />
-                        )}
-                    </div>
-                </div>
-                <div className="device-section">
-                    <h1 className="device-title">Smart Schedules</h1>
-                    <div className="device-box-container">
-                        {schedules.map((schedule, index) => (
-                            <ScheduleBox key={index} initialTitle={`${schedule.room} - ${schedule.device} - ${schedule.action} at ${schedule.time}`} />
-                        ))}
-                        <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
-                    </div>
-                </div>
-                {isSettingsModalOpen && (
-                    <SettingsModal onClose={handleCloseSettingsModal} />
-                )}
-            </div>
+  return (
+    <div className="devices-page">
+      <SideBar />
+      <div className="main-content">
+        <div className="device-section">
+          <h1 className="device-title">Smart Devices</h1>
+          <div className="device-box-container">
+            <AddDeviceBox onAddDevice={() => setIsDeviceModalOpen(true)} />
+            {devices.map((device, index) => (
+              <DeviceBox key={index} initialName={device.name} initialImage={device.image} onOpenSettings={() => setIsSettingsModalOpen(true)} />
+            ))}
+            {isDeviceModalOpen && (
+              <AddDeviceModal
+                predefinedDevices={predefinedDevices}
+                onAddDevice={handleAddDevice}
+                onClose={() => setIsDeviceModalOpen(false)}
+              />
+            )}
+          </div>
         </div>
-    );
+        <div className="device-section">
+          <h1 className="device-title">Smart Schedules</h1>
+          <div className="device-box-container">
+            {schedules.map((schedule, index) => (
+              <ScheduleBox key={index} initialTitle={`${schedule.room} - ${schedule.device} - ${schedule.action} at ${schedule.time}`} />
+            ))}
+            <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
+          </div>
+        </div>
+        {isSettingsModalOpen && <SettingsModal onClose={() => setIsSettingsModalOpen(false)} />}
+      </div>
+    </div>
+  );
 }
