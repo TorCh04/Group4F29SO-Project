@@ -22,7 +22,7 @@ export default function ScheduleSettingsModal({
                     <button onClick={onClose} className="close-modal-button">X</button>
                 </div>
                 <div className="modal-body">
-                    <button onClick={handleRemoveClick} className="confirm-remove-schedule-button">Remove Schedule</button>
+                <button onClick={handleRemoveClick} className="confirm-add-device-button" style={{ backgroundColor: 'red' }}>Remove Schedule</button>                
                 </div>
             </div>
         </div>
