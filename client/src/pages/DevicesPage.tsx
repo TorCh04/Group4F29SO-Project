@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import DeviceBox from '../components/DeviceBox';
-import AddDeviceBox from '../components/AddDeviceBox';
-import AddDeviceModal from '../components/AddDeviceModal';
-import AddScheduleBox from '../components/AddScheduleBox';
-import ScheduleBox from '../components/ScheduleBox';
-import SettingsModal from '../components/SettingsModal';
+import DeviceBox from '../components/Devices/DeviceBox';
+import AddDeviceBox from '../components/Devices/AddDeviceBox';
+import AddDeviceModal from '../components/Devices/AddDeviceModal';
+import AddScheduleBox from '../components/Devices/AddScheduleBox';
+import ScheduleBox from '../components/Devices/ScheduleBox';
+import SettingsModal from '../components/Devices/SettingsModal';
 import './styles/Devices.css';
 import axios from 'axios';
 

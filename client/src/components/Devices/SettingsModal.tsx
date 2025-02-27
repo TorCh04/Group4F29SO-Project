@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import roombaImage from '../assets/roomba.svg';
-import lightSwitchImage from '../assets/light_switch.svg';
-import outletImage from '../assets/outlet.svg';
+import roombaImage from '../../assets/roomba.svg';
+import lightSwitchImage from '../../assets/light_switch.svg';
+import outletImage from '../../assets/outlet.svg';
 
 interface SettingsModalProps {
     deviceId: string;

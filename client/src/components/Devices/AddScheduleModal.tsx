@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import plusIcon from '../assets/plus.svg';
+import plusIcon from '../../assets/plus.svg';
 
 interface AddScheduleBoxProps {
     onAddSchedule: () => void;
