@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: left;
-    min-height: 150vh;
+    min-height: 130vh;
     background-color: var(--background);
 }
 
@@ -120,4 +120,9 @@ height: 100px;
 overflow: hidden;
 float: left; /* Align to the left of profile subheading */
 margin-right: 10px; /* Add spacing between image and text */
+}
+
+.sidebar__container
+{
+    min-height: 130vh;
 }
