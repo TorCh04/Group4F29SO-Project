@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import plusIcon from '../assets/plus.svg';
-import '../App.css';
+import plusIcon from '../../assets/plus.svg';
 
 interface AddScheduleBoxProps {
     onAddSchedule: () => void;
@@ -37,18 +36,11 @@ export default function AddScheduleModal({ rooms, devices, onAddSchedule, onClos
             return;
         }
         onAddSchedule(selectedRoom, selectedDevice, selectedAction, selectedTime);
-        setSelectedRoom('');
-        setSelectedDevice('');
-        setSelectedAction('');
-        setSelectedTime('');
-        setErrorMessage('');
         onClose();
     };
 
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
+        if (e.target === e.currentTarget) onClose();
     };
 
     return (

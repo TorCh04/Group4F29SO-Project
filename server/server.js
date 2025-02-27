@@ -222,9 +222,8 @@ app.get('/schedules', async (req, res) => {
 ///////////////
 
 
-
 // Start server
 const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
+

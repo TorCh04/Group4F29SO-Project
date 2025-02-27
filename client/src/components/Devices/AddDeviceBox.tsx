@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import plusIcon from '../assets/plus.svg';
-import '../App.css';
+import React from 'react';
+import plusIcon from '../../assets/plus.svg';
 
 interface AddDeviceBoxProps {
-    predefinedDevices: string[];
     onAddDevice: () => void;
 }
 

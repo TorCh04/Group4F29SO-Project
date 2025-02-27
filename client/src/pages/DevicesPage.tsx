@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import DeviceBox from '../components/DeviceBox';
-import AddDeviceBox from '../components/AddDeviceBox';
-import AddDeviceModal from '../components/AddDeviceModal';
-import AddScheduleBox from '../components/AddScheduleBox';
-import ScheduleBox from '../components/ScheduleBox';
-import SettingsModal from '../components/SettingsModal';
-import '../App.css';
+import DeviceBox from '../components/Devices/DeviceBox';
+import AddDeviceBox from '../components/Devices/AddDeviceBox';
+import AddDeviceModal from '../components/Devices/AddDeviceModal';
+import AddScheduleBox from '../components/Devices/AddScheduleBox';
+import ScheduleBox from '../components/Devices/ScheduleBox';
+import SettingsModal from '../components/Devices/SettingsModal';
+import './styles/Devices.css';
 import axios from 'axios';
+import SideBar from '../components/SideBar';
 
 export default function DevicesPage() {
-    const [devices, setDevices] = useState<{ name: string, image: string }[]>([]);
-    const [schedules, setSchedules] = useState<{ room: string, device: string, action: string, time: string }[]>([]);
+    const [devices, setDevices] = useState<{ _id: string, name: string, image: string }[]>([]);
+    const [schedules, setSchedules] = useState<{ _id: string, room: string, device: string, action: string, time: string }[]>([]);
     const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -27,7 +28,17 @@ export default function DevicesPage() {
             }
         };
 
+        const fetchSchedules = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/schedules');
+                setSchedules(response.data.schedules);
+            } catch (error) {
+                console.error('Error fetching schedules:', error);
+            }
+        };
+
         fetchDevices();
+        fetchSchedules();
     }, []);
 
     const handleAddDevice = async (deviceName: string, deviceImage: string) => {
@@ -39,8 +50,13 @@ export default function DevicesPage() {
         }
     };
 
-    const handleAddSchedule = (room: string, device: string, action: string, time: string) => {
-        setSchedules([...schedules, { room, device, action, time }]);
+    const handleAddSchedule = async (room: string, device: string, action: string, time: string) => {
+        try {
+            const response = await axios.post('http://localhost:8080/schedules', { room, device, action, time });
+            setSchedules([...schedules, response.data.schedule]);
+        } catch (error) {
+            console.error('Error adding schedule:', error);
+        }
     };
 
     const handleOpenDeviceModal = () => {
@@ -61,34 +77,37 @@ export default function DevicesPage() {
 
     return (
         <div className="devices-page">
-            <div className="device-section">
-                <h1 className="device-title">Smart Devices</h1>
-                <div className="device-box-container">
-                    {devices.map((device, index) => (
-                        <DeviceBox key={index} initialName={device.name} initialImage={device.image} onOpenSettings={handleOpenSettingsModal} />
-                    ))}
-                    <AddDeviceBox onAddDevice={handleOpenDeviceModal} />
-                    {isDeviceModalOpen && (
-                        <AddDeviceModal
-                            predefinedDevices={predefinedDevices}
-                            onAddDevice={handleAddDevice}
-                            onClose={handleCloseDeviceModal}
-                        />
-                    )}
+            <SideBar /> {/* Adds the side bar to page */}
+            <div className="main-content">
+                <div className="device-section">
+                    <h1 className="device-title">Smart Devices</h1>
+                    <div className="device-box-container">
+                        <AddDeviceBox onAddDevice={handleOpenDeviceModal} />
+                        {devices.map((device, index) => (
+                            <DeviceBox key={index} initialName={device.name} initialImage={device.image} onOpenSettings={handleOpenSettingsModal} />
+                        ))}
+                        {isDeviceModalOpen && (
+                            <AddDeviceModal
+                                predefinedDevices={predefinedDevices}
+                                onAddDevice={handleAddDevice}
+                                onClose={handleCloseDeviceModal}
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
-            <div className="device-section">
-                <h1 className="device-title">Smart Schedules</h1>
-                <div className="device-box-container">
-                    {schedules.map((schedule, index) => (
-                        <ScheduleBox key={index} initialTitle={`${schedule.room} - ${schedule.device} - ${schedule.action} at ${schedule.time}`} />
-                    ))}
-                    <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
+                <div className="device-section">
+                    <h1 className="device-title">Smart Schedules</h1>
+                    <div className="device-box-container">
+                        {schedules.map((schedule, index) => (
+                            <ScheduleBox key={index} initialTitle={`${schedule.room} - ${schedule.device} - ${schedule.action} at ${schedule.time}`} />
+                        ))}
+                        <AddScheduleBox rooms={rooms} devices={devices} onAddSchedule={handleAddSchedule} />
+                    </div>
                 </div>
+                {isSettingsModalOpen && (
+                    <SettingsModal onClose={handleCloseSettingsModal} />
+                )}
             </div>
-            {isSettingsModalOpen && (
-                <SettingsModal onClose={handleCloseSettingsModal} />
-            )}
         </div>
     );
 }
