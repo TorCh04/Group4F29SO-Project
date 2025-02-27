@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import logo from '../assets/logo_vertical.svg';
+import { useEffect, useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
+import axios from 'axios';
 
 const seeds = ['Mason', 'Leo', 'Adrian', 'Jessica', 'Brian', 'Robert', 'Chase', 'Brooklyn', 'Jocelyn',
             'Liam', 'Mackenzie', 'Eliza', 'Caleb', 'Luis', 'Nolan', 'Alexander', 'Vivian', 'Christian', 
@@ -14,33 +14,37 @@ const avatar = createAvatar(thumbs, {
 
 const svg = avatar.toString();
 
+
+
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     return (
         <div className="profile__center">
+            <h3 className="settings__heading">Settings</h3>
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
                 <svg className='circle__img'
                     dangerouslySetInnerHTML={{ __html: svg }}
-                    width="50"
-                    height="50"
+                    width="40"
+                    height="40"
                     transform="scale(0.8)"
                 />
                 <div className="profile__section">
-                    <h3 className="profile__subheading">First Name Last Name</h3>
+                    <h3 className="profile__info">First Name Last Name</h3>
                 </div>
                 <div className="profile__section">
-                    <h3 className="profile__subheading">Email</h3>
+                    <h3 className="profile__info">Email</h3>
                 </div>
             </div>
 
 
             <h3 className="profile__heading">Update Profile</h3>
-            <div className="profile__container">
+            <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Name</h3>
                     <input
@@ -73,7 +77,7 @@ export default function UpdateProfileForm() {
 
             {/* Update Password Form */}
             <h3 className="profile__heading">Security Settings</h3>
-            <div className="profile__container">
+            <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Current Password</h3>
                     <input
@@ -94,8 +98,8 @@ export default function UpdateProfileForm() {
                         type="password"
                         placeholder="Confirm Password"
                         className="profile__input"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
                 </div>
@@ -103,7 +107,7 @@ export default function UpdateProfileForm() {
 
             
             <h3 className="profile__heading">Privacy Settings</h3>
-            <div className="profile__container">
+            <div className="settings__container">
                 <div className="profile__section">
                     <div className="privacy__extra__links">
                             <label className="privacy__checkbox__label">
