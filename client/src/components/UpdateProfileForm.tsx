@@ -1,3 +1,4 @@
+import { useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
@@ -14,7 +15,14 @@ const avatar = createAvatar(thumbs, {
 
 const svg = avatar.toString();
 
-
+interface ProfileContext {
+    userData: {
+        email: string;
+        firstName: string;
+        lastName: string;
+    } | null;
+    logout: () => void;
+    }
 
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
@@ -22,9 +30,12 @@ export default function UpdateProfileForm() {
     const [oldPassword, setOldPasssword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const {userData, logout } = useOutletContext<ProfileContext>();
 
+    
     return (
         <div className="profile__center">
+            <h1>Username: {name}</h1>
             <h3 className="settings__heading">Settings</h3>
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
@@ -35,10 +46,10 @@ export default function UpdateProfileForm() {
                     transform="scale(0.8)"
                 />
                 <div className="profile__section">
-                    <h3 className="profile__info">First Name Last Name</h3>
+                    <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3>
                 </div>
                 <div className="profile__section">
-                    <h3 className="profile__info">Email</h3>
+                    <h3 className="profile__info">{userData?.email}</h3>
                 </div>
             </div>
 
