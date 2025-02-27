@@ -120,16 +120,9 @@ export default function UpdateProfileForm() {
                                 <input type="checkbox" className="privacy__checkbox" />
                                 <span className="privacy__checkbox__custom"></span>
                             </label>
-
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
-
-
     )
 }
