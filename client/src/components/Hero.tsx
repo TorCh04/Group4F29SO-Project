@@ -11,11 +11,6 @@ export default function Hero() {
                     <div className="hero__button__container">
                         <Link to="/register" className="button hero__button">Register Now</Link>
                         <Link to="/login" className="button hero__button hero__button__alt">Login</Link>
-
-
-                        <Link to="/DevicesPage" className="button hero__button hero__button__alt">Temp</Link>
-
-
                     </div>
                 </div>
                 <div className="hero__image">

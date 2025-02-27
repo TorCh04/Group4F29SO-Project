@@ -9,6 +9,7 @@ import SmartDevices from './pages/SmartDevices';
 import EnergyTracker from './pages/EnergyTracker';
 import Leaderboard from './pages/Leaderboard';
 import Settings from './pages/Settings';
+import DevicesPage from './pages/DevicesPage';
 import Nopage from './pages/Nopage';
 import './App.css';
 
