@@ -114,8 +114,8 @@
 }
 
 .privacy__checkbox__label {
-    display: inline-block;
-    align-items: center;
+    display: block; /* Or display: inline-block; */
+    align-items: flex-start; /* Or align-items: center; */
     position: relative;
     cursor: pointer;
     color: var(--text);
@@ -124,7 +124,7 @@
     font-style: italic;
     margin-bottom: 10px;
     padding: 0;
-    width: 18vw;
+    max-width: fit-content;
 }
 
 .privacy__checkbox {
