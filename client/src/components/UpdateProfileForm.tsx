@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import logo from '../assets/logo_vertical.svg';
 
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
@@ -9,6 +9,7 @@ export default function UpdateProfileForm() {
         <div className="profile__center">
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
+                <img src={logo} alt="Moogle Logo" className="circle__img" />
                 <div className="profile__section">
                     <h3 className="profile__subheading">First Name Last Name</h3>
                 </div>
@@ -80,6 +81,7 @@ export default function UpdateProfileForm() {
                 </div>
             </div>
 
+            
             <h3 className="profile__heading">Privacy Settings</h3>
             <div className="profile__container">
                 <div className="profile__section">
