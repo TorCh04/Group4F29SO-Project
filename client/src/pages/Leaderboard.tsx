@@ -36,7 +36,9 @@ export default function Leaderboard() {
   return (
     <div className="leaderboard-container">
       <div className="top-section">
-        <h2 className="leaderboard-title">🏆 Leaderboard 🏆</h2>
+        <div className="leaderboard-title">
+          <h2 className="leaderboard-title">🏆 Leaderboard 🏆</h2>
+        </div>
       </div>
 
       <div className="top-three-container">

@@ -19,7 +19,7 @@ body, html {
     background-color: #1e273d; 
     color: white;
     border-radius: 12px; /* Rounded edges */
-    border: 5px solid #1a1a2a   ; /* Subtle border to separate from background */
+    border: 5px solid #1a1a2a; /* Subtle border to separate from background */
     overflow: hidden;
     position: absolute;
     top: 50%;
@@ -27,6 +27,11 @@ body, html {
     transform: translate(-50%, -50%);
     font-family: 'Inter', system-ui;
     font-size: clamp(14px, 3vw, 16px); 
+  }
+
+  .leaderboard-title{
+    font-family: 'Afacad', system-ui;
+    font-size: clamp(40px, 4vw, 24px);
   }
 
   /* Leaderboard row - Increase spacing */
