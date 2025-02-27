@@ -107,7 +107,7 @@ export default function UpdateProfileForm() {
 
             
             <h3 className="profile__heading">Privacy Settings</h3>
-            <div className="settings__container">
+            <div className="privacy__container">
                 <div className="profile__section">
                     <div className="privacy__extra__links">
                             <label className="privacy__checkbox__label">

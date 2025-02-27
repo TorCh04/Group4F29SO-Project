@@ -94,6 +94,15 @@
     background-color: #4a2fb4;
 }
 
+.privacy__container {
+    background-color: var(--backgroundContrastGrey);
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    color: var(--text);
+    margin-left: 30px;
+    height: 90px;
+}
 
 .privacy__extra__links {
     display: flex;
@@ -109,24 +118,25 @@
     align-items: center;
     position: relative;
     cursor: pointer;
-    color: var(--mutedText);
+    color: var(--text);
     font-family: 'Inter', system-ui;
-    font-size: clamp(8px, 2.5vw, 10px); /* Scales between 8px and 10px based on viewport width */
+    font-size: clamp(14px, 2.5vw, 17px); /* Scales between 8px and 10px based on viewport width */
     font-style: italic;
-    margin: 0;
+    margin-bottom: 10px;
     padding: 0;
+    width: 18vw;
 }
 
 .privacy__checkbox {
-    appearance: none; /* Hide the default checkbox */
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none; /* Hide the default checkbox */
     position: absolute; /* Position it absolutely within the label */
 }
 
 .privacy__checkbox__custom {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border: solid 1px;
     border-color: var(--mutedText);
     background-color: var(--mutedText);
@@ -139,14 +149,16 @@
 .privacy__checkbox:checked + .privacy__checkbox__custom::after {
     content: '';
     position: absolute;
-    left: 3px;
+    left: 4px;
     top: 1px;
-    width: 3px;
-    height: 6px;
+    width: 5px;
+    height: 10px;
     border: solid white;
-    border-width: 0 2px 2px 0;
+    border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
+
+
 
 .circle__img {
 border-radius: 50%;
