@@ -1,14 +1,17 @@
 import { useState } from 'react';
-
+import logo from '../assets/logo_vertical.svg';
 
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [oldPassword, setOldPasssword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
     return (
         <div className="profile__center">
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
+                <img src={logo} alt="Moogle Logo" className="circle__img" />
                 <div className="profile__section">
                     <h3 className="profile__subheading">First Name Last Name</h3>
                 </div>
@@ -59,27 +62,28 @@ export default function UpdateProfileForm() {
                         type="password"
                         placeholder="Current Password"
                         className="profile__input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={oldPassword}
+                        onChange={(e) => setOldPasssword(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="New Password"
                         className="profile__input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="Confirm Password"
                         className="profile__input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                     />
                     <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
                 </div>
             </div>
 
+            
             <h3 className="profile__heading">Privacy Settings</h3>
             <div className="profile__container">
                 <div className="profile__section">

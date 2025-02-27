@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: left;
-    height: 100vh;
+    min-height: 130vh;
     background-color: var(--background);
 }
 
@@ -113,3 +113,16 @@
     position: relative;
 }
 
+.circle__img {
+border-radius: 50%;
+width: 100px;
+height: 100px;
+overflow: hidden;
+float: left; /* Align to the left of profile subheading */
+margin-right: 10px; /* Add spacing between image and text */
+}
+
+.sidebar__container
+{
+    min-height: 130vh;
+}
