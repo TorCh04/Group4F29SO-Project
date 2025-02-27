@@ -372,19 +372,3 @@
     flex-direction: column; /* Stack the sections vertically */
 }
 
-/* Sidebar styles */
-.sidebar__container {
-    width: 250px; /* Adjust width as needed */
-    background-color: var(--backgroundContrastGrey);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 30px;
-    gap: 30px;
-}
-
-.sidebar__links {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
