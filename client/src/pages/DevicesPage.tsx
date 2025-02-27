@@ -9,8 +9,8 @@ import './styles/Devices.css';
 import axios from 'axios';
 
 export default function DevicesPage() {
-    const [devices, setDevices] = useState<{ name: string, image: string }[]>([]);
-    const [schedules, setSchedules] = useState<{ room: string, device: string, action: string, time: string }[]>([]);
+    const [devices, setDevices] = useState<{ _id: string, name: string, image: string }[]>([]);
+    const [schedules, setSchedules] = useState<{ _id: string, room: string, device: string, action: string, time: string }[]>([]);
     const [isDeviceModalOpen, setIsDeviceModalOpen] = useState(false);
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -27,7 +27,17 @@ export default function DevicesPage() {
             }
         };
 
+        const fetchSchedules = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/schedules');
+                setSchedules(response.data.schedules);
+            } catch (error) {
+                console.error('Error fetching schedules:', error);
+            }
+        };
+
         fetchDevices();
+        fetchSchedules();
     }, []);
 
     const handleAddDevice = async (deviceName: string, deviceImage: string) => {
@@ -39,8 +49,13 @@ export default function DevicesPage() {
         }
     };
 
-    const handleAddSchedule = (room: string, device: string, action: string, time: string) => {
-        setSchedules([...schedules, { room, device, action, time }]);
+    const handleAddSchedule = async (room: string, device: string, action: string, time: string) => {
+        try {
+            const response = await axios.post('http://localhost:8080/schedules', { room, device, action, time });
+            setSchedules([...schedules, response.data.schedule]);
+        } catch (error) {
+            console.error('Error adding schedule:', error);
+        }
     };
 
     const handleOpenDeviceModal = () => {

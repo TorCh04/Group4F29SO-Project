@@ -183,6 +183,40 @@ app.get('/devices', async (req, res) => {
   }
 });
 
+// Schedule schema and model
+const scheduleSchema = new mongoose.Schema({
+  room: { type: String, required: true },
+  device: { type: String, required: true },
+  action: { type: String, required: true },
+  time: { type: String, required: true }
+});
+
+const Schedule = mongoose.model('Schedule', scheduleSchema);
+
+// Add a schedule endpoint
+app.post('/schedules', async (req, res) => {
+  try {
+    const { room, device, action, time } = req.body;
+    const schedule = new Schedule({ room, device, action, time });
+    await schedule.save();
+    res.status(201).json({ message: 'Schedule added successfully', schedule });
+  } catch (error) {
+    console.error('Error adding schedule:', error);
+    res.status(500).json({ message: 'Server error while adding schedule' });
+  }
+});
+
+// Fetch all schedules endpoint
+app.get('/schedules', async (req, res) => {
+  try {
+    const schedules = await Schedule.find();
+    res.status(200).json({ schedules });
+  } catch (error) {
+    console.error('Error fetching schedules:', error);
+    res.status(500).json({ message: 'Server error while fetching schedules' });
+  }
+});
+
 ///////////////
 //Devices end//
 ///////////////
