@@ -11,13 +11,13 @@
     overflow-y: scroll;
   }
   .et__main {
-    background-color: red;
     height: 100vh;
     padding-left: 2%;
     padding-right: 2%;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 2;
+    justify-content: space-between;
   }
   
   .et_title {
@@ -30,7 +30,6 @@
   .et__graph__container {
     height: 95vh;
     width: 82vw;
-    background-color: red;
     display: flex;
     left: 50%;
   
@@ -39,7 +38,7 @@
   .et__teu_graph__container {
     width: 80vw;  /* 80% of the viewport width */
     max-width: 1100px; /* Prevents it from being too wide on large screens */
-    height: 95vh; /* Adjust height to leave space around it */
+    height: 90vh; /* Adjust height to leave space around it */
     max-height: 750px; /* Prevents it from taking up too much vertical space */
     display: flex;
     flex-direction: column;
@@ -117,7 +116,8 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 80%;
+    min-width: 1000px;
+    top: 90%;
     left: 50%;
     width: 40vw;
     transform: translate(-50%, -50%);
