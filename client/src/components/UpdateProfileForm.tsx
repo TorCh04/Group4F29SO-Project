@@ -1,5 +1,18 @@
 import { useState } from 'react';
 import logo from '../assets/logo_vertical.svg';
+import { createAvatar } from '@dicebear/core';
+import { thumbs } from '@dicebear/collection';
+
+const seeds = ['Mason', 'Leo', 'Adrian', 'Jessica', 'Brian', 'Robert', 'Chase', 'Brooklyn', 'Jocelyn',
+            'Liam', 'Mackenzie', 'Eliza', 'Caleb', 'Luis', 'Nolan', 'Alexander', 'Vivian', 'Christian', 
+            'Eden', 'Sara'];
+const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
+
+const avatar = createAvatar(thumbs, {
+    "seed": randomSeed
+});
+
+const svg = avatar.toString();
 
 export default function UpdateProfileForm() {
     const [name, setName] = useState('');
@@ -11,7 +24,12 @@ export default function UpdateProfileForm() {
         <div className="profile__center">
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
-                <img src={logo} alt="Moogle Logo" className="circle__img" />
+                <svg className='circle__img'
+                    dangerouslySetInnerHTML={{ __html: svg }}
+                    width="50"
+                    height="50"
+                    transform="scale(0.8)"
+                />
                 <div className="profile__section">
                     <h3 className="profile__subheading">First Name Last Name</h3>
                 </div>
