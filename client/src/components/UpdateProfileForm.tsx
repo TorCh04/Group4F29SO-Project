@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import axios from 'axios';
+import React from 'react';
 
 const seeds = ['Mason', 'Leo', 'Adrian', 'Jessica', 'Brian', 'Robert', 'Chase', 'Brooklyn', 'Jocelyn',
             'Liam', 'Mackenzie', 'Eliza', 'Caleb', 'Luis', 'Nolan', 'Alexander', 'Vivian', 'Christian', 
             'Eden', 'Sara'];
+
 const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
 
 const avatar = createAvatar(thumbs, {
@@ -17,6 +19,7 @@ const svg = avatar.toString();
 
 interface ProfileContext {
     userData: {
+        id: string;
         email: string;
         firstName: string;
         lastName: string;
@@ -25,6 +28,8 @@ interface ProfileContext {
     }
 
 export default function UpdateProfileForm() {
+    const [firstName, setFirstName] = useState({firstName: ''});
+    const [lastName, setLastName] = useState({lastName: ''});
     const [name, setName] = useState({firstName: '', lastName: ''});
     const [email, setEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
@@ -34,23 +39,37 @@ export default function UpdateProfileForm() {
 
     const updateName = async () => {
         try {
-            const { firstName, lastName } = name; // Extract values correctly
-            const response = await axios.put('/api/users/', { firstName, lastName });
+            const response = await axios.put('http://localhost:8080/users', { 
+                firstName: name.firstName, 
+                lastName: name.lastName 
+            });
             console.log(response.data);
-            
             // Ideally, update userData from the parent context
             setName({ firstName: '', lastName: '' }); // Clear input fields after submission
         } catch (error) {
             console.error("Error updating name:", error);
         }
     };
-    
+    const addTestField = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/users/${userData?.id}', { testField: 'Test Value' });
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error adding test field:', error);
+        }
+        };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await updateName();
+    };
     
     console.log("Updating Name:", name);
     
     
     return (
         <div className="profile__center">
+            <button onClick={addTestField}>Add Test Field</button>
             <h3 className="settings__heading">Settings</h3>
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
@@ -85,11 +104,11 @@ export default function UpdateProfileForm() {
                         type="text"
                         placeholder="Last Name"
                         className="profile__input"
-                        value={name.firstName}
-                        onChange={(e) => setName({...name, firstName: e.target.value})}
+                        value={name.lastName}
+                        onChange={(e) => setName({...name, lastName: e.target.value})}
                         
                     />
-                    <button className="profile__button" onClick={() => updateName()}>Submit</button>
+                    <button type = "submit" className="profile__button" onClick={() => {handleSubmit}}>Submit</button>
                 </div>
 
                 <div className="profile__section">
