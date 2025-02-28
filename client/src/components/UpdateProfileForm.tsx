@@ -25,17 +25,32 @@ interface ProfileContext {
     }
 
 export default function UpdateProfileForm() {
-    const [name, setName] = useState('');
+    const [name, setName] = useState({firstName: '', lastName: ''});
     const [email, setEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
 
+    const updateName = async () => {
+        try {
+            const { firstName, lastName } = name; // Extract values correctly
+            const response = await axios.put('/api/users/', { firstName, lastName });
+            console.log(response.data);
+            
+            // Ideally, update userData from the parent context
+            setName({ firstName: '', lastName: '' }); // Clear input fields after submission
+        } catch (error) {
+            console.error("Error updating name:", error);
+        }
+    };
+    
+    
+    console.log("Updating Name:", name);
+    
     
     return (
         <div className="profile__center">
-            <h1>Username: {name}</h1>
             <h3 className="settings__heading">Settings</h3>
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
@@ -62,10 +77,11 @@ export default function UpdateProfileForm() {
                         type="text"
                         placeholder="New Name"
                         className="profile__input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={name.firstName}
+                        onChange={(e) => setName({...name, firstName: e.target.value})}
+                        
                     />
-                    <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
+                    <button className="profile__button" onClick={() => updateName()}>Submit</button>
                 </div>
 
                 <div className="profile__section">
