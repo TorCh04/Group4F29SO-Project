@@ -75,7 +75,15 @@ export default function UpdateProfileForm() {
                     <h3 className="profile__subheading">Update Name</h3>
                     <input
                         type="text"
-                        placeholder="New Name"
+                        placeholder="First Name"
+                        className="profile__input"
+                        value={name.firstName}
+                        onChange={(e) => setName({...name, firstName: e.target.value})}
+                        
+                    />
+                    <input
+                        type="text"
+                        placeholder="Last Name"
                         className="profile__input"
                         value={name.firstName}
                         onChange={(e) => setName({...name, firstName: e.target.value})}
