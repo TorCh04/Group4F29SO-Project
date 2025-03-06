@@ -42,6 +42,7 @@ export default function Settings() {
     <p>Email: {userData?.email}</p>
     <p>First Name: {userData?.firstName}</p>
     <p>Last Name: {userData?.lastName}</p>
+    
     {/* <UpdatePassword/> */}
     {/* <header>
       <h1>Welcome, {userData?.firstName}!</h1>

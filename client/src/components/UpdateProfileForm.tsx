@@ -28,8 +28,8 @@ interface ProfileContext {
     }
 
 export default function UpdateProfileForm() {
-    const [firstName, setFirstName] = useState({firstName: ''});
-    const [lastName, setLastName] = useState({lastName: ''});
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [name, setName] = useState({firstName: '', lastName: ''});
     const [email, setEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
@@ -37,9 +37,28 @@ export default function UpdateProfileForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
 
+    const [formData, setFormData] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+
+    // const updateName = {
+    //     $set: {
+    //         quantity: 5,
+    //     },
+    //     };
+
+
+
+    
     const updateName = async () => {
         try {
-            const response = await axios.put('http://localhost:8080/users', { 
+            const response = await axios.put('http://localhost:8080/update-profile', { 
+                id: userData?.id,
                 firstName: name.firstName, 
                 lastName: name.lastName 
             });
@@ -50,6 +69,7 @@ export default function UpdateProfileForm() {
             console.error("Error updating name:", error);
         }
     };
+
     const addTestField = async () => {
         try {
             const response = await axios.post('http://localhost:8080/users/${userData?.id}', { testField: 'Test Value' });
@@ -67,9 +87,12 @@ export default function UpdateProfileForm() {
     console.log("Updating Name:", name);
     
     
+
+
+
     return (
         <div className="profile__center">
-            <button onClick={addTestField}>Add Test Field</button>
+            <button onSubmit={addTestField}>Add Test Field</button>
             <h3 className="settings__heading">Settings</h3>
             <h3 className="profile__heading">Profile</h3>
             <div className="profile__container">
@@ -92,23 +115,25 @@ export default function UpdateProfileForm() {
             <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Name</h3>
-                    <input
+                    <form onSubmit={handleSubmit}>
+                        <input
                         type="text"
                         placeholder="First Name"
                         className="profile__input"
-                        value={name.firstName}
-                        onChange={(e) => setName({...name, firstName: e.target.value})}
-                        
-                    />
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        className="profile__input"
-                        value={name.lastName}
-                        onChange={(e) => setName({...name, lastName: e.target.value})}
-                        
-                    />
-                    <button type = "submit" className="profile__button" onClick={() => {handleSubmit}}>Submit</button>
+                        value={formData.firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Last Name"
+                            className="profile__input"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            
+                        />
+                        <input type="submit" value="Submit" className="profile__button" />
+                    </form>
+                    
                 </div>
 
                 <div className="profile__section">

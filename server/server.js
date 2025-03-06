@@ -160,3 +160,38 @@ const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Updating Profile
+app.post('/update-profile',
+  [
+    body('firstName').trim().escape(),
+    body('lastName').trim().escape(),
+    body('password').isLength({ min: 6 }),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) throw new Error('Passwords mismatch');
+      return true;
+    })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+    try {
+      const { firstName, lastName, password } = req.body;
+      const userId = req.user._id; // assuming you have a middleware that sets req.user
+
+      const user = await User.findById(userId);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.password = password;
+
+      await user.save();
+      res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (error) {
+      console.error('Update profile error:', error);
+      res.status(500).json({ message: 'Server error during update' });
+    }
+  }
+);
