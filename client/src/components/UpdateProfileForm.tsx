@@ -31,7 +31,11 @@ interface ProfileContext {
 export default function UpdateProfileForm() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [error, setError] = useState<string>('');
+    const [errors, setErrors] = useState({
+                                            email: '',
+                                            newPassword: '',
+                                            confirmPassword: ''
+                                        });
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
@@ -80,7 +84,7 @@ export default function UpdateProfileForm() {
         e.preventDefault();
         console.log('Sending update email request...');
         if (email !== confirmEmail) {
-            setError('Emails do not match');
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
             return;
         }
         try {
@@ -123,17 +127,17 @@ export default function UpdateProfileForm() {
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        // if (userData?.password !== oldPassword) {
-        //     setError('Old password does not match');
-        //     return;
-        // }
+        if (newPassword !== confirmPassword) {
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            return;
+            }
         
 
 
         console.log('Sending update password request...');
         try {
             const token = localStorage.getItem('token');
-        const response = await axios.post(
+            const response = await axios.post(
             'http://localhost:8080/updatePassword', 
             { confirmPassword },
             { headers: { Authorization: `Bearer ${token}` } } 
@@ -155,6 +159,8 @@ export default function UpdateProfileForm() {
     console.log("Updating Name:", firstName);
     console.log("Updating Email:", email);
     console.log("Updating Password:", oldPassword);
+    console.log("Updating New Password:", newPassword);
+    console.log("Updating Confirm Password:", confirmPassword);
     
 
 
@@ -218,7 +224,7 @@ export default function UpdateProfileForm() {
                         className="profile__input"value={confirmEmail}
                         onChange={(e) => setConfirmEmail(e.target.value)}
                     />
-                    {error && <p className="error__message">{error}</p>}
+                    {errors.email && <p className="error__message">{errors.email}</p>}
                     <input type="submit" value="Submit" className="profile__button" />
                     </form>
                 </div>
@@ -240,7 +246,6 @@ export default function UpdateProfileForm() {
                                                 verifyOldPassword(e.target.value);
                                             }
                                     }
-
                         />
                         <input
                             type="password"
@@ -257,7 +262,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <input type="submit" value="Submit" className="profile__button" />
-                        {error && <p className="error__message">{error}</p>}
+                        {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
                     </form>
                     
                 </div>
