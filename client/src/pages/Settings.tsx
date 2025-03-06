@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 interface DashboardContext {
   userData: {
+    id: string;
     email: string;
     firstName: string;
     lastName: string;
@@ -42,6 +43,7 @@ export default function Settings() {
     <p>Email: {userData?.email}</p>
     <p>First Name: {userData?.firstName}</p>
     <p>Last Name: {userData?.lastName}</p>
+
     
     {/* <UpdatePassword/> */}
     {/* <header>
