@@ -33,8 +33,7 @@ export default function UpdateProfileForm() {
     const [lastName, setLastName] = useState('');
     const [errors, setErrors] = useState({
                                             email: '',
-                                            newPassword: '',
-                                            confirmPassword: ''
+                                            password: '',
                                         });
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
@@ -128,12 +127,10 @@ export default function UpdateProfileForm() {
         e.preventDefault();
         
         if (newPassword !== confirmPassword) {
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            setErrors(prevErrors => ({ ...prevErrors, password: 'Passwords do not match' }));
             return;
             }
         
-
-
         console.log('Sending update password request...');
         try {
             const token = localStorage.getItem('token');
@@ -147,7 +144,7 @@ export default function UpdateProfileForm() {
             // Ideally, update userData from the parent context
             // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
-            console.error("Error updating name:", error);
+            console.error("Error updating password:", error);
         }
     };
 
@@ -181,6 +178,7 @@ export default function UpdateProfileForm() {
                 </div>
                 <div className="profile__section">
                     <h3 className="profile__info">{userData?.email}</h3>
+                    <h3 className="profile__info">{userData?.password}</h3>
                 </div>
             </div>
 
@@ -262,7 +260,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <input type="submit" value="Submit" className="profile__button" />
-                        {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
+                        {errors.password && <p className="error__message">{errors.password}</p>}
                     </form>
                     
                 </div>

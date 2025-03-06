@@ -188,22 +188,46 @@ app.post('/updateEmail', verifyToken,  async (req, res) => {
   }
 });
 
-app.post('/updatePassword', verifyToken,  async (req, res) => {
-  
-  try {
-    const filter = { _id: req.user.id };
-    const update = { email: req.body.password };
+// app.post('/updatePassword', verifyToken,  async (req, res) => {
+//   try {
+//     const filter = { _id: req.user.id };
+//     const update = { password: req.body.password };
     
 
-    const user = await User.findOneAndUpdate(filter, update, {
-      new: true
-    });
-    res.json({ message: 'Password updated successfully', user });
+//     const user = await User.findOneAndUpdate(filter, update, {
+//       new: true
+//     });
+//     res.json({ message: 'Password updated successfully', user });
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     res.status(500).json({ message: 'Server error while fetching user' });
+//   }
+// });
+
+app.post('/updatePassword', verifyToken, async (req, res) => {
+  try {
+    const { confirmPassword } = req.body;
+
+    if (!confirmPassword) {
+      return res.status(400).json({ message: 'Password is required' });
+    }
+
+    // Hash the password before updating
+    const hashedPassword = await bcrypt.hash(confirmPassword, 10);
+
+    const filter = { _id: req.user.id };
+    const update = { password: hashedPassword };
+
+    const user = await User.findOneAndUpdate(filter, update, { new: true });
+
+    res.json({ message: 'Password updated successfully' });
   } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ message: 'Server error while fetching user' });
+    console.error('Error updating password:', error);
+    res.status(500).json({ message: 'Server error while updating password' });
   }
 });
+
+
 
 app.post('/verifyPassword', verifyToken,  async (req, res) => {
   try {
