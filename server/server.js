@@ -211,10 +211,30 @@ app.post('/updateEmail', verifyToken,  async (req, res) => {
     const filter = { _id: req.user.id };
     const update = { email: req.body.email };
 
+    body('confirmEmail').custom((value, { req }) => {
+      if (value !== req.body.email) throw new Error('Email mismatch');
+      return true;
+    })
+
     const user = await User.findOneAndUpdate(filter, update, {
       new: true
     });
     res.json({ message: 'Email updated successfully', user });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Server error while fetching user' });
+  }
+});
+
+app.post('/updatePassword', verifyToken,  async (req, res) => {
+  try {
+    const filter = { _id: req.user.id };
+    const update = { email: req.body.password };
+
+    const user = await User.findOneAndUpdate(filter, update, {
+      new: true
+    });
+    res.json({ message: 'Password updated successfully', user });
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).json({ message: 'Server error while fetching user' });

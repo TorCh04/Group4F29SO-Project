@@ -23,6 +23,7 @@ interface ProfileContext {
         email: string;
         firstName: string;
         lastName: string;
+        password: string;
     } | null;
     logout: () => void;
     }
@@ -30,8 +31,9 @@ interface ProfileContext {
 export default function UpdateProfileForm() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [name, setName] = useState({firstName: '', lastName: ''});
+    const [error, setError] = useState<string>('');
     const [email, setEmail] = useState('');
+    const [confirmEmail, setConfirmEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -77,11 +79,15 @@ export default function UpdateProfileForm() {
     const updateEmail = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Sending update email request...');
+        if (email !== confirmEmail) {
+            setError('Emails do not match');
+            return;
+        }
         try {
             const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:8080/updateEmail', 
-            { email },  // Request body (corrected)
+            { email },  
             { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
         );     
         console.log('Response reached');
@@ -93,6 +99,30 @@ export default function UpdateProfileForm() {
         }
     };
 
+    const updatePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (userData?.password !== oldPassword) {
+            setError('Old password does not match');
+            return;
+        }
+
+        console.log('Sending update password request...');
+        try {
+            const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:8080/updatePassword', 
+            { confirmPassword },
+            { headers: { Authorization: `Bearer ${token}` } } 
+        );     
+        console.log('Response reached');
+        console.log(response.data);
+            // Ideally, update userData from the parent context
+            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        } catch (error) {
+            console.error("Error updating name:", error);
+        }
+    };
 
     // const handleSubmit = async (e: React.FormEvent) => {
     //     e.preventDefault();
@@ -101,7 +131,7 @@ export default function UpdateProfileForm() {
     
     console.log("Updating Name:", name);
     console.log("Updating Email:", email);
-    
+    // console.log("Updating Password:", password);
     
 
 
@@ -146,9 +176,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setLastName(e.target.value)} 
                         />
                         <input type="submit" value="Submit" className="profile__button" />
-                    </form>
-                    <p>{formData.firstName}, {formData.lastName} {userData?.id } </p>
-                    
+                    </form>                    
                 </div>
 
                 <div className="profile__section">
@@ -164,8 +192,10 @@ export default function UpdateProfileForm() {
                     <input
                         type="email"
                         placeholder="Confirm Email"
-                        className="profile__input"
+                        className="profile__input"value={confirmEmail}
+                        onChange={(e) => setConfirmEmail(e.target.value)}
                     />
+                    {error && <p className="error__message">{error}</p>}
                     <input type="submit" value="Submit" className="profile__button" />
                     </form>
                 </div>
@@ -176,28 +206,32 @@ export default function UpdateProfileForm() {
             <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Current Password</h3>
-                    <input
-                        type="password"
-                        placeholder="Current Password"
-                        className="profile__input"
-                        value={oldPassword}
-                        onChange={(e) => setOldPasssword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="New Password"
-                        className="profile__input"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        className="profile__input"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
+                    <form onSubmit={updatePassword}>
+                        <input
+                            type="password"
+                            placeholder="Current Password"
+                            className="profile__input"
+                            value={oldPassword}
+                            onChange={(e) => setOldPasssword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="New Password"
+                            className="profile__input"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            className="profile__input"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <input type="submit" value="Submit" className="profile__button" />
+
+                    </form>
+                    
                 </div>
             </div>
 
