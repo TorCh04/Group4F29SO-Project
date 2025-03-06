@@ -35,6 +35,7 @@ export default function UpdateProfileForm() {
                                             email: '',
                                             curPassword: '',
                                             newPassword: '',
+                                            samePassword: ''
                                         });
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
@@ -131,19 +132,43 @@ export default function UpdateProfileForm() {
     
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        
+
         const isOldPasswordCorrect = await verifyOldPassword(oldPassword);
         if (!isOldPasswordCorrect) {
             console.log("Old password is incorrect");
+            setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
+            return;
+            } else {
+            setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
             }
-            if (newPassword !== confirmPassword) {
-                console.log("Passwords do not match");
+
+        if (newPassword !== confirmPassword) {
+            console.log("Passwords do not match");
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            return;
+            } else {
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+            if (oldPassword === newPassword || oldPassword == confirmPassword) {
+                setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+                return;
+            } else {
+                setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
             }
+            }
+        
+        
+        
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
+            newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
+            samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
+        }));
+
+        
             
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
-                newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match'
-            }));
         
 
         console.log('Sending update password request...');
@@ -163,11 +188,6 @@ export default function UpdateProfileForm() {
         } 
     };
 
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     await updateName();
-    // };
-    
     console.log("Updating Name:", firstName);
     console.log("Updating Email:", email);
     console.log("Updating Password:", oldPassword);
@@ -277,6 +297,7 @@ export default function UpdateProfileForm() {
                         />
                         <input type="submit" value="Submit" className="profile__button" />
                         {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
+                        {errors.samePassword && <p className="error__message">{errors.samePassword}</p>}
                     </form>
                     
                 </div>
