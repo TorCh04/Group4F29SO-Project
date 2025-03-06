@@ -74,6 +74,25 @@ export default function UpdateProfileForm() {
         }
     };
 
+    const updateEmail = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Sending update email request...');
+        try {
+            const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:8080/updateEmail', 
+            { email },  // Request body (corrected)
+            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+        );     
+        console.log('Response reached');
+        console.log(response.data);
+            // Ideally, update userData from the parent context
+            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        } catch (error) {
+            console.error("Error updating name:", error);
+        }
+    };
+
 
     // const handleSubmit = async (e: React.FormEvent) => {
     //     e.preventDefault();
@@ -81,6 +100,7 @@ export default function UpdateProfileForm() {
     // };
     
     console.log("Updating Name:", name);
+    console.log("Updating Email:", email);
     
     
 
@@ -133,6 +153,7 @@ export default function UpdateProfileForm() {
 
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Email</h3>
+                    <form onSubmit={updateEmail}>
                     <input
                         type="email"
                         placeholder="New Email"
@@ -145,7 +166,8 @@ export default function UpdateProfileForm() {
                         placeholder="Confirm Email"
                         className="profile__input"
                     />
-                    <button className="profile__button" onClick={() => {/* handle email update */}}>Submit</button>
+                    <input type="submit" value="Submit" className="profile__button" />
+                    </form>
                 </div>
             </div>
 
