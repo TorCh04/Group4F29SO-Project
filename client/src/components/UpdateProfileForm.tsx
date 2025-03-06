@@ -33,7 +33,8 @@ export default function UpdateProfileForm() {
     const [lastName, setLastName] = useState('');
     const [errors, setErrors] = useState({
                                             email: '',
-                                            password: '',
+                                            curPassword: '',
+                                            newPassword: '',
                                         });
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
@@ -115,6 +116,11 @@ export default function UpdateProfileForm() {
             if (response.status === 200) {
                 // Store token in localStorage
                 console.log("password matches!")
+                return true;
+
+            }
+            else {
+                return false;
             }
         // Handle the response from the server
         } catch (error) {
@@ -127,10 +133,17 @@ export default function UpdateProfileForm() {
         e.preventDefault();
         
         if (newPassword !== confirmPassword) {
-            setErrors(prevErrors => ({ ...prevErrors, password: 'Passwords do not match' }));
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
             return;
             }
         
+        const isOldPasswordCorrect = await verifyOldPassword(oldPassword);
+        if (!isOldPasswordCorrect) {
+            console.log("Old password is incorrect");
+            setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
+            return;
+        }
+
         console.log('Sending update password request...');
         try {
             const token = localStorage.getItem('token');
@@ -145,7 +158,7 @@ export default function UpdateProfileForm() {
             // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
             console.error("Error updating password:", error);
-        }
+        } 
     };
 
     // const handleSubmit = async (e: React.FormEvent) => {
@@ -245,6 +258,7 @@ export default function UpdateProfileForm() {
                                             }
                                     }
                         />
+                        {errors.curPassword && <p className="error__message">{errors.curPassword}</p>}
                         <input
                             type="password"
                             placeholder="New Password"
@@ -260,7 +274,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <input type="submit" value="Submit" className="profile__button" />
-                        {errors.password && <p className="error__message">{errors.password}</p>}
+                        {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
                     </form>
                     
                 </div>
