@@ -133,14 +133,14 @@ export default function UpdateProfileForm() {
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        
-
         const isOldPasswordCorrect = await verifyOldPassword(oldPassword);
         if (!isOldPasswordCorrect) {
             console.log("Old password is incorrect");
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
             setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
             return;
             } else {
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
             setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
             }
 
@@ -150,6 +150,7 @@ export default function UpdateProfileForm() {
             return;
             } else {
             setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+            
             if (oldPassword === newPassword || oldPassword == confirmPassword) {
                 setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
                 return;
@@ -159,13 +160,13 @@ export default function UpdateProfileForm() {
             }
         
         
-        
-        setErrors(prevErrors => ({
-            ...prevErrors,
-            curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
-            newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
-            samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
-        }));
+        // Don't think I need these
+        // setErrors(prevErrors => ({
+        //     ...prevErrors,
+        //     curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
+        //     newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
+        //     samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
+        // }));
 
         
             

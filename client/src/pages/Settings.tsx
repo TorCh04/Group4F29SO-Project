@@ -40,9 +40,7 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-    <p>Email: {userData?.email}</p>
-    <p>First Name: {userData?.firstName}</p>
-    <p>Last Name: {userData?.lastName}</p>
+
 
     
     {/* <UpdatePassword/> */}
