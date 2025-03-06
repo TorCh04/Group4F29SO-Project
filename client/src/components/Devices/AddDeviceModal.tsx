@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import roombaImage from '../assets/roomba.svg';
-import lightSwitchImage from '../assets/light_switch.svg';
-import outletImage from '../assets/outlet.svg';
-import plusIcon from '../assets/plus.svg';
-import CustomDeviceModal from './CustomDeviceModal';
-import '../App.css';
+import roombaImage from '../../assets/roomba.svg';
+import lightSwitchImage from '../../assets/light_switch.svg';
+import outletImage from '../../assets/outlet.svg';
+import plusIcon from '../../assets/plus.svg';
+import CustomDeviceModal from '../Devices/CustomDeviceModal';
 
 interface AddDeviceModalProps {
     predefinedDevices: string[];
@@ -12,7 +11,7 @@ interface AddDeviceModalProps {
     onClose: () => void;
 }
 
-export default function AddDeviceModal({ predefinedDevices, onAddDevice, onClose }: AddDeviceModalProps) {
+const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ predefinedDevices, onAddDevice, onClose }) => {
     const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
 
     const handleAddDevice = (deviceName: string, deviceImage?: string) => {
@@ -23,21 +22,19 @@ export default function AddDeviceModal({ predefinedDevices, onAddDevice, onClose
 
     const getImage = (deviceName: string) => {
         switch (deviceName.toLowerCase()) {
-            case 'roomba':
+            case 'roomba': 
                 return roombaImage;
-            case 'light switch':
+            case 'light switch': 
                 return lightSwitchImage;
-            case 'outlet':
+            case 'outlet': 
                 return outletImage;
-            default:
+            default: 
                 return outletImage;
         }
     };
 
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
+        if (e.target === e.currentTarget) onClose();
     };
 
     return (
@@ -49,30 +46,22 @@ export default function AddDeviceModal({ predefinedDevices, onAddDevice, onClose
                 </div>
                 <div className="device-buttons-container">
                     {predefinedDevices.map((device, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handleAddDevice(device, getImage(device))}
-                            className="device-button"
-                        >
+                        <button key={index} onClick={() => handleAddDevice(device, getImage(device))} className="device-button">
                             <img src={getImage(device)} alt={device} className="device-button-image" />
                             {device}
                         </button>
                     ))}
-                    <button
-                        onClick={() => setIsCustomModalOpen(true)}
-                        className="device-button"
-                    >
+                    <button onClick={() => setIsCustomModalOpen(true)} className="device-button">
                         <img src={plusIcon} alt="Add Custom Device" className="device-button-image" />
                         Add Custom Device
                     </button>
                 </div>
                 {isCustomModalOpen && (
-                    <CustomDeviceModal
-                        onAddDevice={handleAddDevice}
-                        onClose={() => setIsCustomModalOpen(false)}
-                    />
+                    <CustomDeviceModal onAddDevice={handleAddDevice} onClose={() => setIsCustomModalOpen(false)} />
                 )}
             </div>
         </div>
     );
-}
+};
+
+export default AddDeviceModal;

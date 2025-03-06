@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../App.css';
-import roombaImage from '../assets/roomba.svg';
-import lightSwitchImage from '../assets/light_switch.svg';
-import outletImage from '../assets/outlet.svg';
+import roombaImage from '../../assets/roomba.svg';
+import lightSwitchImage from '../../assets/light_switch.svg';
+import outletImage from '../../assets/outlet.svg';
 
 interface SettingsModalProps {
     deviceId: string;
@@ -25,9 +24,7 @@ export default function SettingsModal({ deviceId, initialName, initialImage, onC
 
     const handleSaveClick = async () => {
         try {
-            // Make an API call to update the device in the database
             await axios.put(`http://localhost:8080/devices/${deviceId}`, { name, image });
-            // Call the onSave callback to update the parent component
             onSave(name, image);
             onClose();
         } catch (error) {

@@ -158,6 +158,7 @@ app.use("/api", leaderboardRoutes);
 
 
 
+
 app.post('/updateName', verifyToken,  async (req, res) => {
   try {
     const filter = { _id: req.user.id };
@@ -246,6 +247,74 @@ app.post('/verifyPassword', verifyToken,  async (req, res) => {
     res.status(500).json({ message: 'Server error while verifying old password' });
   }
 });
+
+
+///////////
+//Devices//
+///////////
+
+// Add a device endpoint
+app.post('/devices', async (req, res) => {
+  try {
+    const { name, image } = req.body;
+    const device = new Device({ name, image });
+    await device.save();
+    res.status(201).json({ message: 'Device added successfully', device });
+  } catch (error) {
+    console.error('Error adding device:', error);
+    res.status(500).json({ message: 'Server error while adding device' });
+  }
+});
+
+// Fetch all devices endpoint
+app.get('/devices', async (req, res) => {
+  try {
+    const devices = await Device.find();
+    res.status(200).json({ devices });
+  } catch (error) {
+    console.error('Error fetching devices:', error);
+    res.status(500).json({ message: 'Server error while fetching devices' });
+  }
+});
+
+// Schedule schema and model
+const scheduleSchema = new mongoose.Schema({
+  room: { type: String, required: true },
+  device: { type: String, required: true },
+  action: { type: String, required: true },
+  time: { type: String, required: true }
+});
+
+const Schedule = mongoose.model('Schedule', scheduleSchema);
+
+// Add a schedule endpoint
+app.post('/schedules', async (req, res) => {
+  try {
+    const { room, device, action, time } = req.body;
+    const schedule = new Schedule({ room, device, action, time });
+    await schedule.save();
+    res.status(201).json({ message: 'Schedule added successfully', schedule });
+  } catch (error) {
+    console.error('Error adding schedule:', error);
+    res.status(500).json({ message: 'Server error while adding schedule' });
+  }
+});
+
+// Fetch all schedules endpoint
+app.get('/schedules', async (req, res) => {
+  try {
+    const schedules = await Schedule.find();
+    res.status(200).json({ schedules });
+  } catch (error) {
+    console.error('Error fetching schedules:', error);
+    res.status(500).json({ message: 'Server error while fetching schedules' });
+  }
+});
+
+///////////////
+//Devices end//
+///////////////
+
 
 
 // Start server
