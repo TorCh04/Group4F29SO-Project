@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import axios from 'axios';
+import React from 'react';
 
 const seeds = ['Mason', 'Leo', 'Adrian', 'Jessica', 'Brian', 'Robert', 'Chase', 'Brooklyn', 'Jocelyn',
             'Liam', 'Mackenzie', 'Eliza', 'Caleb', 'Luis', 'Nolan', 'Alexander', 'Vivian', 'Christian', 
             'Eden', 'Sara'];
+
 const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
 
 const avatar = createAvatar(thumbs, {
@@ -17,38 +19,180 @@ const svg = avatar.toString();
 
 interface ProfileContext {
     userData: {
+        id: string;
         email: string;
         firstName: string;
         lastName: string;
+        password: string;
     } | null;
     logout: () => void;
     }
 
 export default function UpdateProfileForm() {
-    const [name, setName] = useState({firstName: '', lastName: ''});
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [errors, setErrors] = useState({
+                                            email: '',
+                                            curPassword: '',
+                                            newPassword: '',
+                                            samePassword: ''
+                                        });
     const [email, setEmail] = useState('');
+    const [confirmEmail, setConfirmEmail] = useState('');
     const [oldPassword, setOldPasssword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
+    const [usersData, setUserData] = useState({});
 
-    const updateName = async () => {
+
+
+    // const updateName = {
+    //     $set: {
+    //         quantity: 5,
+    //     },
+    //     };
+
+
+
+    
+    const updateName = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Sending update name request...');
         try {
-            const { firstName, lastName } = name; // Extract values correctly
-            const response = await axios.put('/api/users/', { firstName, lastName });
-            console.log(response.data);
-            
+            const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:8080/updateName', 
+            { firstName, lastName },  // Request body (corrected)
+            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+        );     
+        console.log('Response reached');
+        console.log(response.data);
+        setUserData(response.data);
+        window.location.reload(); // Reload the page once the name is updated
+        } catch (error) {
+            console.error("Error updating name:", error);
+        }
+        
+    };
+
+    const updateEmail = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Sending update email request...');
+        if (email !== confirmEmail) {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:8080/updateEmail', 
+            { email },  
+            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+        );     
+        console.log('Response reached');
+        console.log(response.data);
             // Ideally, update userData from the parent context
-            setName({ firstName: '', lastName: '' }); // Clear input fields after submission
+            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
             console.error("Error updating name:", error);
         }
     };
+
+
+    const verifyOldPassword = async (oldPassword: string) => {
+        try 
+        {   
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                'http://localhost:8080/verifyPassword', 
+                { oldPassword },
+                { headers: { Authorization: `Bearer ${token}` } } 
+            );
+            if (response.status === 200) {
+                // Store token in localStorage
+                console.log("password matches!")
+                return true;
+
+            }
+            else {
+                return false;
+            }
+        // Handle the response from the server
+        } catch (error) {
+        console.error('Error verifying old password:', error);
+        }
+        
+    };
     
+    const updatePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const isOldPasswordCorrect = await verifyOldPassword(oldPassword);
+        if (!isOldPasswordCorrect) {
+            console.log("Old password is incorrect");
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+            setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
+            return;
+            } else {
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+            setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
+            }
+
+        if (newPassword !== confirmPassword) {
+            console.log("Passwords do not match");
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            return;
+            } else {
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+            
+            if (oldPassword === newPassword || oldPassword == confirmPassword) {
+                setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+                return;
+            } else {
+                setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
+            }
+            }
+        
+        
+        // Don't think I need these
+        // setErrors(prevErrors => ({
+        //     ...prevErrors,
+        //     curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
+        //     newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
+        //     samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
+        // }));
+
+        
+            
+        
+
+        console.log('Sending update password request...');
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+            'http://localhost:8080/updatePassword', 
+            { confirmPassword },
+            { headers: { Authorization: `Bearer ${token}` } } 
+        );     
+        console.log('Response reached');
+        console.log(response.data);
+            // Ideally, update userData from the parent context
+            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        } catch (error) {
+            console.error("Error updating password:", error);
+        } 
+    };
+
+    console.log("Updating Name:", firstName);
+    console.log("Updating Email:", email);
+    console.log("Updating Password:", oldPassword);
+    console.log("Updating New Password:", newPassword);
+    console.log("Updating Confirm Password:", confirmPassword);
     
-    console.log("Updating Name:", name);
-    
-    
+
+
+
     return (
         <div className="profile__center">
             <h3 className="settings__heading">Settings</h3>
@@ -61,7 +205,7 @@ export default function UpdateProfileForm() {
                     transform="scale(0.8)"
                 />
                 <div className="profile__section">
-                    <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3>
+                    <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3> 
                 </div>
                 <div className="profile__section">
                     <h3 className="profile__info">{userData?.email}</h3>
@@ -73,19 +217,28 @@ export default function UpdateProfileForm() {
             <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Name</h3>
-                    <input
+                    <form onSubmit={updateName}>
+                        <input
                         type="text"
-                        placeholder="New Name"
+                        placeholder="First Name"
                         className="profile__input"
-                        value={name.firstName}
-                        onChange={(e) => setName({...name, firstName: e.target.value})}
-                        
-                    />
-                    <button className="profile__button" onClick={() => updateName()}>Submit</button>
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Last Name"
+                            className="profile__input"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)} 
+                        />
+                        <input type="submit" value="Submit" className="profile__button" />
+                    </form>                    
                 </div>
 
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Email</h3>
+                    <form onSubmit={updateEmail}>
                     <input
                         type="email"
                         placeholder="New Email"
@@ -96,9 +249,12 @@ export default function UpdateProfileForm() {
                     <input
                         type="email"
                         placeholder="Confirm Email"
-                        className="profile__input"
+                        className="profile__input"value={confirmEmail}
+                        onChange={(e) => setConfirmEmail(e.target.value)}
                     />
-                    <button className="profile__button" onClick={() => {/* handle email update */}}>Submit</button>
+                    {errors.email && <p className="error__message">{errors.email}</p>}
+                    <input type="submit" value="Submit" className="profile__button" />
+                    </form>
                 </div>
             </div>
 
@@ -107,28 +263,38 @@ export default function UpdateProfileForm() {
             <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Current Password</h3>
-                    <input
-                        type="password"
-                        placeholder="Current Password"
-                        className="profile__input"
-                        value={oldPassword}
-                        onChange={(e) => setOldPasssword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="New Password"
-                        className="profile__input"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        className="profile__input"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <button className="profile__button" onClick={() => {/* handle name update */}}>Submit</button>
+                    <form onSubmit={updatePassword}>
+                        <input
+                            type="password"
+                            placeholder="Current Password"
+                            className="profile__input"
+                            value={userData?.password}
+                            onChange={(e) => {
+                                                setOldPasssword(e.target.value);
+                                                verifyOldPassword(e.target.value);
+                                            }
+                                    }
+                        />
+                        {errors.curPassword && <p className="error__message">{errors.curPassword}</p>}
+                        <input
+                            type="password"
+                            placeholder="New Password"
+                            className="profile__input"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            className="profile__input"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <input type="submit" value="Submit" className="profile__button" />
+                        {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
+                        {errors.samePassword && <p className="error__message">{errors.samePassword}</p>}
+                    </form>
+                    
                 </div>
             </div>
 
