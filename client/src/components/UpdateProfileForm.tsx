@@ -43,14 +43,8 @@ export default function UpdateProfileForm() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
+    const [usersData, setUserData] = useState({});
 
-    const [formData, setFormData] = useState({
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        confirmPassword: ''
-    });
 
 
     // const updateName = {
@@ -74,11 +68,12 @@ export default function UpdateProfileForm() {
         );     
         console.log('Response reached');
         console.log(response.data);
-            // Ideally, update userData from the parent context
-            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        setUserData(response.data);
+        window.location.reload(); // Reload the page once the name is updated
         } catch (error) {
             console.error("Error updating name:", error);
         }
+        
     };
 
     const updateEmail = async (e: React.FormEvent) => {
@@ -210,11 +205,10 @@ export default function UpdateProfileForm() {
                     transform="scale(0.8)"
                 />
                 <div className="profile__section">
-                    <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3>
+                    <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3> 
                 </div>
                 <div className="profile__section">
                     <h3 className="profile__info">{userData?.email}</h3>
-                    <h3 className="profile__info">{userData?.password}</h3>
                 </div>
             </div>
 

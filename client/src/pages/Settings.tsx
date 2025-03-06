@@ -19,7 +19,7 @@ interface DashboardContext {
 
 export default function Settings() {
   const { userData, logout } = useOutletContext<DashboardContext>();
-  const [name, setName] = useState({firstName: '', lastName: ''});
+  
 
   // useEffect(() => {
   //   axios
@@ -40,7 +40,9 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-
+    <p>Email: {userData?.email}</p>
+    <p>First Name: {userData?.firstName}</p>
+    <p>Last Name: {userData?.lastName}</p>
 
     
     {/* <UpdatePassword/> */}
