@@ -99,13 +99,27 @@ export default function UpdateProfileForm() {
         }
     };
 
+
+    const verifyOldPassword = async (oldPassword: string) => {
+        try 
+        {
+            const response = await axios.post('http://localhost:8080/verifyPassword', { oldPassword });
+
+        // Handle the response from the server
+        } catch (error) {
+        console.error('Error verifying old password:', error);
+        }
+    };
+    
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // if (userData?.password !== oldPassword) {
+        //     setError('Old password does not match');
+        //     return;
+        // }
+        
 
-        if (userData?.password !== oldPassword) {
-            setError('Old password does not match');
-            return;
-        }
 
         console.log('Sending update password request...');
         try {
@@ -129,9 +143,9 @@ export default function UpdateProfileForm() {
     //     await updateName();
     // };
     
-    console.log("Updating Name:", name);
+    console.log("Updating Name:", firstName);
     console.log("Updating Email:", email);
-    // console.log("Updating Password:", password);
+    console.log("Updating Password:", oldPassword);
     
 
 
@@ -211,8 +225,13 @@ export default function UpdateProfileForm() {
                             type="password"
                             placeholder="Current Password"
                             className="profile__input"
-                            value={oldPassword}
-                            onChange={(e) => setOldPasssword(e.target.value)}
+                            value={userData?.password}
+                            onChange={(e) => {
+                                                setOldPasssword(e.target.value);
+                                                verifyOldPassword(e.target.value);
+                                            }
+                                    }
+
                         />
                         <input
                             type="password"
@@ -229,7 +248,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <input type="submit" value="Submit" className="profile__button" />
-
+                        {error && <p className="error__message">{error}</p>}
                     </form>
                     
                 </div>

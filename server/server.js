@@ -211,11 +211,6 @@ app.post('/updateEmail', verifyToken,  async (req, res) => {
     const filter = { _id: req.user.id };
     const update = { email: req.body.email };
 
-    body('confirmEmail').custom((value, { req }) => {
-      if (value !== req.body.email) throw new Error('Email mismatch');
-      return true;
-    })
-
     const user = await User.findOneAndUpdate(filter, update, {
       new: true
     });
@@ -238,6 +233,24 @@ app.post('/updatePassword', verifyToken,  async (req, res) => {
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).json({ message: 'Server error while fetching user' });
+  }
+});
+
+app.post('/verifyPassword', verifyToken,  async (req, res) => {
+  try {
+    const oldPassword = req.body.oldPassword;
+    // Verify the old password with the current password in the database
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (!bcrypt.compareSync(oldPassword, user.password)) {
+      return res.status(401).json({ message: 'Old password is incorrect' });
+    }
+    res.json({ message: 'Old password is correct' });
+  } catch (error) {
+    console.error('Error verifying old password:', error);
+    res.status(500).json({ message: 'Server error while verifying old password' });
   }
 });
 
