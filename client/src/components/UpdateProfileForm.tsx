@@ -102,13 +102,22 @@ export default function UpdateProfileForm() {
 
     const verifyOldPassword = async (oldPassword: string) => {
         try 
-        {
-            const response = await axios.post('http://localhost:8080/verifyPassword', { oldPassword });
-
+        {   
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                'http://localhost:8080/verifyPassword', 
+                { oldPassword },
+                { headers: { Authorization: `Bearer ${token}` } } 
+            );
+            if (response.status === 200) {
+                // Store token in localStorage
+                console.log("password matches!")
+            }
         // Handle the response from the server
         } catch (error) {
         console.error('Error verifying old password:', error);
         }
+        
     };
     
     const updatePassword = async (e: React.FormEvent) => {
