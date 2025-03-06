@@ -60,10 +60,13 @@ export default function UpdateProfileForm() {
         console.log('Sending update name request...');
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post('http://localhost:8080/updateName', {firstName, lastName , headers: { Authorization: `Bearer ${token}`}});     
-            console.log('respones reached');
-            console.log(response.data);
-            console.log(response);
+        const response = await axios.post(
+            'http://localhost:8080/updateName', 
+            { firstName, lastName },  // Request body (corrected)
+            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+        );     
+        console.log('Response reached');
+        console.log(response.data);
             // Ideally, update userData from the parent context
             // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
