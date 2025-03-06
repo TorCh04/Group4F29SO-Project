@@ -223,28 +223,44 @@ app.post('/update-profile',
 
 
 // Settings test route
-app.post('/updateName',
-  [
-    body('firstName'),
-    body('lastName')
-  ],
-  async (req, res) => {
-  try {
-    const token = localStorage.getItem('token');
-    const decoded = jwt.verify(token, JWT_SECRET);
+// app.post('/updateName',
+//   [
+//     body('firstName'),
+//     body('lastName')
+//   ],
+//   async (req, res) => {
+//   try {
+//     const token = localStorage.getItem('token');
+//     const decoded = jwt.verify(token, JWT_SECRET);
+//     console.log(decoded.id);
+//     // const filter = { _id: decoded.id };
+//     // const update = { firstName: req.body.firstName, lastName: req.body.lastName };
 
-    const filter = { _id: decoded.id };
+//     // res = await User.findOneAndUpdate(filter, update, {
+//     //   new: true
+//     // });
+
+//     res = decoded.id;
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     res.status(500).json({ message: 'Server error while fetching user' });
+//   }
+// });
+
+app.post('/updateName', verifyToken,  async (req, res) => {
+  try {
+    const filter = { _id: req.user.id };
     const update = { firstName: req.body.firstName, lastName: req.body.lastName };
 
-    res = await User.findOneAndUpdate(filter, update, {
+    const user = await User.findOneAndUpdate(filter, update, {
       new: true
     });
+    res.json({ message: 'Name updated successfully', user });
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).json({ message: 'Server error while fetching user' });
   }
 });
-
 
 
 // Start server

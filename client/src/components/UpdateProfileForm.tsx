@@ -55,14 +55,15 @@ export default function UpdateProfileForm() {
 
 
     
-    const updateName = async () => {
+    const updateName = async (e: React.FormEvent) => {
+        e.preventDefault();
         console.log('Sending update name request...');
         try {
-            const response = await axios.post('http://localhost:8080/updateName', {     
-                firstName: formData.firstName, 
-                lastName: formData.lastName 
-            });     
+            const token = localStorage.getItem('token');
+            const response = await axios.post('http://localhost:8080/updateName', {firstName, lastName , headers: { Authorization: `Bearer ${token}`}});     
+            console.log('respones reached');
             console.log(response.data);
+            console.log(response);
             // Ideally, update userData from the parent context
             // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
@@ -71,10 +72,10 @@ export default function UpdateProfileForm() {
     };
 
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        await updateName();
-    };
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     await updateName();
+    // };
     
     console.log("Updating Name:", name);
     
@@ -106,20 +107,20 @@ export default function UpdateProfileForm() {
             <div className="settings__container">
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Name</h3>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={updateName}>
                         <input
                         type="text"
                         placeholder="First Name"
                         className="profile__input"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                         />
                         <input
                             type="text"
                             placeholder="Last Name"
                             className="profile__input"
-                            value={formData.lastName}
-                            onChange={(e) => setFormData({...formData, lastName: e.target.value})} 
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)} 
                         />
                         <input type="submit" value="Submit" className="profile__button" />
                     </form>
