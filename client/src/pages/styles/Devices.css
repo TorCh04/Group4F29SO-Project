@@ -388,7 +388,6 @@
   .energy-fact {
     margin: 0;
     padding: 5px 0;
-    text-align: center;
     width: 100%;
     animation: showFact 20s ease-in-out infinite; /* Fade in and out */
   }
