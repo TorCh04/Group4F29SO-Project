@@ -156,14 +156,38 @@ const leaderboardRoutes = require("./leaderboard_stats"); // Import leaderboard 
 app.use("/api", leaderboardRoutes);
 
 
-
-
-
+// SETTINGS PAGE
+// Updating Name
 app.post('/updateName', verifyToken,  async (req, res) => {
   try {
+    // Set the update object
+    const userN = await User.findById(req.user.id);
     const filter = { _id: req.user.id };
-    const update = { firstName: req.body.firstName, lastName: req.body.lastName };
+    let update = { firstName: req.body.firstName, lastName: req.body.lastName };
+    
+    // If first or last name is empty, only update the other one
+    if (update.firstName == '') 
+      {
+        update = { lastName: req.body.lastName };
+      }
+    else if (update.lastName == '') 
+      {
+        update = { firstName: req.body.firstName };
+      }
 
+    // If the first name is the same
+    if ((req.body.firstName == userN.firstName)) 
+    { 
+      return res.json({ message: 'Same First Name' });
+    } 
+    // If the last name is the same
+    else if ((req.body.lastName == userN.lastName)) 
+    {
+      return res.json({ message: 'Same Last Name' });
+    }
+
+
+    // Update the user
     const user = await User.findOneAndUpdate(filter, update, {
       new: true
     });
@@ -174,11 +198,22 @@ app.post('/updateName', verifyToken,  async (req, res) => {
   }
 });
 
+// Updating Email
 app.post('/updateEmail', verifyToken,  async (req, res) => {
   try {
+    // Get current Email
+    const userEmail = await User.findById(req.user.id);
+    // Set the update object
     const filter = { _id: req.user.id };
     const update = { email: req.body.email };
 
+    // If the email is the same email in database
+    if ((req.body.email == userEmail.email)) 
+      { 
+        return res.json({ message: 'Same Email' });
+      } 
+
+    // Update the user
     const user = await User.findOneAndUpdate(filter, update, {
       new: true
     });
@@ -189,26 +224,13 @@ app.post('/updateEmail', verifyToken,  async (req, res) => {
   }
 });
 
-// app.post('/updatePassword', verifyToken,  async (req, res) => {
-//   try {
-//     const filter = { _id: req.user.id };
-//     const update = { password: req.body.password };
-    
-
-//     const user = await User.findOneAndUpdate(filter, update, {
-//       new: true
-//     });
-//     res.json({ message: 'Password updated successfully', user });
-//   } catch (error) {
-//     console.error('Error fetching user:', error);
-//     res.status(500).json({ message: 'Server error while fetching user' });
-//   }
-// });
-
+// Updating Password
 app.post('/updatePassword', verifyToken, async (req, res) => {
   try {
+    // Get the new password
     const { confirmPassword } = req.body;
 
+    // Check if the new password is provided
     if (!confirmPassword) {
       return res.status(400).json({ message: 'Password is required' });
     }
@@ -216,29 +238,38 @@ app.post('/updatePassword', verifyToken, async (req, res) => {
     // Hash the password before updating
     const hashedPassword = await bcrypt.hash(confirmPassword, 10);
 
+    // Set the update object
     const filter = { _id: req.user.id };
     const update = { password: hashedPassword };
 
-    const user = await User.findOneAndUpdate(filter, update, { new: true });
+    // Update the user
+    const user = await User.findOneAndUpdate(filter, update, 
+    { 
+      new: true 
+    });
 
-    res.json({ message: 'Password updated successfully' });
+    res.json({ message: 'Password updated successfully', user });
   } catch (error) {
     console.error('Error updating password:', error);
     res.status(500).json({ message: 'Server error while updating password' });
   }
 });
 
-
-
+// Verifies Password
 app.post('/verifyPassword', verifyToken,  async (req, res) => {
   try {
-    const oldPassword = req.body.oldPassword;
-    // Verify the old password with the current password in the database
+    // Get the current password inputted
+    const curPassword = req.body.curPassword;
+    // Grab the current user from the database
     const user = await User.findById(req.user.id);
+
+    // If user can't be found
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (!bcrypt.compareSync(oldPassword, user.password)) {
+
+    // Compares the decrypted passwords, and if it doesn't match throw an error
+    if (!bcrypt.compareSync(curPassword, user.password)) {
       return res.status(401).json({ message: 'Old password is incorrect' });
     }
     res.json({ message: 'Old password is correct' });
