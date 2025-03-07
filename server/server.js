@@ -175,11 +175,16 @@ app.post('/updateName', verifyToken,  async (req, res) => {
         update = { firstName: req.body.firstName };
       }
 
-      if ((req.body.firstName == userN.firstName)) {
-        return res.status(401).json({ message: 'Same First Name' });
-      } else if ((req.body.lastName == userN.lastName)) {
-        return res.status(401).json({ message: 'Same Last Name' });
-      }
+    // If the first name is the same
+    if ((req.body.firstName == userN.firstName)) 
+    { 
+      return res.json({ message: 'Same First Name' });
+    } 
+    // If the last name is the same
+    else if ((req.body.lastName == userN.lastName)) 
+    {
+      return res.json({ message: 'Same Last Name' });
+    }
 
 
     // Update the user
@@ -196,9 +201,17 @@ app.post('/updateName', verifyToken,  async (req, res) => {
 // Updating Email
 app.post('/updateEmail', verifyToken,  async (req, res) => {
   try {
+    // Get current Email
+    const userEmail = await User.findById(req.user.id);
     // Set the update object
     const filter = { _id: req.user.id };
     const update = { email: req.body.email };
+
+    // If the email is the same email in database
+    if ((req.body.email == userEmail.email)) 
+      { 
+        return res.json({ message: 'Same Email' });
+      } 
 
     // Update the user
     const user = await User.findOneAndUpdate(filter, update, {

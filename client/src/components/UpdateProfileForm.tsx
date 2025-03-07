@@ -67,7 +67,7 @@ export default function UpdateProfileForm() {
     const updateName = async (e: React.FormEvent) => {
         e.preventDefault();
         // Reset errors and success messages
-        setErrors(prevErrors => ({ ...prevErrors, name: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, name: '',firstName: '', lastName: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, name: '' }));
 
         // Check if either first or last name is provided
@@ -87,13 +87,15 @@ export default function UpdateProfileForm() {
                 { headers: { Authorization: `Bearer ${token}` } } 
             );    
             
+            // Checks if The First Name Entered is the same as Current First Name
             if (response.data.message === 'Same First Name') {
-                console.log("Enters same first name");
-                setErrors(prevErrors => ({ ...prevErrors, firstName: 'First name is the same as the old one' }));
+                setErrors(prevErrors => ({ ...prevErrors, firstName: 'Your new First Name is the same as your current one!' }));
                 return;
             } 
-            if (response.data.message === 'Same Last Name') {
-                setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last name is the same as the old one' }));
+            // Checks if The Last Name Entered is the same as Current Last Name
+            else if (response.data.message === 'Same Last Name') {
+                setErrors(prevErrors => ({ ...prevErrors, lastName: 'Your new Last Name is the same as your current one!' }));
+                return;
             }
 
             // If the request is successful, update the user data and reset the form
@@ -124,6 +126,7 @@ export default function UpdateProfileForm() {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
             return;
         }
+        
         try {
             // Get token from local storage
             const token = localStorage.getItem('token');
@@ -133,6 +136,14 @@ export default function UpdateProfileForm() {
             { email },  
             { headers: { Authorization: `Bearer ${token}` } } 
         );     
+
+        // Checks if The Email Entered is the same as Current Email
+        if (response.data.message === 'Same Email') {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Your new Email is the same as your current one!' }));
+            return;
+        } 
+        
+        // Checks if The Last Name Entered is the same as Current Last Name
         console.log('Response reached');
         console.log(response.data);
         // Set success message and clear form
