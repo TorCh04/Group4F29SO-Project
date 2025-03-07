@@ -1,3 +1,5 @@
+/*Devices*/
+/* #region */
 .error-message {
     color: var(--infoRed);
     font-size: 16px;
@@ -12,6 +14,7 @@
     margin-bottom: 40px;
     padding-left: 20px;
     flex: 1;
+    font-family: 'Inter', system-ui;
 }
 
 .device-title {
@@ -338,4 +341,98 @@
     display: flex;
     flex-direction: column;
 }
+/* #endregion */
 
+/*User Stats*/
+/* #region */
+.userStatsContainer{
+    width: 90vw;  /* 80% of the viewport width */
+    max-height: 750px; /* Prevents it from taking up too much vertical space */
+    height: 30vh; /* Adjust height to leave space around it */
+    display: flex;
+    flex-direction: column;
+    align-items: Left;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: #1e273d; 
+    color: white;
+    border: 5px solid #1a1a2a; /* Subtle border to separate from background */
+    overflow: hidden;
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 3vw, 16px); 
+    display: flex;
+}
+
+.userWelcome{
+    margin:0;
+    padding:0;
+    font-size:3em;
+
+}
+
+.energy-fact-container {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    height: 30px;
+    overflow: hidden; /* Hide overflowing text */
+    min-width: 600px;
+  }
+  
+  .energy-fact-wrapper {
+    display: flex;
+    flex-direction: column;
+    animation: rotateFacts 20s linear infinite; /* Smooth scrolling */
+  }
+  
+  .energy-fact {
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    width: 100%;
+    animation: showFact 20s ease-in-out infinite; /* Fade in and out */
+  }
+  
+  .energy-fact:nth-child(1) { animation-delay: 0s; }
+  .energy-fact:nth-child(2) { animation-delay: 4s; }
+  .energy-fact:nth-child(3) { animation-delay: 8s; }
+  .energy-fact:nth-child(4) { animation-delay: 12s; }
+  .energy-fact:nth-child(5) { animation-delay: 16s; }
+  
+  @keyframes rotateFacts {
+    0%, 20%, 100% {
+      transform: translateY(0); /* Keep the first fact visible */
+    }
+    25%, 45% {
+      transform: translateY(-100%); /* Move to the second fact */
+    }
+    50%, 70% {
+      transform: translateY(-200%); /* Move to the third fact */
+    }
+    75%, 95% {
+      transform: translateY(-300%); /* Move to the fourth fact */
+    }
+  }
+  
+.stats-container {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    margin-bottom: 20px;
+    gap: 20px; /* Space between items */
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.introducingStats{
+    margin-bottom: 0px;
+}
+
+.icon {
+    margin-right: 5px; /* space between icon and text */
+}
+
+
+
+/* #endregion */
