@@ -7,18 +7,18 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 
-// interface DashboardContext {
-//   userData: {
-//     id: string;
-//     email: string;
-//     firstName: string;
-//     lastName: string;
-//   } | null;
-//   logout: () => void;
-// }
+interface DashboardContext {
+  userData: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  } | null;
+  logout: () => void;
+}
 
 export default function Settings() {
-  // const { userData, logout } = useOutletContext<DashboardContext>();
+  const { userData, logout } = useOutletContext<DashboardContext>();
   
 
   // useEffect(() => {
@@ -40,14 +40,14 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-
+    <button onClick={logout}>Logout</button>
 
     
     {/* <UpdatePassword/> */}
     {/* <header>
       <h1>Welcome, {userData?.firstName}!</h1>
       <p>Email: {userData?.email}</p>
-      <button onClick={logout}>Logout</button>
+      
       <img src={logo} alt="Moogle Logo" />
     </header> */}
     </>
