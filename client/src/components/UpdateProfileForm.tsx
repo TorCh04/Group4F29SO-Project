@@ -32,6 +32,7 @@ export default function UpdateProfileForm() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [errors, setErrors] = useState({
+                                            name: '',
                                             email: '',
                                             curPassword: '',
                                             newPassword: '',
@@ -67,7 +68,7 @@ export default function UpdateProfileForm() {
     //     },
     //     };
 
-
+        
 
     
     const updateName = async (e: React.FormEvent) => {
@@ -75,9 +76,20 @@ export default function UpdateProfileForm() {
         setErrors(prevErrors => ({ ...prevErrors, name: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, name: '' }));
         console.log('Sending update name request...');
+        if (!firstName && !lastName) 
+            {
+                setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' }));
+                return;
+            }
+
+        if (!firstName) 
+        {
+            setFirstName(userData?.firstName);
+        }
+            
         try {
             const token = localStorage.getItem('token');
-        const response = await axios.post(
+            const response = await axios.post(
             'http://localhost:8080/updateName', 
             { firstName, lastName },  
             { headers: { Authorization: `Bearer ${token}` } } 
@@ -98,13 +110,18 @@ export default function UpdateProfileForm() {
         setErrors(prevErrors => ({ ...prevErrors, email: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, email: '' }));
         console.log('Sending update email request...');
+        if (!email) 
+        {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Email is required' }));
+            return;
+        }
         if (email !== confirmEmail) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
             return;
         }
         try {
             const token = localStorage.getItem('token');
-        const response = await axios.post(
+            const response = await axios.post(
             'http://localhost:8080/updateEmail', 
             { email },  
             { headers: { Authorization: `Bearer ${token}` } } 
@@ -253,6 +270,7 @@ export default function UpdateProfileForm() {
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)} 
                         />
+                        {errors.name && <p className="error__message">{errors.name}</p>}
                         <input type="submit" value="Submit" className="profile__button" />
                         {success.name && <p className="success__message">{success.name}</p>}
                     </form>                    

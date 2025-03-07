@@ -162,7 +162,17 @@ app.use("/api", leaderboardRoutes);
 app.post('/updateName', verifyToken,  async (req, res) => {
   try {
     const filter = { _id: req.user.id };
-    const update = { firstName: req.body.firstName, lastName: req.body.lastName };
+    let update = { firstName: req.body.firstName, lastName: req.body.lastName };
+    
+    if (update.firstName == '') 
+      {
+        update = { lastName: req.body.lastName };
+      }
+
+    else if (update.lastName == '') 
+      {
+        update = { firstName: req.body.firstName };
+      }
 
     const user = await User.findOneAndUpdate(filter, update, {
       new: true
@@ -227,7 +237,6 @@ app.post('/updatePassword', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while updating password' });
   }
 });
-
 
 
 app.post('/verifyPassword', verifyToken,  async (req, res) => {
