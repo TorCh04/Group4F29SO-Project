@@ -33,6 +33,8 @@ export default function UpdateProfileForm() {
     const [lastName, setLastName] = useState('');
     const [errors, setErrors] = useState({
                                             name: '',
+                                            firstName: '',
+                                            lastName: '',
                                             email: '',
                                             curPassword: '',
                                             newPassword: '',
@@ -83,7 +85,17 @@ export default function UpdateProfileForm() {
                 'http://localhost:8080/updateName', 
                 { firstName, lastName },  
                 { headers: { Authorization: `Bearer ${token}` } } 
-            );     
+            );    
+            
+            if (response.data.message === 'Same First Name') {
+                console.log("Enters same first name");
+                setErrors(prevErrors => ({ ...prevErrors, firstName: 'First name is the same as the old one' }));
+                return;
+            } 
+            if (response.data.message === 'Same Last Name') {
+                setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last name is the same as the old one' }));
+            }
+
             // If the request is successful, update the user data and reset the form
             setUserData(response.data);
             setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
@@ -262,6 +274,7 @@ export default function UpdateProfileForm() {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         />
+                        {errors.firstName && <p className="error__message">{errors.firstName}</p>}
                         <input
                             type="text"
                             placeholder="Last Name"
@@ -269,6 +282,7 @@ export default function UpdateProfileForm() {
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)} 
                         />
+                        {errors.lastName && <p className="error__message">{errors.lastName}</p>}
                         {errors.name && <p className="error__message">{errors.name}</p>}
                         <input type="submit" value="Submit" className="profile__button" />
                         {success.name && <p className="success__message">{success.name}</p>}

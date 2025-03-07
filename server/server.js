@@ -161,6 +161,7 @@ app.use("/api", leaderboardRoutes);
 app.post('/updateName', verifyToken,  async (req, res) => {
   try {
     // Set the update object
+    const userN = await User.findById(req.user.id);
     const filter = { _id: req.user.id };
     let update = { firstName: req.body.firstName, lastName: req.body.lastName };
     
@@ -173,6 +174,13 @@ app.post('/updateName', verifyToken,  async (req, res) => {
       {
         update = { firstName: req.body.firstName };
       }
+
+      if ((req.body.firstName == userN.firstName)) {
+        return res.status(401).json({ message: 'Same First Name' });
+      } else if ((req.body.lastName == userN.lastName)) {
+        return res.status(401).json({ message: 'Same Last Name' });
+      }
+
 
     // Update the user
     const user = await User.findOneAndUpdate(filter, update, {
@@ -239,7 +247,7 @@ app.post('/verifyPassword', verifyToken,  async (req, res) => {
   try {
     // Get the current password inputted
     const curPassword = req.body.curPassword;
-    // Verify the current password inputted with the current password in the database
+    // Grab the current user from the database
     const user = await User.findById(req.user.id);
 
     // If user can't be found
