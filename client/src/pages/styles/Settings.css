@@ -179,7 +179,6 @@ margin-right: 10px; /* Add spacing between image and text */
 }
 
 .success__message {
-    color: var(--successGreen);
     float: right;
     margin-top: 12px;
 }

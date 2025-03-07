@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import axios from 'axios';
@@ -61,58 +61,61 @@ export default function UpdateProfileForm() {
         };
 
 
-
-    // const updateName = {
-    //     $set: {
-    //         quantity: 5,
-    //     },
-    //     };
-
+    // Handles the updateName form submission
     const updateName = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Reset errors and success messages
         setErrors(prevErrors => ({ ...prevErrors, name: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, name: '' }));
-        console.log('Sending update name request...');
-        if (!firstName && !lastName) 
-            {
-                setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' }));
-                return;
-            }
+
+        // Check if either first or last name is provided
+        if (!firstName && !lastName) {
+            // If not, set error message
+            setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' }));
+            return;
+        }
 
         try {
+            // Get the user's token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to the server to update the user's name
             const response = await axios.post(
-            'http://localhost:8080/updateName', 
-            { firstName, lastName },  
-            { headers: { Authorization: `Bearer ${token}` } } 
-        );     
-        console.log('Response reached');
-        console.log(response.data);
-        setUserData(response.data);
-        setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
-        resetForm();
+                'http://localhost:8080/updateName', 
+                { firstName, lastName },  
+                { headers: { Authorization: `Bearer ${token}` } } 
+            );     
+            // If the request is successful, update the user data and reset the form
+            setUserData(response.data);
+            setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
+            resetForm();
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating name:", error);
         }
-        
     };
 
+    // Handles updateEmail form submission
     const updateEmail = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Resets Error and Success Messages
         setErrors(prevErrors => ({ ...prevErrors, email: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, email: '' }));
         console.log('Sending update email request...');
+        // Checks if email is provided
         if (!email) 
         {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Email is required' }));
             return;
         }
+        // Checks if emails match
         if (email !== confirmEmail) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
             return;
         }
         try {
+            // Get token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to update email
             const response = await axios.post(
             'http://localhost:8080/updateEmail', 
             { email },  
@@ -120,29 +123,34 @@ export default function UpdateProfileForm() {
         );     
         console.log('Response reached');
         console.log(response.data);
+        // Set success message and clear form
         setSuccess(prevSuccess => ({ ...prevSuccess, email: 'Email changed successfully' }));
         resetForm();
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating name:", error);
         }
     };
 
-
+    // Handles Verification of Current Password
     const verifyCurPassword = async (curPassword: string) => {
         try 
         {   
+            // Get token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to verify password
             const response = await axios.post(
                 'http://localhost:8080/verifyPassword', 
                 { curPassword },
                 { headers: { Authorization: `Bearer ${token}` } } 
             );
+            // Password matches password stroed in database
             if (response.status === 200) {
-                // Store token in localStorage
                 console.log("password matches!")
                 return true;
 
             }
+            // Password does not match
             else {
                 return false;
             }
@@ -153,70 +161,52 @@ export default function UpdateProfileForm() {
         }
         
     };
-    
+
+    // Handles updatePassword form submission
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Reset success message
+        setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
         setSuccess(prevSuccess => ({ ...prevSuccess, password: '' }));
 
+        // Checks if current password entered is correct
         const isCurPasswordCorrect = await verifyCurPassword(curPassword);
+
+        // If current password entered is incorrect
         if (!isCurPasswordCorrect) {
             console.log("Old password is incorrect");
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
             setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
             return;
-            } else {
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-            setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
-            }
+            } 
 
+        // Checks if new password and confirm password match
         if (newPassword !== confirmPassword) {
             console.log("Passwords do not match");
             setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
             return;
-            } else {
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-            
-            if (curPassword === newPassword || curPassword == confirmPassword) {
-                setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
-                return;
-            } else {
-                setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
-            }
-            }
+            } 
 
+        // Checks if either newPassword or confirmPassword is the same as current password
+        if (curPassword === newPassword || curPassword == confirmPassword) {
+            setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+            return;
+        }
+
+        // Checks if either newPassword or confirmPassword is empty
         if (curPassword && (newPassword == '' || confirmPassword == '')) 
             {
                 setErrors(prevErrors => ({ ...prevErrors, newPassword: 'No new password entered' }));
                 return;
             } 
 
-            if (newPassword !== confirmPassword) {
-                console.log("Passwords do not match");
-                setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
-                return;
-                } else {
-                setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-                
-                if (curPassword === newPassword || curPassword == confirmPassword) {
-                    setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
-                    return;
-                } else {
-                    setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
-                }
-                }
-        
-        
-        // Don't think I need these
-        // setErrors(prevErrors => ({
-        //     ...prevErrors,
-        //     curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
-        //     newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
-        //     samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
-        // }));
-
         console.log('Sending update password request...');
+
         try {
+            // Get token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to update the password
             const response = await axios.post(
             'http://localhost:8080/updatePassword', 
             { confirmPassword },
@@ -224,29 +214,21 @@ export default function UpdateProfileForm() {
         );     
         console.log('Response reached');
         console.log(response.data);
+        // Set success message and clear input files
         setSuccess(prevSuccess => ({ ...prevSuccess, password: 'Passwords changed succesfully' }));
         resetForm();
-            
-            // Ideally, update userData from the parent context
-            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating password:", error);
         } 
     };
 
-
-
-
-
-    // // Testing
-    console.log("Updating Name:", firstName);
-    console.log("Updating Email:", email);
-    console.log("Updating Password:", curPassword);
-    console.log("Updating New Password:", newPassword);
-    console.log("Updating Confirm Password:", confirmPassword);
-    
-
-
+    // Solely for Testing
+    // console.log("Updating Name:", firstName);
+    // console.log("Updating Email:", email);
+    // console.log("Updating Password:", curPassword);
+    // console.log("Updating New Password:", newPassword);
+    // console.log("Updating Confirm Password:", confirmPassword);
 
     return (
         <div className="profile__center">
@@ -267,7 +249,7 @@ export default function UpdateProfileForm() {
                 </div>
             </div>
 
-
+            {/* Update Name Form */}
             <h3 className="profile__heading">Update Profile</h3>
             <div className="settings__container">
                 <div className="profile__section">
@@ -293,6 +275,7 @@ export default function UpdateProfileForm() {
                     </form>                    
                 </div>
 
+                {/* Update Email Form */}
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Email</h3>
                     <form onSubmit={updateEmail}>
@@ -357,7 +340,7 @@ export default function UpdateProfileForm() {
                 </div>
             </div>
 
-            
+
             <h3 className="profile__heading">Privacy Settings</h3>
             <div className="privacy__container">
                 <div className="profile__section">
