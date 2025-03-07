@@ -49,6 +49,15 @@ export default function UpdateProfileForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
     const [usersData, setUserData] = useState({});
+    const resetForm = () => {
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setConfirmEmail('');
+        setCurPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        };
 
 
 
@@ -74,7 +83,9 @@ export default function UpdateProfileForm() {
         console.log('Response reached');
         console.log(response.data);
         setUserData(response.data);
-        window.location.reload(); // Reload the page once the name is updated
+        setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
+        resetForm();
+        window.location.reload(); 
         } catch (error) {
             console.error("Error updating name:", error);
         }
@@ -98,15 +109,14 @@ export default function UpdateProfileForm() {
         console.log('Response reached');
         console.log(response.data);
         setSuccess(prevSuccess => ({ ...prevSuccess, email: 'Email changed successfully' }));
-            // Ideally, update userData from the parent context
-            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        resetForm();
         } catch (error) {
             console.error("Error updating name:", error);
         }
     };
 
 
-    const verifyOldPassword = async (curPassword: string) => {
+    const verifyCurPassword = async (curPassword: string) => {
         try 
         {   
             const token = localStorage.getItem('token');
@@ -119,11 +129,13 @@ export default function UpdateProfileForm() {
                 // Store token in localStorage
                 console.log("password matches!")
                 return true;
+                
 
             }
             else {
                 return false;
             }
+        
         // Handle the response from the server
         } catch (error) {
         console.error('Error verifying old password:', error);
@@ -133,9 +145,10 @@ export default function UpdateProfileForm() {
     
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSuccess(prevSuccess => ({ ...prevSuccess, password: '' }));
 
-        const isOldPasswordCorrect = await verifyOldPassword(curPassword);
-        if (!isOldPasswordCorrect) {
+        const isCurPasswordCorrect = await verifyCurPassword(curPassword);
+        if (!isCurPasswordCorrect) {
             console.log("Old password is incorrect");
             setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
             setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
@@ -180,6 +193,8 @@ export default function UpdateProfileForm() {
         console.log('Response reached');
         console.log(response.data);
         setSuccess(prevSuccess => ({ ...prevSuccess, password: 'Passwords changed succesfully' }));
+        resetForm();
+            
             // Ideally, update userData from the parent context
             // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
         } catch (error) {
@@ -188,11 +203,11 @@ export default function UpdateProfileForm() {
     };
 
     // // Testing
-    // console.log("Updating Name:", firstName);
-    // console.log("Updating Email:", email);
-    // console.log("Updating Password:", oldPassword);
-    // console.log("Updating New Password:", newPassword);
-    // console.log("Updating Confirm Password:", confirmPassword);
+    console.log("Updating Name:", firstName);
+    console.log("Updating Email:", email);
+    console.log("Updating Password:", curPassword);
+    console.log("Updating New Password:", newPassword);
+    console.log("Updating Confirm Password:", confirmPassword);
     
 
 
@@ -237,6 +252,7 @@ export default function UpdateProfileForm() {
                             onChange={(e) => setLastName(e.target.value)} 
                         />
                         <input type="submit" value="Submit" className="profile__button" />
+                        {success.name && <p className="success__message">{success.name}</p>}
                     </form>                    
                 </div>
 
@@ -276,7 +292,7 @@ export default function UpdateProfileForm() {
                             value={userData?.password}
                             onChange={(e) => {
                                                 setCurPassword(e.target.value);
-                                                verifyOldPassword(e.target.value);
+                                                verifyCurPassword(e.target.value);
                                             }
                                     }
                         />
