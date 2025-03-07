@@ -232,13 +232,13 @@ app.post('/updatePassword', verifyToken, async (req, res) => {
 
 app.post('/verifyPassword', verifyToken,  async (req, res) => {
   try {
-    const oldPassword = req.body.oldPassword;
+    const curPassword = req.body.curPassword;
     // Verify the old password with the current password in the database
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (!bcrypt.compareSync(oldPassword, user.password)) {
+    if (!bcrypt.compareSync(curPassword, user.password)) {
       return res.status(401).json({ message: 'Old password is incorrect' });
     }
     res.json({ message: 'Old password is correct' });
