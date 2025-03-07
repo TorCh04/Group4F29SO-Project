@@ -68,9 +68,6 @@ export default function UpdateProfileForm() {
     //     },
     //     };
 
-        
-
-    
     const updateName = async (e: React.FormEvent) => {
         e.preventDefault();
         setErrors(prevErrors => ({ ...prevErrors, name: '' }));
@@ -82,11 +79,6 @@ export default function UpdateProfileForm() {
                 return;
             }
 
-        if (!firstName) 
-        {
-            setFirstName(userData?.firstName);
-        }
-            
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(
@@ -191,6 +183,27 @@ export default function UpdateProfileForm() {
                 setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
             }
             }
+
+        if (curPassword && (newPassword == '' || confirmPassword == '')) 
+            {
+                setErrors(prevErrors => ({ ...prevErrors, newPassword: 'No new password entered' }));
+                return;
+            } 
+
+            if (newPassword !== confirmPassword) {
+                console.log("Passwords do not match");
+                setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+                return;
+                } else {
+                setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+                
+                if (curPassword === newPassword || curPassword == confirmPassword) {
+                    setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+                    return;
+                } else {
+                    setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
+                }
+                }
         
         
         // Don't think I need these
@@ -220,6 +233,10 @@ export default function UpdateProfileForm() {
             console.error("Error updating password:", error);
         } 
     };
+
+
+
+
 
     // // Testing
     console.log("Updating Name:", firstName);
