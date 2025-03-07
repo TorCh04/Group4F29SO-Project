@@ -7,18 +7,18 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 
-interface DashboardContext {
-  userData: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  } | null;
-  logout: () => void;
-}
+// interface DashboardContext {
+//   userData: {
+//     id: string;
+//     email: string;
+//     firstName: string;
+//     lastName: string;
+//   } | null;
+//   logout: () => void;
+// }
 
 export default function Settings() {
-  const { userData, logout } = useOutletContext<DashboardContext>();
+  // const { userData, logout } = useOutletContext<DashboardContext>();
   
 
   // useEffect(() => {
@@ -40,9 +40,7 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-    <p>Email: {userData?.email}</p>
-    <p>First Name: {userData?.firstName}</p>
-    <p>Last Name: {userData?.lastName}</p>
+
 
     
     {/* <UpdatePassword/> */}
