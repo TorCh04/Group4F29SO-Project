@@ -72,20 +72,21 @@ export default function UpdateProfileForm() {
     
     const updateName = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrors(prevErrors => ({ ...prevErrors, name: '' }));
+        setSuccess(prevSuccess => ({ ...prevSuccess, name: '' }));
         console.log('Sending update name request...');
         try {
             const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:8080/updateName', 
-            { firstName, lastName },  // Request body (corrected)
-            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+            { firstName, lastName },  
+            { headers: { Authorization: `Bearer ${token}` } } 
         );     
         console.log('Response reached');
         console.log(response.data);
         setUserData(response.data);
         setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
         resetForm();
-        window.location.reload(); 
         } catch (error) {
             console.error("Error updating name:", error);
         }
@@ -94,6 +95,8 @@ export default function UpdateProfileForm() {
 
     const updateEmail = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrors(prevErrors => ({ ...prevErrors, email: '' }));
+        setSuccess(prevSuccess => ({ ...prevSuccess, email: '' }));
         console.log('Sending update email request...');
         if (email !== confirmEmail) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
@@ -104,7 +107,7 @@ export default function UpdateProfileForm() {
         const response = await axios.post(
             'http://localhost:8080/updateEmail', 
             { email },  
-            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+            { headers: { Authorization: `Bearer ${token}` } } 
         );     
         console.log('Response reached');
         console.log(response.data);
@@ -129,7 +132,6 @@ export default function UpdateProfileForm() {
                 // Store token in localStorage
                 console.log("password matches!")
                 return true;
-                
 
             }
             else {

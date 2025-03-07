@@ -172,3 +172,14 @@ margin-right: 10px; /* Add spacing between image and text */
 {
     min-height: 130vh;
 }
+
+
+.error__message {
+    color: var(--infoRed);
+}
+
+.success__message {
+    color: var(--successGreen);
+    float: right;
+    margin-top: 12px;
+}
