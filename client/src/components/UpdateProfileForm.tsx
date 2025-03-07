@@ -289,7 +289,7 @@ export default function UpdateProfileForm() {
                             type="password"
                             placeholder="Current Password"
                             className="profile__input"
-                            value={userData?.password}
+                            value={curPassword}
                             onChange={(e) => {
                                                 setCurPassword(e.target.value);
                                                 verifyCurPassword(e.target.value);
