@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import AddDeviceBlock from '../components/Dashboard/SmartDevices/AddDeviceBlock';
-import AddScheduleBlock from '../components/Dashboard/SmartDevices/AddScheduleBlock';
-import AddEnergyProductionBlock from '../components/Dashboard/SmartDevices/AddEnergyProductionBlock';
+import DevicesSection from '../components/Dashboard/SmartDevices/DevicesSection';
+import SchedulesSection from '../components/Dashboard/SmartDevices/SchedulesSection';
+import EnergyProductionSection from '../components/Dashboard/SmartDevices/EnergyProductionSection';
 import DeviceManager from '../components/Dashboard/SmartDevices/DeviceManager';
 import './styles/SmartDevices.css';
 
@@ -19,7 +19,7 @@ export default function SmartDevices() {
         setDeviceManagerVisible(true);
     };
 
-    const handleAddEnergyProductionClick = () => {
+    const handleAddEnergySourceClick = () => {
         setFormType('energyProduction');
         setDeviceManagerVisible(true);
     };
@@ -30,21 +30,18 @@ export default function SmartDevices() {
 
     return (
         <>
-        {/* Smart Devices */}
-        <h1>Smart Devices</h1>
-          <AddDeviceBlock onClick={handleAddDeviceClick} />
+            {/* Smart Devices */}
+            <DevicesSection onAddDeviceClick={handleAddDeviceClick} />
 
-        {/* Schedules */}
-        <h1>Schedules</h1>
-          <AddScheduleBlock onClick={handleAddScheduleClick} />
+            {/* Schedules */}
+            <SchedulesSection onAddSchedulesClick={handleAddScheduleClick} />
 
-        {/* Energy Production */}
-        <h1>Energy Production</h1>
-          <AddEnergyProductionBlock onClick={handleAddEnergyProductionClick} />
-          
-          {isDeviceManagerVisible && (
-              <DeviceManager formType={formType} onClose={handleCloseDeviceManager} />
-          )}
+            {/* Energy Source */}
+            <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} />
+            
+            {isDeviceManagerVisible && (
+                <DeviceManager formType={formType} onClose={handleCloseDeviceManager} />
+            )}
         </>
     );
 }

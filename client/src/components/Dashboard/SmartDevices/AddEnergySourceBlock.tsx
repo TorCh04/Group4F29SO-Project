@@ -1,11 +1,11 @@
 import AddBlock from './AddBlock';
 import plusIcon from '../../../assets/plus.svg';
 
-interface AddEnergyProductionBlockProps {
+interface AddEnergySourceBlockProps {
     onClick: () => void;
 }
 
-export default function AddEnergyProductionBlock({ onClick }: AddEnergyProductionBlockProps) {
+export default function AddEnergySourceBlock({ onClick }: AddEnergySourceBlockProps) {
     return (
         <AddBlock onClick={onClick} text="Add Energy Source" icon={plusIcon} />
     );

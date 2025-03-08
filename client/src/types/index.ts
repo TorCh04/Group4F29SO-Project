@@ -1,5 +1,5 @@
 export { default as AddDeviceBlock } from '../components/Dashboard/SmartDevices/AddDeviceBlock';
-export { default as AddEnergyProductionBlock } from '../components/Dashboard/SmartDevices/AddEnergyProductionBlock';
+export { default as AddEnergyProductionBlock } from '../components/Dashboard/SmartDevices/AddEnergySourceBlock';
 export { default as AddScheduleBlock } from '../components/Dashboard/SmartDevices/AddScheduleBlock';
 export { default as DeviceManager } from '../components/Dashboard/SmartDevices/DeviceManager';
 export { default as AddBlock } from '../components/Dashboard/SmartDevices/AddBlock';

@@ -92,18 +92,20 @@ html {
 
   .device__block__text {
     font-family: 'Inter', system-ui;
-    font-size: clamp(20px, 3vw, 22px); /* Scales between 27px and 30px based on viewport width */
+    font-size: clamp(20px, 3vw, 22px); /* Scales between 20px and 22px based on viewport width */
     margin: 0;
     padding: 0;
     color: var(--white);
+    text-align: center;
   }
 
   .devices__heading {
     font-family: 'Inter', system-ui;
-    font-size: clamp(36px, 5vw, 40px); /* Scales between 27px and 30px based on viewport width */
+    font-size: clamp(32px, 5vw, 36px); /* Scales between 36px and 40px based on viewport width */
+    font-weight: 400;
     margin: 0;
     padding: 0;
-    color: var(--mutedText);
+    color: var(--text);
   }
   /* #endregion */
   
