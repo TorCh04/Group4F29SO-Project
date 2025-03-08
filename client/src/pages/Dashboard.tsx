@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Dashboard/Sidebar';
 import './styles/Dashboard.css';
 
 interface User {

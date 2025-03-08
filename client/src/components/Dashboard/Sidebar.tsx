@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo_vertical.svg';
+import logo from '../../assets/logo_vertical.svg';
 
 export default function Sidebar() {
   return (

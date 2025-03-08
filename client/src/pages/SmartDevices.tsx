@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AddDeviceBlock from '../components/Dashboard/SmartDevices/AddDeviceBlock';
+import AddScheduleBlock from '../components/Dashboard/SmartDevices/AddScheduleBlock';
+import AddEnergyProductionBlock from '../components/Dashboard/SmartDevices/AddEnergyProductionBlock';
 import DeviceManager from '../components/Dashboard/SmartDevices/DeviceManager';
 import './styles/SmartDevices.css';
 
@@ -34,12 +36,12 @@ export default function SmartDevices() {
 
         {/* Schedules */}
         <h1>Schedules</h1>
-          <AddDeviceBlock onClick={handleAddScheduleClick} />
-
+          <AddScheduleBlock onClick={handleAddScheduleClick} />
 
         {/* Energy Production */}
-          <button onClick={handleAddScheduleClick}>Add Schedule</button>
-          <button onClick={handleAddEnergyProductionClick}>Add Energy Production</button>
+        <h1>Energy Production</h1>
+          <AddEnergyProductionBlock onClick={handleAddEnergyProductionClick} />
+          
           {isDeviceManagerVisible && (
               <DeviceManager formType={formType} onClose={handleCloseDeviceManager} />
           )}

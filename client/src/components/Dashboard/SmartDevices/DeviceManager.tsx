@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface DeviceManagerProps {
     formType: 'device' | 'schedule' | 'energyProduction';
     onClose: () => void;
