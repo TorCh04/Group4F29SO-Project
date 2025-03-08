@@ -1,14 +1,57 @@
+import { useEffect, useState } from 'react';
 import AddDeviceBlock from './AddDeviceBlock';
+import DeviceBlock from './DeviceBlock';
+import { Device } from '../../../types/index';
+import DevicesSectionProps from '../../../types/index.ts';
 
-interface DevicesSectionProps {
-    onAddDeviceClick: () => void;
-}
+export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: DevicesSectionProps) {
+    const [devices, setDevices] = useState<Device[]>([]);
 
-export default function DevicesSection({ onAddDeviceClick }: DevicesSectionProps) {
+    const fetchDevices = async () => {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:8080/getDevices', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        setDevices(data.devices);
+    };
+
+    useEffect(() => {
+        fetchDevices();
+        setFetchDevices(fetchDevices);
+    }, []);
+
+    const handleToggleStatus = async (deviceId: string) => {
+        const token = localStorage.getItem('token');
+        await fetch(`http://localhost:8080/toggleDeviceStatus/${deviceId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        setDevices(devices.map(device => 
+            device._id === deviceId ? { ...device, status: device.status === 'Connected' ? 'Not Connected' : 'Connected' } : device
+        ));
+    };
+
     return (
-        <div>
+        <>
             <h1 className="devices__heading">Smart Devices</h1>
-            <AddDeviceBlock onClick={onAddDeviceClick} />
-        </div>
+            <div className="devices__container">
+                {devices.map(device => (
+                    <DeviceBlock
+                        key={device._id}
+                        name={device.name}
+                        type={device.type}
+                        status={device.status}
+                        onToggleStatus={() => handleToggleStatus(device._id)}
+                    />
+                ))}
+                <AddDeviceBlock onClick={onAddDeviceClick} />
+            </div>
+        </>
     );
 }

@@ -8,13 +8,14 @@ import Plus from '../../../assets/plus.svg';
 interface DeviceManagerProps {
     formType: 'device' | 'schedule' | 'energyProduction';
     onClose: () => void;
+    onDeviceAdded: () => void;
 }
 
-export default function DeviceManager({ formType, onClose }: DeviceManagerProps) {
+export default function DeviceManager({ formType, onClose, onDeviceAdded }: DeviceManagerProps) {
     const renderForm = () => {
         switch (formType) {
             case 'device':
-                return <DeviceForm onClose={onClose} />;
+                return <DeviceForm onClose={onClose} onDeviceAdded={onDeviceAdded} />;
             case 'schedule':
                 return <ScheduleForm onClose={onClose} />;
             case 'energyProduction':
@@ -33,7 +34,12 @@ export default function DeviceManager({ formType, onClose }: DeviceManagerProps)
     );
 }
 
-function DeviceForm({ onClose }: { onClose: () => void }) {
+interface DeviceFormProps {
+    onClose: () => void;
+    onDeviceAdded: () => void;
+}
+
+function DeviceForm({ onClose, onDeviceAdded }: DeviceFormProps) {
     const [deviceTypeIndex, setDeviceTypeIndex] = useState(0);
     const [status, setStatus] = useState('Not Connected');
     const [deviceName, setDeviceName] = useState('');
@@ -77,7 +83,8 @@ function DeviceForm({ onClose }: { onClose: () => void }) {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Device added successfully:', data);
-                onClose(); // Close the form after successful submission
+                onDeviceAdded(); // Call the callback to update the devices list
+                onClose();
             } else {
                 console.error('Error adding device:', response.statusText);
             }

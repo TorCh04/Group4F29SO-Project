@@ -6,9 +6,9 @@ interface EnergyProductionSectionProps {
 
 export default function EnergyProduction({ onAddEnergySourceClick }: EnergyProductionSectionProps) {
     return (
-        <div>
+        <>
             <h1 className="devices__heading">Add Energy Source</h1>
             <AddEnergySourceBlock onClick={onAddEnergySourceClick} />
-        </div>
+        </>
     );
 }

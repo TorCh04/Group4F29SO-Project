@@ -12,3 +12,15 @@ export interface AddBlockProps {
     text: string;
     icon: string;
 }
+
+export interface Device {
+    _id: string;
+    name: string;
+    type: string;
+    status: string;
+}
+
+export default interface DevicesSectionProps {
+    onAddDeviceClick: () => void;
+    setFetchDevices: (fetchDevices: () => void) => void;
+}

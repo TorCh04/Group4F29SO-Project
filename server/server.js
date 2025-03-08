@@ -226,6 +226,28 @@ app.post('/removeDevice', verifyToken, async (req, res) => {
   }
 });
 
+app.get('/getDevices', verifyToken, async (req, res) => {
+  try {
+      const user = await User.findById(req.user.id).populate('devices');
+      res.json({ devices: user.devices });
+  } catch (error) {
+      console.error('Error fetching devices:', error);
+      res.status(500).json({ message: 'Server error while fetching devices' });
+  }
+});
+
+app.post('/toggleDeviceStatus/:deviceId', verifyToken, async (req, res) => {
+  try {
+      const device = await Device.findById(req.params.deviceId);
+      device.status = device.status === 'Connected' ? 'Not Connected' : 'Connected';
+      await device.save();
+      res.json({ message: 'Device status updated successfully' });
+  } catch (error) {
+      console.error('Error toggling device status:', error);
+      res.status(500).json({ message: 'Server error while toggling device status' });
+  }
+});
+
 app.post('/updateName', verifyToken,  async (req, res) => {
   try {
     const filter = { _id: req.user.id };

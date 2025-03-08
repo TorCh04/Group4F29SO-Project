@@ -1,27 +1,50 @@
+/* Page Structure Styles */
+.devices__dashboard__main__container {
+    display: flex;
+}
+
+.devices__dashboard__left__container {
+
+}
+
+.devices__dashboard__right__container {
+}
+
 /* General Device Block Styles */
 .device__block {
-    /* width: clamp(160px, 20%, 210px);
-    height: clamp(200px, 20%, 250px); */
-
     width: 170px;
     height: 200px;
     cursor: pointer;
     border-radius: 10px;
-}
-
-
-/* Specific Device Block Styles */
-.add__device__block {
-    background-color: var(--backgroundContrastGrey);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+
+/* Specific Device Block Styles */
+.add__device__block {
+    background-color: var(--backgroundContrastGrey);
+}
+
 .add__device__block__image {
     min-width: 60px;
     min-height: 60px;
+}
+
+.device__block--on {
+    background-color: var(--backgroundContrastGreen);
+}
+
+.device__block--off {
+    background-color: var(--backgroundContrastRed);
+}
+
+.device__block__toggle {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 
@@ -176,3 +199,14 @@
 }
 /* #endregion */
 
+/* Devices Section Styles*/
+.devices__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items:flex-start;
+    justify-content: flex-start;
+    gap: 25px;
+    max-width: 560px;
+    width: 100%;
+    padding-top: 10px;
+}

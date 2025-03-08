@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import DevicesSection from '../components/Dashboard/SmartDevices/DevicesSection';
 import SchedulesSection from '../components/Dashboard/SmartDevices/SchedulesSection';
 import EnergyProductionSection from '../components/Dashboard/SmartDevices/EnergyProductionSection';
@@ -8,6 +8,7 @@ import './styles/SmartDevices.css';
 export default function SmartDevices() {
     const [isDeviceManagerVisible, setDeviceManagerVisible] = useState(false);
     const [formType, setFormType] = useState<'device' | 'schedule' | 'energyProduction'>('device');
+    const fetchDevicesRef = useRef<() => void>(() => {});
 
     const handleAddDeviceClick = () => {
         setFormType('device');
@@ -28,20 +29,31 @@ export default function SmartDevices() {
         setDeviceManagerVisible(false);
     };
 
+    const handleDeviceAdded = () => {
+        fetchDevicesRef.current();
+    };
+
+    const setFetchDevices = (fetchDevices: () => void) => {
+        fetchDevicesRef.current = fetchDevices;
+    };
+
     return (
-        <>
-            {/* Smart Devices */}
-            <DevicesSection onAddDeviceClick={handleAddDeviceClick} />
+        <div className="devices__dashboard__main__container">
+            <div className="devices__dashboard__left__container">
+                {/* Smart Devices */}
+                <DevicesSection onAddDeviceClick={handleAddDeviceClick} setFetchDevices={setFetchDevices} />
 
-            {/* Schedules */}
-            <SchedulesSection onAddSchedulesClick={handleAddScheduleClick} />
+                {/* Schedules */}
+                <SchedulesSection onAddSchedulesClick={handleAddScheduleClick} />
 
-            {/* Energy Source */}
-            <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} />
-            
-            {isDeviceManagerVisible && (
-                <DeviceManager formType={formType} onClose={handleCloseDeviceManager} />
-            )}
-        </>
+                {/* Energy Source */}
+                <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} />
+            </div>
+            <div className="devices__dashboard__right__container">
+                {isDeviceManagerVisible && (
+                    <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} />
+                )}
+            </div>
+        </div>
     );
 }
