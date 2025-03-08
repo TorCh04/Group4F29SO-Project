@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function EnergyFact() {
   return (
     <div className="energy-fact-container">

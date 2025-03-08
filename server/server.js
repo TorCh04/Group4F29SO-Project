@@ -343,7 +343,6 @@ app.post('/removeDevice', verifyToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
     await Device.findByIdAndDelete(deviceId);
 
     res.status(200).json({ message: 'Device removed successfully', user });
