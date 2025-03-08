@@ -9,6 +9,10 @@
     width: 100%;
 }
 
+.dashboard-background {
+    background-color: var(--background);
+}
+
 /* SIDEBAR SECTION */
 /* #region */
 .sidebar__container {

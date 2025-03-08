@@ -3,7 +3,7 @@ import roombaImage from '../../assets/roomba.svg';
 import lightSwitchImage from '../../assets/light_switch.svg';
 import outletImage from '../../assets/outlet.svg';
 import plusIcon from '../../assets/plus.svg';
-import CustomDeviceModal from '../Devices/CustomDeviceModal';
+import CustomDeviceModal from './CustomDeviceModal';
 
 interface AddDeviceModalProps {
     predefinedDevices: string[];

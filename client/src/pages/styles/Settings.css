@@ -167,8 +167,3 @@ overflow: hidden;
 float: left; /* Align to the left of profile subheading */
 margin-right: 10px; /* Add spacing between image and text */
 }
-
-.sidebar__container
-{
-    min-height: 130vh;
-}

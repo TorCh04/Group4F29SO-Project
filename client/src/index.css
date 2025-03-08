@@ -89,6 +89,22 @@ html {
     color: var(--mutedText);
     text-decoration: none;
   }
+
+  .device__block__text {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(20px, 3vw, 22px); /* Scales between 27px and 30px based on viewport width */
+    margin: 0;
+    padding: 0;
+    color: var(--white);
+  }
+
+  .devices__heading {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(36px, 5vw, 40px); /* Scales between 27px and 30px based on viewport width */
+    margin: 0;
+    padding: 0;
+    color: var(--mutedText);
+  }
   /* #endregion */
   
   
