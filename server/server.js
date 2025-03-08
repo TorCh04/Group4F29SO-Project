@@ -21,12 +21,42 @@ mongoose.connect('mongodb://localhost:27017/f29so')
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+// Device schema and model
+const deviceSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  status: { type: String, required: true },
+});
+
+const Device = mongoose.model('Device', deviceSchema);
+
+
+// Schedule schema and model
+const scheduleSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  device: { type: String, required: true },
+  instructions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Instruction' }],
+});
+
+const Schedule = mongoose.model('Schedule', scheduleSchema);
+
+
+// Instructions schema and model
+const instructionsSchema = new mongoose.Schema({
+  insruction: { type: String, required: true }
+});
+
+const Instruction = mongoose.model('Instruction', instructionsSchema);
+
+
 // User schema and model
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  devices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }],
+  schedules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Schedule' }]
 });
 
 // Hash password before saving
@@ -39,13 +69,6 @@ userSchema.pre('save', async function(next) {
 
 const User = mongoose.model('User', userSchema);
 
-// Device schema and model
-const deviceSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  image: { type: String, required: true }
-});
-
-const Device = mongoose.model('Device', deviceSchema);
 
 // JWT token verification middleware
 function verifyToken(req, res, next) {
@@ -284,68 +307,73 @@ app.post('/verifyPassword', verifyToken,  async (req, res) => {
 //Devices//
 ///////////
 
-// Add a device endpoint
-app.post('/devices', async (req, res) => {
+app.post('/addDevice', verifyToken, async (req, res) => {
   try {
-    const { name, image } = req.body;
-    const device = new Device({ name, image });
-    await device.save();
-    res.status(201).json({ message: 'Device added successfully', device });
+    const newDevice = new Device({
+      name: req.body.name,
+      type: req.body.type,
+      status: req.body.status
+    });
+
+    await newDevice.save();
+
+    // Add the new device to the user's devices array
+    const user = await User.findById(req.user.id);
+    user.devices.push(newDevice._id);
+    await user.save();
+
+    res.status(201).json({ message: 'Device added successfully', device: newDevice });
   } catch (error) {
     console.error('Error adding device:', error);
     res.status(500).json({ message: 'Server error while adding device' });
   }
 });
 
-// Fetch all devices endpoint
-app.get('/devices', async (req, res) => {
+app.post('/removeDevice', verifyToken, async (req, res) => {
   try {
-    const devices = await Device.find();
-    res.status(200).json({ devices });
+    const deviceId = req.body.deviceId;
+
+    // Remove the device from the user's devices array
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { $pull: { devices: deviceId } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    await Device.findByIdAndDelete(deviceId);
+
+    res.status(200).json({ message: 'Device removed successfully', user });
   } catch (error) {
-    console.error('Error fetching devices:', error);
-    res.status(500).json({ message: 'Server error while fetching devices' });
+    console.error('Error removing device:', error);
+    res.status(500).json({ message: 'Server error while removing device' });
   }
 });
 
-// Schedule schema and model
-const scheduleSchema = new mongoose.Schema({
-  room: { type: String, required: true },
-  device: { type: String, required: true },
-  action: { type: String, required: true },
-  time: { type: String, required: true }
-});
-
-const Schedule = mongoose.model('Schedule', scheduleSchema);
-
-// Add a schedule endpoint
-app.post('/schedules', async (req, res) => {
+app.get('/getDevices', verifyToken, async (req, res) => {
   try {
-    const { room, device, action, time } = req.body;
-    const schedule = new Schedule({ room, device, action, time });
-    await schedule.save();
-    res.status(201).json({ message: 'Schedule added successfully', schedule });
+      const user = await User.findById(req.user.id).populate('devices');
+      res.json({ devices: user.devices });
   } catch (error) {
-    console.error('Error adding schedule:', error);
-    res.status(500).json({ message: 'Server error while adding schedule' });
+      console.error('Error fetching devices:', error);
+      res.status(500).json({ message: 'Server error while fetching devices' });
   }
 });
 
-// Fetch all schedules endpoint
-app.get('/schedules', async (req, res) => {
+app.post('/toggleDeviceStatus/:deviceId', verifyToken, async (req, res) => {
   try {
-    const schedules = await Schedule.find();
-    res.status(200).json({ schedules });
+      const device = await Device.findById(req.params.deviceId);
+      device.status = device.status === 'Connected' ? 'Not Connected' : 'Connected';
+      await device.save();
+      res.json({ message: 'Device status updated successfully' });
   } catch (error) {
-    console.error('Error fetching schedules:', error);
-    res.status(500).json({ message: 'Server error while fetching schedules' });
+      console.error('Error toggling device status:', error);
+      res.status(500).json({ message: 'Server error while toggling device status' });
   }
 });
-
-///////////////
-//Devices end//
-///////////////
-
 
 
 // Start server

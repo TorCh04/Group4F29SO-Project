@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import logo from '../assets/logo_vertical.svg';
-import UpdateProfileForm from '../components/UpdateProfileForm';
-import UpdatePassword from '../components/UpdatePassword';
+import UpdateProfileForm from '../components/Dashboard/Settings/UpdateProfileForm';
+import UpdatePassword from '../components/Dashboard/Settings/UpdatePassword';
 import  '../pages/styles/Settings.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';

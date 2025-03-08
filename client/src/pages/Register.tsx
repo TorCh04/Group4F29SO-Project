@@ -1,5 +1,5 @@
-import Header from '../components/Header'
-import RegisterForm from '../components/RegisterForm'
+import Header from '../components/Home/Header'
+import RegisterForm from '../components/Authentication/RegisterForm'
 import './styles/Login.css'
 
 export default function Register() {

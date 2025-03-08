@@ -1,0 +1,212 @@
+/* Page Structure Styles */
+.devices__dashboard__main__container {
+    display: flex;
+}
+
+.devices__dashboard__left__container {
+
+}
+
+.devices__dashboard__right__container {
+}
+
+/* General Device Block Styles */
+.device__block {
+    width: 170px;
+    height: 200px;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Specific Device Block Styles */
+.add__device__block {
+    background-color: var(--backgroundContrastGrey);
+}
+
+.add__device__block__image {
+    min-width: 60px;
+    min-height: 60px;
+}
+
+.device__block--on {
+    background-color: var(--backgroundContrastGreen);
+}
+
+.device__block--off {
+    background-color: var(--backgroundContrastRed);
+}
+
+.device__block__toggle {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* Device Manager Styles */
+/* #region */
+.device__manager {
+    background-color: var(--backgroundContrastGrey);
+    width: 400px;
+    height: 650px;
+    border-radius: 25px;
+}
+
+.manager__form__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.manager__heading {
+    display:flex;
+    background-color: var(--backgroundContrastGreen);
+    padding: 20px 35px 20px 35px;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    width: 100%;
+}
+
+.manager__close {
+    background-color: var(--infoRed);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}   
+
+.manager__close__image {
+    min-width: 45px;
+    min-height: 45px;
+    transform: rotate(45deg);
+}
+
+.manager__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 330px;
+    width: 100%;
+    height: 100%;
+    margin: 30px;
+}
+
+.manager__image {
+    width: 200px;
+    height: 200px;
+}
+
+
+.manager__type__selector {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.manager__direction__button {
+    background-color: var(--secondary);
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    width: 45px;
+    height: 45px;
+}
+
+.manager__arrow {
+    height: 33px;
+    width: 18px;
+}
+
+.manager__arrow__right {
+    transform: rotate(180deg);
+}
+
+.manager__name__input {
+    width: 100%;
+    background-color: var(--background);
+    border: none;
+    padding: 10px 10px 10px 10px;
+    color: var(--mutedText);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(20px, 3vw, 22px); /* Scales between 20px and 22px based on viewport width */
+    border-radius: 10px;
+}
+
+.manager__name__input::placeholder{
+    color: var(--mutedText);
+}
+
+.manager__sync__container {
+    display: flex;
+    color: var(--text);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(16px, 2vw, 18px); /* Scales between 16px and 18px based on viewport width */
+    font-weight: 350;
+    width: 100%;
+    margin: 0px 15px 0px 15px;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.manager__sync__button {
+    background-color: var(--secondary);
+    border: none;
+    padding: 15px 10px 15px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(18px, 2vw, 20px); /* Scales between 18px and 20px based on viewport width */
+    font-weight: 350;
+}
+
+.manager__sync__text {
+
+}
+
+.manager__submit__button {
+    width: 100%;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    color: var(--white);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(2px, 3.5vw, 24px); /* Scales between 20px and 22px based on viewport width */
+}
+/* #endregion */
+
+/* Devices Section Styles*/
+.devices__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items:flex-start;
+    justify-content: flex-start;
+    gap: 25px;
+    max-width: 560px;
+    width: 100%;
+    padding-top: 10px;
+}
