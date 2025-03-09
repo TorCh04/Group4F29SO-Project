@@ -220,7 +220,8 @@
 /*User Stats*/
 /* #region */
 .userStatsContainer{
-    width: 90vw;  /* 80% of the viewport width */
+    width: 90vw; 
+    max-width: 82vw;
     max-height: 750px; /* Prevents it from taking up too much vertical space */
     height: 30vh; /* Adjust height to leave space around it */
     display: flex;
@@ -305,7 +306,5 @@
 .icon {
     margin-right: 5px; /* space between icon and text */
 }
-
-
 
 /* #endregion */
