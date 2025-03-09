@@ -1,6 +1,6 @@
 /* Page Structure Styles */
 .devices__dashboard__main__container {
-    display: flex;
+    
 }
 
 .devices__dashboard__left__container {
@@ -248,7 +248,7 @@
     display: flex;
     justify-content: left;
     align-items: left;
-    height: 30px;
+    height: 22px;
     overflow: hidden; /* Hide overflowing text */
     min-width: 600px;
   }
@@ -277,13 +277,13 @@
       transform: translateY(0); /* Keep the first fact visible */
     }
     25%, 45% {
-      transform: translateY(-100%); /* Move to the second fact */
+      transform: translateY(-22%); /* Move to the second fact */
     }
     50%, 70% {
-      transform: translateY(-200%); /* Move to the third fact */
+      transform: translateY(-44%); /* Move to the third fact */
     }
     75%, 95% {
-      transform: translateY(-300%); /* Move to the fourth fact */
+      transform: translateY(-66%); /* Move to the fourth fact */
     }
   }
   

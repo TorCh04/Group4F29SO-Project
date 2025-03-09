@@ -3,6 +3,7 @@ import DevicesSection from '../components/Dashboard/SmartDevices/DevicesSection'
 import SchedulesSection from '../components/Dashboard/SmartDevices/SchedulesSection';
 import EnergyProductionSection from '../components/Dashboard/SmartDevices/EnergyProductionSection';
 import DeviceManager from '../components/Dashboard/SmartDevices/DeviceManager';
+import UserStats from '../components/UserStats';
 import './styles/SmartDevices.css';
 
 export default function SmartDevices() {
@@ -39,6 +40,7 @@ export default function SmartDevices() {
 
     return (
         <div className="devices__dashboard__main__container">
+            <UserStats />
             <div className="devices__dashboard__left__container">
                 {/* Smart Devices */}
                 <DevicesSection onAddDeviceClick={handleAddDeviceClick} setFetchDevices={setFetchDevices} />

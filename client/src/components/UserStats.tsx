@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-import { EnergyFact } from './EnergyStats';  // Import EnergyFact from EnergyStats file
-=======
 import { EnergyFact } from './EnergyStats';
->>>>>>> 33fd166ff5ccabbe70ca5215a593db393b1d33bc
 
 interface DashboardContext {
   userData: {
@@ -19,10 +14,10 @@ interface UserStatsProps {
   userData: { firstName: string } | null;
 }
 
-export default function UserStats({ userData }: UserStatsProps) {
+export default function UserStats(/*{ userData }: UserStatsProps*/) {
   return (
     <div className="userStatsContainer">
-      <h1 className="userWelcome">Hi {userData?.firstName || "Guest"}!</h1>
+      <h1 className="userWelcome">Hi {/*userData?.firstName ||*/ "Guest"}!</h1>
       <h3 className="introducingStats">Your current household statistics:</h3>
       <div className="stats-container">
         <span className="stat"><span className="icon">🌡️</span> 21°C</span>
