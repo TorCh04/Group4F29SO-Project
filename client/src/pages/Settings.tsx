@@ -1,24 +1,7 @@
-import { useOutletContext } from 'react-router-dom';
-import logo from '../assets/logo_vertical.svg';
 import UpdateProfileForm from '../components/Dashboard/Settings/UpdateProfileForm';
-import UpdatePassword from '../components/Dashboard/Settings/UpdatePassword';
 import  '../pages/styles/Settings.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
-
-interface DashboardContext {
-  userData: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  } | null;
-  logout: () => void;
-}
 
 export default function Settings() {
-  const { userData, logout } = useOutletContext<DashboardContext>();
   
 
   // useEffect(() => {
@@ -40,7 +23,6 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-    <button onClick={logout}>Logout</button>
 
     
     {/* <UpdatePassword/> */}

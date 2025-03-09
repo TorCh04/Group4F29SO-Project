@@ -1,7 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo_vertical.svg';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  function logout() {
+    localStorage.removeItem('token');
+    navigate('/');
+  }
+  
   return (
     <div className="sidebar__container">
         <Link to="/">
@@ -13,7 +20,7 @@ export default function Sidebar() {
           <Link to="/leaderboard" className="sidebar__item">Leaderboard</Link>
           <Link to="/settings" className="sidebar__settings">Settings</Link>
         </div>
+        <button onClick={logout}>Logout</button>
     </div>
-
   );
 }

@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: left;
-    min-height: 130vh;
     background-color: var(--background);
 }
 .settings__heading {
@@ -15,7 +14,6 @@
     text-align: left;
     margin-bottom: 10px;
     color: var(--text);
-    margin-left: 30px;
 }
 
 .settings__container {
@@ -24,7 +22,6 @@
     border-radius: 10px;
     width: 350px;
     color: var(--text);
-    margin-left: 30px;
 }
 
 .profile__container {
@@ -32,7 +29,6 @@
     border-radius: 10px;
     width: 300px;
     padding-top: 10px;
-    margin-left: 30px;
     overflow: visible;
 }
 
@@ -43,7 +39,6 @@
     text-align: left;
     margin-bottom: 10px;
     color: var(--mutedText);
-    margin-left: 30px;
 }
 
 .profile__section {
@@ -100,7 +95,6 @@
     border-radius: 10px;
     width: 350px;
     color: var(--text);
-    margin-left: 30px;
     height: 90px;
 }
 

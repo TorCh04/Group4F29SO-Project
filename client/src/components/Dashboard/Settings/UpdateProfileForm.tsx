@@ -50,7 +50,7 @@ export default function UpdateProfileForm() {
     const [curPassword, setCurPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const {userData, logout } = useOutletContext<ProfileContext>();
+    const {userData } = useOutletContext<ProfileContext>();
     const [usersData, setUserData] = useState({});
     const resetForm = () => {
         setFirstName('');
