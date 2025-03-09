@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import logo from '../assets/logo_vertical.svg';
-import UpdateProfileForm from '../components/UpdateProfileForm';
-import UpdatePassword from '../components/UpdatePassword';
+import UpdateProfileForm from '../components/Dashboard/Settings/UpdateProfileForm';
+import UpdatePassword from '../components/Dashboard/Settings/UpdatePassword';
 import  '../pages/styles/Settings.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -40,16 +40,14 @@ export default function Settings() {
   return (
   <>
     <UpdateProfileForm />
-    <p>Email: {userData?.email}</p>
-    <p>First Name: {userData?.firstName}</p>
-    <p>Last Name: {userData?.lastName}</p>
+    <button onClick={logout}>Logout</button>
 
     
     {/* <UpdatePassword/> */}
     {/* <header>
       <h1>Welcome, {userData?.firstName}!</h1>
       <p>Email: {userData?.email}</p>
-      <button onClick={logout}>Logout</button>
+      
       <img src={logo} alt="Moogle Logo" />
     </header> */}
     </>

@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React from 'react';
 import { EnergyFact } from './EnergyStats';  // Import EnergyFact from EnergyStats file
+=======
+import { EnergyFact } from './EnergyStats';
+>>>>>>> 33fd166ff5ccabbe70ca5215a593db393b1d33bc
 
 interface DashboardContext {
   userData: {

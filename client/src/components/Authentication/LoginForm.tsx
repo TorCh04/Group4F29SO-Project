@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logo from "../assets/logo_vertical.svg";
+import logo from "../../assets/logo_vertical.svg";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import './LoginForm.css'

@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import axios from 'axios';
@@ -32,144 +32,204 @@ export default function UpdateProfileForm() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [errors, setErrors] = useState({
+                                            name: '',
+                                            firstName: '',
+                                            lastName: '',
                                             email: '',
                                             curPassword: '',
                                             newPassword: '',
                                             samePassword: ''
                                         });
+    const [success, setSuccess] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
-    const [oldPassword, setOldPasssword] = useState('');
+    const [curPassword, setCurPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData, logout } = useOutletContext<ProfileContext>();
     const [usersData, setUserData] = useState({});
+    const resetForm = () => {
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setConfirmEmail('');
+        setCurPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        };
 
 
-
-    // const updateName = {
-    //     $set: {
-    //         quantity: 5,
-    //     },
-    //     };
-
-
-
-    
+    // Handles the updateName form submission
     const updateName = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Sending update name request...');
+        // Reset errors and success messages
+        setErrors(prevErrors => ({ ...prevErrors, name: '',firstName: '', lastName: '' }));
+        setSuccess(prevSuccess => ({ ...prevSuccess, name: '' }));
+
+        // Check if either first or last name is provided
+        if (!firstName && !lastName) {
+            // If not, set error message
+            setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' }));
+            return;
+        }
+
         try {
+            // Get the user's token from local storage
             const token = localStorage.getItem('token');
-        const response = await axios.post(
-            'http://localhost:8080/updateName', 
-            { firstName, lastName },  // Request body (corrected)
-            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
-        );     
-        console.log('Response reached');
-        console.log(response.data);
-        setUserData(response.data);
-        window.location.reload(); // Reload the page once the name is updated
+            // Make a POST request to the server to update the user's name
+            const response = await axios.post(
+                'http://localhost:8080/updateName', 
+                { firstName, lastName },  
+                { headers: { Authorization: `Bearer ${token}` } } 
+            );    
+            
+            // Checks if The First Name Entered is the same as Current First Name
+            if (response.data.message === 'Same First Name') {
+                setErrors(prevErrors => ({ ...prevErrors, firstName: 'Your new First Name is the same as your current one!' }));
+                return;
+            } 
+            // Checks if The Last Name Entered is the same as Current Last Name
+            else if (response.data.message === 'Same Last Name') {
+                setErrors(prevErrors => ({ ...prevErrors, lastName: 'Your new Last Name is the same as your current one!' }));
+                return;
+            }
+
+            // If the request is successful, update the user data and reset the form
+            setUserData(response.data);
+            setSuccess(prevSuccess => ({ ...prevSuccess, name: 'Name changed successfully' }));
+            resetForm();
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating name:", error);
         }
-        
     };
 
+    // Handles updateEmail form submission
     const updateEmail = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Resets Error and Success Messages
+        setErrors(prevErrors => ({ ...prevErrors, email: '' }));
+        setSuccess(prevSuccess => ({ ...prevSuccess, email: '' }));
         console.log('Sending update email request...');
+        // Checks if email is provided
+        if (!email) 
+        {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Email is required' }));
+            return;
+        }
+        // Checks if emails match
         if (email !== confirmEmail) {
             setErrors(prevErrors => ({ ...prevErrors, email: 'Emails do not match' }));
             return;
         }
+        
         try {
+            // Get token from local storage
             const token = localStorage.getItem('token');
-        const response = await axios.post(
+            // Make a POST request to update email
+            const response = await axios.post(
             'http://localhost:8080/updateEmail', 
             { email },  
-            { headers: { Authorization: `Bearer ${token}` } } // Headers (moved to the right place)
+            { headers: { Authorization: `Bearer ${token}` } } 
         );     
+
+        // Checks if The Email Entered is the same as Current Email
+        if (response.data.message === 'Same Email') {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Your new Email is the same as your current one!' }));
+            return;
+        } 
+        
+        // Checks if The Last Name Entered is the same as Current Last Name
         console.log('Response reached');
         console.log(response.data);
-            // Ideally, update userData from the parent context
-            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        // Set success message and clear form
+        setSuccess(prevSuccess => ({ ...prevSuccess, email: 'Email changed successfully' }));
+        resetForm();
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating name:", error);
         }
     };
 
-
-    const verifyOldPassword = async (oldPassword: string) => {
+    // Handles Verification of Current Password
+    const verifyCurPassword = async (curPassword: string) => {
         try 
         {   
+            // Get token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to verify password
             const response = await axios.post(
                 'http://localhost:8080/verifyPassword', 
-                { oldPassword },
+                { curPassword },
                 { headers: { Authorization: `Bearer ${token}` } } 
             );
+            // Password matches password stroed in database
             if (response.status === 200) {
-                // Store token in localStorage
                 console.log("password matches!")
                 return true;
 
             }
+            // Password does not match
             else {
                 return false;
             }
+        
         // Handle the response from the server
         } catch (error) {
         console.error('Error verifying old password:', error);
         }
         
     };
-    
+
+    // Handles updatePassword form submission
     const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Reset success message
+        setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
+        setSuccess(prevSuccess => ({ ...prevSuccess, password: '' }));
 
-        const isOldPasswordCorrect = await verifyOldPassword(oldPassword);
-        if (!isOldPasswordCorrect) {
+        // Checks if current password entered is correct
+        const isCurPasswordCorrect = await verifyCurPassword(curPassword);
+
+        // If current password entered is incorrect
+        if (!isCurPasswordCorrect) {
             console.log("Old password is incorrect");
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
             setErrors(prevErrors => ({ ...prevErrors, curPassword: 'Your current password is incorrect' }));
             return;
-            } else {
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-            setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
-            }
+            } 
 
+        // Checks if new password and confirm password match
         if (newPassword !== confirmPassword) {
             console.log("Passwords do not match");
             setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
             return;
-            } else {
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-            
-            if (oldPassword === newPassword || oldPassword == confirmPassword) {
-                setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
-                return;
-            } else {
-                setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
-            }
-            }
-        
-        
-        // Don't think I need these
-        // setErrors(prevErrors => ({
-        //     ...prevErrors,
-        //     curPassword: isOldPasswordCorrect ? '' : 'Your current password is incorrect',
-        //     newPassword: newPassword === confirmPassword ? '' : 'Passwords do not match',
-        //     samePassword: oldPassword === confirmPassword ? '' : 'New password is the same as the current one'
-        // }));
+            } 
 
-        
-            
-        
+        // Checks if either newPassword or confirmPassword is the same as current password
+        if (curPassword === newPassword || curPassword == confirmPassword) {
+            setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+            return;
+        }
+
+        // Checks if either newPassword or confirmPassword is empty
+        if (curPassword && (newPassword == '' || confirmPassword == '')) 
+            {
+                setErrors(prevErrors => ({ ...prevErrors, newPassword: 'No new password entered' }));
+                return;
+            } 
 
         console.log('Sending update password request...');
+
         try {
+            // Get token from local storage
             const token = localStorage.getItem('token');
+            // Make a POST request to update the password
             const response = await axios.post(
             'http://localhost:8080/updatePassword', 
             { confirmPassword },
@@ -177,21 +237,21 @@ export default function UpdateProfileForm() {
         );     
         console.log('Response reached');
         console.log(response.data);
-            // Ideally, update userData from the parent context
-            // setFormData({ email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }); // Clear input fields after submission
+        // Set success message and clear input files
+        setSuccess(prevSuccess => ({ ...prevSuccess, password: 'Passwords changed succesfully' }));
+        resetForm();
         } catch (error) {
+            // If there's an error, log it
             console.error("Error updating password:", error);
         } 
     };
 
-    console.log("Updating Name:", firstName);
-    console.log("Updating Email:", email);
-    console.log("Updating Password:", oldPassword);
-    console.log("Updating New Password:", newPassword);
-    console.log("Updating Confirm Password:", confirmPassword);
-    
-
-
+    // Solely for Testing
+    // console.log("Updating Name:", firstName);
+    // console.log("Updating Email:", email);
+    // console.log("Updating Password:", curPassword);
+    // console.log("Updating New Password:", newPassword);
+    // console.log("Updating Confirm Password:", confirmPassword);
 
     return (
         <div className="profile__center">
@@ -212,7 +272,7 @@ export default function UpdateProfileForm() {
                 </div>
             </div>
 
-
+            {/* Update Name Form */}
             <h3 className="profile__heading">Update Profile</h3>
             <div className="settings__container">
                 <div className="profile__section">
@@ -225,6 +285,7 @@ export default function UpdateProfileForm() {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         />
+                        {errors.firstName && <p className="error__message">{errors.firstName}</p>}
                         <input
                             type="text"
                             placeholder="Last Name"
@@ -232,10 +293,14 @@ export default function UpdateProfileForm() {
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)} 
                         />
+                        {errors.lastName && <p className="error__message">{errors.lastName}</p>}
+                        {errors.name && <p className="error__message">{errors.name}</p>}
                         <input type="submit" value="Submit" className="profile__button" />
+                        {success.name && <p className="success__message">{success.name}</p>}
                     </form>                    
                 </div>
 
+                {/* Update Email Form */}
                 <div className="profile__section">
                     <h3 className="profile__subheading">Update Email</h3>
                     <form onSubmit={updateEmail}>
@@ -254,6 +319,7 @@ export default function UpdateProfileForm() {
                     />
                     {errors.email && <p className="error__message">{errors.email}</p>}
                     <input type="submit" value="Submit" className="profile__button" />
+                    {success.email && <p className="success__message">{success.email}</p>}
                     </form>
                 </div>
             </div>
@@ -268,10 +334,10 @@ export default function UpdateProfileForm() {
                             type="password"
                             placeholder="Current Password"
                             className="profile__input"
-                            value={userData?.password}
+                            value={curPassword}
                             onChange={(e) => {
-                                                setOldPasssword(e.target.value);
-                                                verifyOldPassword(e.target.value);
+                                                setCurPassword(e.target.value);
+                                                verifyCurPassword(e.target.value);
                                             }
                                     }
                         />
@@ -293,12 +359,13 @@ export default function UpdateProfileForm() {
                         <input type="submit" value="Submit" className="profile__button" />
                         {errors.newPassword && <p className="error__message">{errors.newPassword}</p>}
                         {errors.samePassword && <p className="error__message">{errors.samePassword}</p>}
+                        {success.password && <p className="success__message">{success.password}</p>}
                     </form>
                     
                 </div>
             </div>
 
-            
+
             <h3 className="profile__heading">Privacy Settings</h3>
             <div className="privacy__container">
                 <div className="profile__section">
