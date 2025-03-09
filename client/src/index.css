@@ -24,7 +24,7 @@ html {
     --backgroundContrastGrey: #242435;
     --backgroundContrastBlue: #201F41;
     --backgroundContrastGreen: #1F2B41;
-    --backgroundContrastred: #411F1F;
+    --backgroundContrastRed: #411F1F;
     --white: #FFFFFF;
     --infoRed: #BE4646;
     --infoGreen: #46BE5C;
@@ -88,6 +88,24 @@ html {
     padding: 0;
     color: var(--mutedText);
     text-decoration: none;
+  }
+
+  .device__block__text {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(20px, 3vw, 22px); /* Scales between 20px and 22px based on viewport width */
+    margin: 0;
+    padding: 0;
+    color: var(--white);
+    text-align: center;
+  }
+
+  .devices__heading {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(32px, 5vw, 36px); /* Scales between 36px and 40px based on viewport width */
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    color: var(--text);
   }
   /* #endregion */
   
