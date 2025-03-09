@@ -16,7 +16,7 @@ export default function Leaderboard() {
 
   useEffect(() => {
     axios
-      .get<User[]>("http://localhost:8080/api/leaderboard")
+      .get<User[]>("http://localhost:8080/leaderboard")
       .then(response => {
         const sortedUsers = response.data
           .map(user => ({
