@@ -8,6 +8,7 @@ import SettingsModal from '../components/Devices/SettingsModal';
 import './styles/Devices.css';
 import axios from 'axios';
 import SideBar from '../components/SideBar';
+import UserStats from '../components/UserStats';
 
 export default function DevicesPage() {
     const [devices, setDevices] = useState<{ _id: string, name: string, image: string }[]>([]);
@@ -79,6 +80,7 @@ export default function DevicesPage() {
         <div className="devices-page">
             <SideBar /> {/* Adds the side bar to page */}
             <div className="main-content">
+                <UserStats />
                 <div className="device-section">
                     <h1 className="device-title">Smart Devices</h1>
                     <div className="device-box-container">

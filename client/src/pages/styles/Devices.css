@@ -345,51 +345,78 @@
 
 /*User Stats*/
 /* #region */
-.userStatsContainer{
-    width: 90vw;  /* 80% of the viewport width */
-    max-height: 750px; /* Prevents it from taking up too much vertical space */
-    height: 30vh; /* Adjust height to leave space around it */
+.userStatsContainer {
+    width: 90vw;
+    max-height: 750px;
+    height: 30vh;
     display: flex;
     flex-direction: column;
-    align-items: Left;
+    align-items: flex-start;
     justify-content: flex-start;
     padding: 1rem;
-    background-color: #1e273d; 
+    background-color: #1e273d;
     color: white;
-    border: 5px solid #1a1a2a; /* Subtle border to separate from background */
+    border: 5px solid #1a1a2a;
     overflow: hidden;
     font-family: 'Inter', system-ui;
-    font-size: clamp(14px, 3vw, 16px); 
-    display: flex;
-}
-
-.userWelcome{
-    margin:0;
-    padding:0;
-    font-size:3em;
-
-}
-
-.energy-fact-container {
+    font-size: clamp(14px, 3vw, 16px);
+  }
+  
+  .userWelcome {
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+  }
+  
+  .stats-container {
     display: flex;
     justify-content: left;
     align-items: left;
-    height: 30px;
-    overflow: hidden; /* Hide overflowing text */
+    margin-bottom: 20px;
+    gap: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .icon {
+    margin-right: 5px;
+  }
+  
+  .introducingStats {
+    margin-bottom: 0px;
+  }
+  
+  .energy-fact-container {
+    display: flex;
+    align-items: center; /* Align static text and scrolling facts on the same line */
+    height: 22px; 
+    overflow: hidden; /* Hide facts that are not in view */
+    font-weight: bold;
+    text-align: left;
     min-width: 600px;
   }
   
+  /* Static Text */
+  .static-text {
+    margin-right: 5px;
+    white-space: nowrap;
+  }
+  
+  /* Energy Fact Animation */
   .energy-fact-wrapper {
     display: flex;
     flex-direction: column;
-    animation: rotateFacts 20s linear infinite; /* Smooth scrolling */
+    justify-content: flex-start; /* Start the facts at the top */
+    height: 22px;
+    animation: rotateFacts 20s linear infinite; /* Smooth scrolling upwards */
   }
   
   .energy-fact {
     margin: 0;
-    padding: 5px 0;
+    text-align: left;
     width: 100%;
-    animation: showFact 20s ease-in-out infinite; /* Fade in and out */
+    animation: showFact 20s ease-in-out infinite;
   }
   
   .energy-fact:nth-child(1) { animation-delay: 0s; }
@@ -400,38 +427,16 @@
   
   @keyframes rotateFacts {
     0%, 20%, 100% {
-      transform: translateY(0); /* Keep the first fact visible */
+      transform: translateY(0); /* Start from the top */
     }
     25%, 45% {
-      transform: translateY(-100%); /* Move to the second fact */
+      transform: translateY(-22px); /* Move to the second fact (height of one fact) */
     }
     50%, 70% {
-      transform: translateY(-200%); /* Move to the third fact */
+      transform: translateY(-44px); /* Move to the third fact */
     }
     75%, 95% {
-      transform: translateY(-300%); /* Move to the fourth fact */
+      transform: translateY(-66px); /* Move to the fourth fact */
     }
   }
-  
-.stats-container {
-    display: flex;
-    justify-content: left;
-    align-items: left;
-    margin-bottom: 20px;
-    gap: 20px; /* Space between items */
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-}
-
-.introducingStats{
-    margin-bottom: 0px;
-}
-
-.icon {
-    margin-right: 5px; /* space between icon and text */
-}
-
-
-
 /* #endregion */
