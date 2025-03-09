@@ -9,6 +9,7 @@ import SmartDevices from './pages/SmartDevices';
 import EnergyTracker from './pages/EnergyTracker';
 import Leaderboard from './pages/Leaderboard';
 import Settings from './pages/Settings';
+import ForgotPassword from './pages/ForgotPassword';
 import Nopage from './pages/Nopage';
 import './App.css';
 
@@ -39,14 +40,16 @@ function BodyClassUpdater() {
 
 
 export default function App() {
-    return (
-      <BrowserRouter>
-        {/* This component updates <body> based on the route */}
-        <BodyClassUpdater />
-        <Routes>
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+  return (
+    <BrowserRouter>
+      {/* This component updates <body> based on the route */}
+      <BodyClassUpdater />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="*" element={<Nopage />} />
 
         {/* Protected routes */}
         <Route element={<PrivateRoute />}>
@@ -58,9 +61,7 @@ export default function App() {
             <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
-            
-            <Route path="*" element={<Nopage />} />
-        </Routes>
-      </BrowserRouter>
-    );
+      </Routes>
+    </BrowserRouter>
+  );
   }

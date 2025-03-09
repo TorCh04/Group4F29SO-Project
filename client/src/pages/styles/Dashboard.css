@@ -23,6 +23,8 @@
     height: 100vh;
     padding: 30px;
     gap: 30px;
+    position: sticky;
+    top: 0;
 }
 
 .sidebar__links {
