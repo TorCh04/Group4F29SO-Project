@@ -354,3 +354,63 @@
 }
 
 /* #endregion */
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1200px) {
+    .devices__dashboard__main__container {
+        flex-direction: column;
+    }
+
+    .devices__dashboard__left__container,
+    .devices__dashboard__right__container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .device__block {
+        width: 150px;
+        height: 180px;
+    }
+
+    .manager__form {
+        max-width: 280px;
+    }
+
+    .manager__image {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .device__block {
+        width: 130px;
+        height: 160px;
+    }
+
+    .manager__form {
+        max-width: 240px;
+    }
+
+    .manager__image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .manager__name__input {
+        font-size: clamp(16px, 3vw, 18px);
+    }
+
+    .manager__sync__container {
+        font-size: clamp(14px, 2vw, 16px);
+    }
+
+    .manager__sync__button {
+        font-size: clamp(16px, 2vw, 18px);
+    }
+
+    .manager__submit__button {
+        font-size: clamp(18px, 3.5vw, 20px);
+    }
+}
