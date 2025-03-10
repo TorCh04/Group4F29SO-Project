@@ -1,16 +1,17 @@
-const express = require('express');
-const verifyToken = require('../middleware/verifyToken'); // Adjust the path as necessary
-const Device = require('../models/Device'); // Adjust the path as necessary
-const User = require('../models/User'); // Adjust the path as necessary
+const express = require("express");
+const EnergyUsage = require("../models/energy"); // Adjust the path as necessary
+const verifyToken = require("../middleware/verifyToken"); // Adjust the path as necessary
+const Device = require("../models/Device"); // Adjust the path as necessary
+const User = require("../models/User"); // Adjust the path as necessary
 
 const router = express.Router();
 
-router.post('/addDevice', verifyToken, async (req, res) => {
+router.post("/addDevice", verifyToken, async (req, res) => {
   try {
     const newDevice = new Device({
       name: req.body.name,
       type: req.body.type,
-      status: req.body.status
+      status: req.body.status,
     });
 
     await newDevice.save();
@@ -20,14 +21,35 @@ router.post('/addDevice', verifyToken, async (req, res) => {
     user.devices.push(newDevice._id);
     await user.save();
 
-    res.status(201).json({ message: 'Device added successfully', device: newDevice });
+    try {
+      // Start Energy tracker
+      const newEnergyUsage = new EnergyUsage({
+        device: newDevice._id,
+        data: [
+          {
+            timestamp: Date.now(),
+            energyUsage: 0,
+          },
+        ],
+      });
+      await newEnergyUsage.save();
+    } catch (err) {
+      console.error("Error adding energy usage:", err);
+      res
+        .status(500)
+        .json({ message: "Server error while adding energy usage" });
+    }
+
+    res
+      .status(201)
+      .json({ message: "Device added successfully", device: newDevice });
   } catch (error) {
-    console.error('Error adding device:', error);
-    res.status(500).json({ message: 'Server error while adding device' });
+    console.error("Error adding device:", error);
+    res.status(500).json({ message: "Server error while adding device" });
   }
 });
 
-router.post('/removeDevice', verifyToken, async (req, res) => {
+router.post("/removeDevice", verifyToken, async (req, res) => {
   try {
     const deviceId = req.body.deviceId;
 
@@ -39,36 +61,39 @@ router.post('/removeDevice', verifyToken, async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     await Device.findByIdAndDelete(deviceId);
 
-    res.status(200).json({ message: 'Device removed successfully', user });
+    res.status(200).json({ message: "Device removed successfully", user });
   } catch (error) {
-    console.error('Error removing device:', error);
-    res.status(500).json({ message: 'Server error while removing device' });
+    console.error("Error removing device:", error);
+    res.status(500).json({ message: "Server error while removing device" });
   }
 });
 
-router.get('/getDevices', verifyToken, async (req, res) => {
+router.get("/getDevices", verifyToken, async (req, res) => {
   try {
-      const user = await User.findById(req.user.id).populate('devices');
-      res.json({ devices: user.devices });
+    const user = await User.findById(req.user.id).populate("devices");
+    res.json({ devices: user.devices });
   } catch (error) {
-      console.error('Error fetching devices:', error);
-      res.status(500).json({ message: 'Server error while fetching devices' });
+    console.error("Error fetching devices:", error);
+    res.status(500).json({ message: "Server error while fetching devices" });
   }
 });
 
-router.post('/toggleDeviceStatus/:deviceId', verifyToken, async (req, res) => {
+router.post("/toggleDeviceStatus/:deviceId", verifyToken, async (req, res) => {
   try {
-      const device = await Device.findById(req.params.deviceId);
-      device.status = device.status === 'Connected' ? 'Not Connected' : 'Connected';
-      await device.save();
-      res.json({ message: 'Device status updated successfully' });
+    const device = await Device.findById(req.params.deviceId);
+    device.status =
+      device.status === "Connected" ? "Not Connected" : "Connected";
+    await device.save();
+    res.json({ message: "Device status updated successfully" });
   } catch (error) {
-      console.error('Error toggling device status:', error);
-      res.status(500).json({ message: 'Server error while toggling device status' });
+    console.error("Error toggling device status:", error);
+    res
+      .status(500)
+      .json({ message: "Server error while toggling device status" });
   }
 });
 
