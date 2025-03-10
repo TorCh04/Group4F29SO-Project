@@ -211,10 +211,40 @@
     padding-top: 10px;
 }
 
-
-
-
-
+.toggle__switch {
+    display: flex;
+    align-items: center;
+    width: 35px;
+    height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 1px;
+  }
+  
+  .toggle__switch--on {
+    background-color: var(--infoGreen);
+  }
+  
+  .toggle__switch--off {
+    background-color: var(--infoRed);
+  }
+  
+  .toggle__switch__slider {
+    width: 18px;
+    height: 18px;
+    background-color: #F2F2F2;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  
+  .toggle__switch--on .toggle__switch__slider {
+    transform: translateX(15px);
+  }
+  
+  .toggle__switch--off .toggle__switch__slider {
+    transform: translateX(0);
+  }
 
 
 /*User Stats*/
