@@ -26,11 +26,14 @@ export default function DeviceManager({ formType, onClose, onDeviceAdded }: Devi
     };
 
     return (
-        <div className="device__manager">
-            <div className="manager__form__container">
-                {renderForm()}
+        <>
+            <div className="device__manager__overlay" onClick={onClose}></div>
+            <div className="device__manager" style={{ position: 'fixed' }}>
+                <div className="manager__form__container">
+                    {renderForm()}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

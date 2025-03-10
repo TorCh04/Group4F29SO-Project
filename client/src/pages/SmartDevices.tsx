@@ -53,7 +53,9 @@ export default function SmartDevices() {
             </div>
             <div className="devices__dashboard__right__container">
                 {isDeviceManagerVisible && (
-                    <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} />
+                    <>
+                        <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} />
+                    </>
                 )}
             </div>
         </div>
