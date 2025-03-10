@@ -134,8 +134,42 @@ function DeviceForm({ onClose, onDeviceAdded }: DeviceFormProps) {
 }
 
 function ScheduleForm({ onClose }: { onClose: () => void }) {
+    const [name, setName] = useState('');
+    const [device, setDevice] = useState('');
+    const [instructions, setInstructions] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/addSchedule', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    device,
+                    instructions
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Schedule added successfully:', data);
+                onClose();
+            } else {
+                console.error('Error adding schedule:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding schedule:', error);
+        }
+    };
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="manager__heading">
                 <h2 className="devices__heading">Add Schedule</h2>
                 <button onClick={onClose} className="manager__close">
@@ -144,15 +178,15 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
             </div>
             <label>
                 Name:
-                <input type="text" name="name" />
+                <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
                 Device:
-                <input type="text" name="device" />
+                <input type="text" name="device" value={device} onChange={(e) => setDevice(e.target.value)} />
             </label>
             <label>
                 Instructions:
-                <textarea name="instructions"></textarea>
+                <textarea name="instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>
             </label>
             <button type="submit">Add Schedule</button>
         </form>

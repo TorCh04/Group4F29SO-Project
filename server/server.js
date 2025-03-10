@@ -7,6 +7,7 @@ const deviceRoutes = require('./routes/devices'); // Import the device routes
 const leaderboardRoutes = require("./routes/leaderboard"); // Import leaderboard routes
 const settingsRoutes = require('./routes/settings'); // Import the settings routes
 const simulationDataRoutes = require('./routes/simulationData'); // Import the simulation data routes
+const schedulesRoutes = require('./routes/schedules'); // Import the schedules routes
 const { startSimulation } = require('./dataSimulator');
 
 // Initialize Express app
@@ -34,6 +35,7 @@ app.use('/', deviceRoutes); // addDevice / removeDevice / getDevices / toggleDev
 app.use('/', settingsRoutes); // updateName / updateEmail / updatePassword / verifyPassword
 app.use('/', leaderboardRoutes); // leaderboard
 app.use('/', simulationDataRoutes); // getSimulationData
+app.use('/', schedulesRoutes); // addSchedule / removeSchedule / getSchedules
 
 
 // Start server
