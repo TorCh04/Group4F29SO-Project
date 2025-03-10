@@ -3,21 +3,21 @@
 
 .et-background {
     background-color: var(--background);
-    display: flex;
     justify-content: space-between;
-    height: 100vh;
+    min-height: 120vh;
+    display: flex;
     margin: 0;
     padding: 0;
     overflow-y: scroll;
   }
   .et__main {
-    height: 100vh;
+    min-height: 120vh;
     padding-left: 2%;
     padding-right: 2%;
     display: flex;
     flex-direction: column;
     flex: 2;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   
   .et_title {
@@ -38,9 +38,10 @@
   .et__teu_graph__container {
     width: 80vw;  /* 80% of the viewport width */
     max-width: 1100px; /* Prevents it from being too wide on large screens */
-    height: 90vh; /* Adjust height to leave space around it */
+    height: 70vh; /* Adjust height to leave space around it */
     max-height: 750px; /* Prevents it from taking up too much vertical space */
     display: flex;
+    margin-top: 10px;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -68,7 +69,7 @@
   .et__teg_graph__container {
     display: none;
     margin: 2rem;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     height: 50vh;
     width: 500px;
