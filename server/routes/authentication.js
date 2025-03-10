@@ -97,4 +97,25 @@ router.get('/dashboard', verifyToken, async (req, res) => {
   }
 });
 
+// Forgot password endpoint
+router.post('/forgotPassword', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    const resetLink = `http://localhost:3000/resetPassword/${user._id}/${token}`;
+
+    // Send email with reset link
+    // ...
+
+    res.json({ message: 'Reset link sent to email' });
+  } catch (error) {
+    console.error('Error sending reset link:', error);
+    res.status(500).json({ message: 'Server error while sending reset link' });
+  }
+});
+
 module.exports = router;

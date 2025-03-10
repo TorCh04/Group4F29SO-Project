@@ -59,7 +59,7 @@ export default function LoginForm() {
                                         Remember me
                                     </label>
                                 </div>
-                                <a href="#" className="login__forgot__password">Forgot Password?</a>
+                                <a href="/forgotPassword" className="login__forgot__password">Forgot Password?</a>
                             </div>
                         </div>
                         <div className="login__submit__grouping">

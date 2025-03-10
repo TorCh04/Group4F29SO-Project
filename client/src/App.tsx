@@ -23,6 +23,7 @@ function BodyClassUpdater() {
             "/": "hero-background",
             "/login": "login-background",
             "/register": "login-background", // Shares the same background as login
+            "/forgotPassword": "login-background",
             "/test": "test-background",
             "/devices": "dashboard-background",
             "/energy": "dashboard-background",
@@ -48,7 +49,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="*" element={<Nopage />} />
 
         {/* Protected routes */}
