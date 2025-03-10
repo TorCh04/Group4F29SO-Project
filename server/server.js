@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authentication'); // Import the authenticat
 const deviceRoutes = require('./routes/devices'); // Import the device routes
 const leaderboardRoutes = require("./routes/leaderboard"); // Import leaderboard routes
 const settingsRoutes = require('./routes/settings'); // Import the settings routes
+const simulationDataRoutes = require('./routes/simulationData'); // Import the simulation data routes
 const { startSimulation } = require('./dataSimulator');
 
 // Initialize Express app
@@ -28,10 +29,11 @@ mongoose.connect('mongodb://localhost:27017/f29so')
 
 
 // Routes
-app.use('/', authRoutes); // Login / Register / Dashboard
+app.use('/', authRoutes); // login / register / dashboard
 app.use('/', deviceRoutes); // addDevice / removeDevice / getDevices / toggleDeviceStatus
 app.use('/', settingsRoutes); // updateName / updateEmail / updatePassword / verifyPassword
-app.use("/", leaderboardRoutes);
+app.use('/', leaderboardRoutes); // leaderboard
+app.use('/', simulationDataRoutes); // getSimulationData
 
 
 // Start server
@@ -39,4 +41,3 @@ const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
