@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function ForgotPasswordForm() {
+  interface SecurityQA {
+    securityQuestion: string | '';
+    securityAnswer: string | '';
+  }
     const [formData, setFormData] = useState({
         email: '',
         firstName: '',
@@ -20,6 +24,10 @@ export default function ForgotPasswordForm() {
                                                 answer: '',
                                             });
     const navigate = useNavigate();
+    const useSimulationData = () => {
+      const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
+    }
+    
     const [showForm, setShowForm] = useState(true);
 
 
@@ -90,6 +98,26 @@ export default function ForgotPasswordForm() {
         }
       };
 
+
+      const fetchSecurityQA = async () => {
+        const token = localStorage.getItem('token');
+        try {
+          const response = await fetch('http://localhost:8080/getSimulationData', {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const result = await response.json();
+          console.log('Fetched simulation data:', result);
+          if (response.ok) {
+            setData(result);
+          } else {
+            console.error('Error fetching simulation data:', result.message);
+          }
+        } catch (error) {
+          console.error('Error fetching simulation data:', error);
+        }
+      };
+    
     // const handleSubmit = async (e: React.FormEvent) => {
     //     e.preventDefault();
     //     if (formData.password !== formData.confirmPassword) {
@@ -132,7 +160,7 @@ export default function ForgotPasswordForm() {
                   <img src={logo} alt="Moogle Logo" />
                   <h2 className="password__heading">Forgot Password</h2>
               </div>
-              <div>
+              <div className="" style={{ display: showForm ? 'block' : 'none' }}>
                 <form className="password__form__container">
                       <input 
                           type="text" 
@@ -142,13 +170,15 @@ export default function ForgotPasswordForm() {
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
                           required
                       />
+                      {errors && <p className="error__message">{errors.email}</p>}
                 </form>
                 {errors && <p className="error__message">{errors.email}</p>}
               </div>
               
               <button onClick={handleClick} className="password__button">Show Form</button>
-              <div className="" style={{ display: showForm ? 'block' : 'none' }}>
-                
+              <button onClick={fetchSecurityQA} className="password__button">Get QA</button>
+              <div className="" style={{ display: showForm ? 'none' : 'block' }}>
+              
                   <form className="password__form__container">
                       <input 
                           type="password" 
@@ -168,7 +198,7 @@ export default function ForgotPasswordForm() {
                       />
                       <div className="password__submit__grouping">
                           <input type="submit" value="Register" className="password__submit__button" />
-                          {/* {error && <p className="error__message">{error}</p>} */}
+                          {/* {errors && <p className="error__message">{errors.email}</p>} */}
                           <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
                       </div>
                   </form>
@@ -178,4 +208,5 @@ export default function ForgotPasswordForm() {
 
 
     )
+  
 }

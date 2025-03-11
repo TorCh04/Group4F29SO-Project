@@ -97,6 +97,7 @@ router.get('/dashboard', verifyToken, async (req, res) => {
   }
 });
 
+
 // Forgot password endpoint
 router.post('/verifyEmail', 
   [
@@ -113,14 +114,34 @@ router.post('/verifyEmail',
         return res.status(201).json({ message: 'Email already exists' });
       }
 
-      const user = new User({ email, firstName, lastName, password, securityQuestion, securityAnswer });
-      await user.save();
-      res.status(201).json({ message: 'Registration successful' });
+
     } catch (error) {
-      console.error('Registration error:', error);
-      res.status(500).json({ message: 'Server error during registration' });
+      console.error('Email verification error:', error);
+      res.status(500).json({ message: 'Server error during email verification' });
     }
   }
 );
+
+router.get('/getSecurityQA', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findOne(user.email).select('securityQuestion securityAnswer'); 
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ 
+      message: 'Simulation data retrieved successfully',
+      securityQuestion: user.securityQuestion,
+      securityQuestion: user.securityAnswer
+    });
+  } catch (error) {
+    console.error('Error fetching simulation data:', error);
+    res.status(500).json({ message: 'Server error while fetching simulation data' });
+  }
+});
+
+
+
 
 module.exports = router;
