@@ -147,35 +147,26 @@ router.get('/getSecurityQA', async (req, res) => {
 
 router.post('/resetPassword', async (req, res) => {
   try {
-    // Get the new password
-    const { email } = req.body.email;
-    const { password } = req.body.password;
+    const email = req.body.email;
+    const password = req.body.password;
 
-    // Check if the new password is provided
     if (!password) {
       return res.status(400).json({ message: 'Password is required' });
     }
 
-    if (await User.findOne({ email })) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      
-      // Set the update object
-      const filter = { _id: req.user.id };
-      const update = { password: hashedPassword };
+    const user = await User.findOne({ email });
 
-      const user = await User.findOneAndUpdate(filter, update, { new: true });
-
-      return res.status(201).json({ message: 'Email already exists' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    // Hash the password before updating
-    
 
-    
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Update the user
-    
+    const update = { password: hashedPassword };
 
-    res.json({ message: 'Password updated successfully', user });
+    await User.findOneAndUpdate({ _id: user._id }, update);
+
+    return res.status(201).json({ message: 'Password updated successfully' });
   } catch (error) {
     console.error('Error updating password:', error);
     res.status(500).json({ message: 'Server error while updating password' });
