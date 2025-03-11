@@ -372,7 +372,7 @@
 }
 
 .schedule-form input,
-.schedule-form textarea {
+.schedule-form select {
     padding: 0.5rem;
     border: 1px solid var(--backgroundContrastGreen);
     border-radius: 8px;
@@ -381,9 +381,8 @@
     margin-top: 0.5rem;
 }
 
-.schedule-form textarea {
-    resize: vertical;
-    min-height: 100px;
+.schedule-form select {
+    height: 40px;
 }
 
 .submit-button {
