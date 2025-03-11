@@ -20,9 +20,7 @@ export default function ForgotPasswordForm() {
     const [showForm, setShowForm] = useState(true);
 
 
-    const handleClick = () => {
-      setShowForm(!showForm);
-    };
+   
 
     
     const handleResetPassword = async () => {
@@ -38,8 +36,7 @@ export default function ForgotPasswordForm() {
     };
 
 
-    const verifyEmail = async (e: React.FormEvent) => {
-            e.preventDefault();
+    const verifyEmail = async (email: string) => {
             // Resets Error and Success Messages
             console.log('Sending update email request...');
             // Checks if email is provided
@@ -63,12 +60,27 @@ export default function ForgotPasswordForm() {
                 console.log("email verified!");
                 return true;
             }
+
+            else {
+                console.log('email not verified');
+                return false;
+            }
           }
           catch (error) {
             console.error('Error updating email:', error);
     
           }
           };
+
+      const handleClick = async () => {
+        // Checks if current password entered is correct
+        const verifiedEmail = await verifyEmail(formData.email);
+        if (verifiedEmail)
+        {
+          setShowForm(!showForm);
+        }
+        
+      };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -125,7 +137,7 @@ export default function ForgotPasswordForm() {
                 </form>
               </div>
               
-              <button onClick={verifyEmail} className="password__button">Show Form</button>
+              <button onClick={handleClick} className="password__button">Show Form</button>
               <div className="" style={{ display: showForm ? 'block' : 'none' }}>
                 
                   <form className="password__form__container" onSubmit={handleSubmit}>
