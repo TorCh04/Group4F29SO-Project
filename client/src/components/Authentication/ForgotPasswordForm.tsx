@@ -16,8 +16,7 @@ export default function ForgotPasswordForm() {
         email: '',
         firstName: '',
         lastName: '',
-        password: '',
-        confirmPassword: ''
+        securityAnswer: ''
     });
     const [errors, setErrors] = useState({
                                                 email: '',
@@ -47,7 +46,6 @@ export default function ForgotPasswordForm() {
 
 
     const verifyEmail = async (email: string) => {
-
             setErrors(prevErrors => ({ ...prevErrors, email: '' }))
             // Resets Error and Success Messages
             console.log('Sending update email request...');
@@ -60,12 +58,10 @@ export default function ForgotPasswordForm() {
             
             try {
                 // Get token from local storage
-                const token = localStorage.getItem('token');
                 // Make a POST request to update email
                 const response = await axios.post(
                 'http://localhost:8080/verifyEmail', 
                 { email: formData.email },  
-                { headers: { Authorization: `Bearer ${token}` } } 
             );     
     
             if (response.status === 201) {
@@ -84,11 +80,26 @@ export default function ForgotPasswordForm() {
           }
           };
 
-      const handleClick = async () => {
+          const verifyAnswer = async (e: React.FormEvent) => {
+            e.preventDefault();
+            if (formData.securityAnswer !== data.securityAnswer) 
+            {
+              console.log("WRong")
+            }
+
+            else {
+              console.log("Right")
+              navigate('/resetPassword');
+            }
+            
+          }
+      const handleClick = async (e: React.FormEvent) => {
+        e.preventDefault();
         // Checks if current password entered is correct
         const verifiedEmail = await verifyEmail(formData.email);
         if (verifiedEmail)
         {
+          await fetchSecurityQA();
           setShowForm(!showForm);
         }
 
@@ -151,6 +162,7 @@ export default function ForgotPasswordForm() {
 
 
       console.log("Email:" + formData.email);
+      console.log("Answer:" + formData.securityAnswer);
 
     return (
         <div className="password__center">
@@ -160,7 +172,7 @@ export default function ForgotPasswordForm() {
                   <h2 className="password__heading">Forgot Password</h2>
               </div>
               <div className="" style={{ display: showForm ? 'block' : 'none' }}>
-                <form className="password__form__container">
+                <form className="password__form__container" onSubmit={handleClick}>
                       <input 
                           type="text" 
                           placeholder="Please Enter Your Email" 
@@ -170,33 +182,26 @@ export default function ForgotPasswordForm() {
                           required
                       />
                       {errors && <p className="error__message">{errors.email}</p>}
+                      <input type="submit" value="Submit Email" className="password__submit__button" />
                 </form>
                 {errors && <p className="error__message">{errors.email}</p>}
               </div>
               
               <button onClick={handleClick} className="password__button">Show Form</button>
-              <button onClick={fetchSecurityQA} className="password__button">Get QA</button>
+              {/* <button onClick={fetchSecurityQA} className="password__button">Get QA</button> */}
               <div className="" style={{ display: showForm ? 'none' : 'block' }}>
-              
-                  <form className="password__form__container">
+                <h2 className="password__heading">Security Question: {data.securityQuestion}</h2>
+                  <form className="password__form__container" onSubmit={verifyAnswer}>
                       <input 
-                          type="password" 
-                          placeholder="Password" 
+                          type="text" 
+                          placeholder="Enter Answer" 
                           className="password__input"
-                          value={formData.password}
-                          onChange={(e) => setFormData({...formData, password: e.target.value})}
-                          required
-                      />
-                      <input 
-                          type="password" 
-                          placeholder="Confirm Password" 
-                          className="password__input"
-                          value={formData.confirmPassword}
-                          onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                          value={formData.securityAnswer}
+                          onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
                           required
                       />
                       <div className="password__submit__grouping">
-                          <input type="submit" value="Register" className="password__submit__button" />
+                          <input type="submit" value="Submit Answer" className="password__submit__button" />
                           {/* {errors && <p className="error__message">{errors.email}</p>} */}
                           <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
                       </div>

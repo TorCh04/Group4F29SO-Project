@@ -144,6 +144,30 @@ router.get('/getSecurityQA', async (req, res) => {
 });
 
 
+router.post('/verifyAnswer', 
+  [
+    body('email').isEmail().normalizeEmail(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+    try {
+      const { email } = req.body;
+      
+      if (await User.findOne({ email })) {
+        return res.status(201).json({ message: 'Email already exists' });
+      }
+
+
+    } catch (error) {
+      console.error('Email verification error:', error);
+      res.status(500).json({ message: 'Server error during email verification' });
+    }
+  }
+);
+
+
 
 
 module.exports = router;
