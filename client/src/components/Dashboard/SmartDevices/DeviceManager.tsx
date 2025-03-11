@@ -190,7 +190,20 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
             </label>
             <label>
                 Instructions:
-                <textarea name="instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>
+                <select
+                    name="instructions"
+                    className="manager__instructions__select"
+                    value={instructions}
+                    onChange={(e) => setInstructions(e.target.value)}
+                >
+                    <option value="">Select an instruction</option>
+                    <option value="Turn On">Turn On</option>
+                    <option value="Turn Off">Turn Off</option>
+                    <option value="Increase Temperature">Increase Temperature</option>
+                    <option value="Decrease Temperature">Decrease Temperature</option>
+                    <option value="Start Cleaning">Start Cleaning</option>
+                    <option value="Stop Cleaning">Stop Cleaning</option>
+                </select>
             </label>
             <button type="submit" className="manager__submit__button">Add Schedule</button>
         </form>
