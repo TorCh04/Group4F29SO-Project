@@ -41,7 +41,7 @@ export default function Sidebar() {
   }, [isMenuOpen]);
 
   return (
-    <div>
+    <>
       {!isMenuOpen && (
         <button className="menu-button" onClick={toggleMenu}>
           ☰
@@ -64,6 +64,6 @@ export default function Sidebar() {
         </div>
         <button className="sidebar__logout" onClick={logout}>Logout</button>
       </div>
-    </div>
+    </>
   );
 }
