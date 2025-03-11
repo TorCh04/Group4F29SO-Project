@@ -23,13 +23,13 @@ router.post('/register',
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { email, firstName, lastName, password } = req.body;
+      const { email, firstName, lastName, password, securityQuestion, securityAnswer } = req.body;
       
       if (await User.findOne({ email })) {
         return res.status(400).json({ message: 'Email already exists' });
       }
 
-      const user = new User({ email, firstName, lastName, password });
+      const user = new User({ email, firstName, lastName, password, securityQuestion, securityAnswer });
       await user.save();
       res.status(201).json({ message: 'Registration successful' });
     } catch (error) {

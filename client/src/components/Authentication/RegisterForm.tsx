@@ -26,7 +26,9 @@ export default function RegisterForm() {
         firstName: '',
         lastName: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        securityQuestion: '',
+        securityAnswer: ''
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -63,6 +65,15 @@ export default function RegisterForm() {
         }
       };
 
+
+      // Solely for Testing
+      console.log("Security Question:",formData.securityQuestion);
+      console.log("Security Answer:",formData.securityAnswer);
+    // console.log("Updating Name:", firstName);
+    // console.log("Updating Email:", email);
+    // console.log("Updating Password:", curPassword);
+    // console.log("Updating New Password:", newPassword);
+    // console.log("Updating Confirm Password:", confirmPassword);
     return (
         <div className="login__center">
             <div className="login__container" id="register__container__override">
@@ -112,14 +123,22 @@ export default function RegisterForm() {
                             onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                             required
                         />
-                        <select aria-label="Select an option" className='login__input'>
+                        <select aria-label="Select an option" className='login__input' 
+                        value={formData.securityQuestion} 
+                        onChange={(e) => setFormData({...formData, securityQuestion: e.target.value})}>
                         <option selected disabled>Please choose...</option>
                           {securityQ.map((question, index) => (
                             <option key={index} value={question}>{question}</option>
                           ))}
                         </select>  
-                        <button type="button" data-action="follow">GO TO URL</button>
-                        <button type="button" data-action="download">DOWNLOAD</button>
+                        <input 
+                          type="text" 
+                          placeholder="Answer" 
+                          className="login__input"
+                          value={formData.securityAnswer}
+                          onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
+                          required
+                          />
                         <div className="login__submit__grouping">
                             <input type="submit" value="Register" className="login__button" />
                             {error && <p className="error__message">{error}</p>}
