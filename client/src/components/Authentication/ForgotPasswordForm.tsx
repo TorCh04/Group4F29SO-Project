@@ -15,28 +15,32 @@ export default function ForgotPasswordForm() {
         password: '',
         confirmPassword: ''
     });
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState({
+                                                email: '',
+                                                answer: '',
+                                            });
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(true);
 
 
-   
 
     
-    const handleResetPassword = async () => {
-        try {
-            const response = await axios.post('http://localhost:8080/resetPassword', { email: formData.email });
-            if (response.status === 200) {
-                setError('Password reset email sent');
-            }
-        } catch (error) {
-            console.error('Error sending password reset email:', error);
-            setError('Failed to send password reset email');
-        }
-    };
+    // const handleResetPassword = async () => {
+    //     try {
+    //         const response = await axios.post('http://localhost:8080/resetPassword', { email: formData.email });
+    //         if (response.status === 200) {
+    //           setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' })'Password reset email sent');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error sending password reset email:', error);
+    //         setErrors("Failed to send password reset email");
+    //     }
+    // };
 
 
     const verifyEmail = async (email: string) => {
+
+            setErrors(prevErrors => ({ ...prevErrors, email: '' }))
             // Resets Error and Success Messages
             console.log('Sending update email request...');
             // Checks if email is provided
@@ -79,40 +83,44 @@ export default function ForgotPasswordForm() {
         {
           setShowForm(!showForm);
         }
-        
+
+        if (!verifiedEmail)
+        {
+          setErrors(prevErrors => ({ ...prevErrors, email: 'Incorrect Email!' }))
+        }
       };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match');
-          return;
-        }
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     if (formData.password !== formData.confirmPassword) {
+    //       setError('Passwords do not match');
+    //       return;
+    //     }
       
-        try {
-          const registerResponse = await axios.post('http://localhost:8080/register', formData);
-          if (registerResponse.status === 201) {
-            // Registration succeeded. Now attempt auto-login.
-            try {
-              const loginResponse = await axios.post('http://localhost:8080/login', {
-                email: formData.email,
-                password: formData.password
-              });
-              if (loginResponse.status === 200) {
-                // Store token and navigate to dashboard
-                localStorage.setItem('token', loginResponse.data.token);
-                navigate('/devices');
-              }
-            } catch (loginError) {
-              setError('Auto-login failed. Please try logging in manually.');
-              console.error('Login error:', loginError);
-            }
-          }
-        } catch (registerError) {
-          setError('Registration failed - please check your details');
-          console.error('Registration error:', registerError);
-        }
-      };
+    //     try {
+    //       const registerResponse = await axios.post('http://localhost:8080/register', formData);
+    //       if (registerResponse.status === 201) {
+    //         // Registration succeeded. Now attempt auto-login.
+    //         try {
+    //           const loginResponse = await axios.post('http://localhost:8080/login', {
+    //             email: formData.email,
+    //             password: formData.password
+    //           });
+    //           if (loginResponse.status === 200) {
+    //             // Store token and navigate to dashboard
+    //             localStorage.setItem('token', loginResponse.data.token);
+    //             navigate('/devices');
+    //           }
+    //         } catch (loginError) {
+    //           setError('Auto-login failed. Please try logging in manually.');
+    //           console.error('Login error:', loginError);
+    //         }
+    //       }
+    //     } catch (registerError) {
+    //       setError('Registration failed - please check your details');
+    //       console.error('Registration error:', registerError);
+    //     }
+    //   };
 
 
       console.log("Email:" + formData.email);
@@ -125,7 +133,7 @@ export default function ForgotPasswordForm() {
                   <h2 className="password__heading">Forgot Password</h2>
               </div>
               <div>
-                <form className="password__form__container" onSubmit={handleSubmit}>
+                <form className="password__form__container">
                       <input 
                           type="text" 
                           placeholder="Please Enter Your Email" 
@@ -135,12 +143,13 @@ export default function ForgotPasswordForm() {
                           required
                       />
                 </form>
+                {errors && <p className="error__message">{errors.email}</p>}
               </div>
               
               <button onClick={handleClick} className="password__button">Show Form</button>
               <div className="" style={{ display: showForm ? 'block' : 'none' }}>
                 
-                  <form className="password__form__container" onSubmit={handleSubmit}>
+                  <form className="password__form__container">
                       <input 
                           type="password" 
                           placeholder="Password" 
@@ -159,7 +168,7 @@ export default function ForgotPasswordForm() {
                       />
                       <div className="password__submit__grouping">
                           <input type="submit" value="Register" className="password__submit__button" />
-                          {error && <p className="error__message">{error}</p>}
+                          {/* {error && <p className="error__message">{error}</p>} */}
                           <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
                       </div>
                   </form>
