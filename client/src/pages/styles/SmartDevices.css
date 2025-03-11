@@ -212,7 +212,8 @@
     padding: 10px 20px 10px 20px;
     color: var(--white);
     font-family: 'Inter', system-ui;
-    font-size: clamp(2px, 3.5vw, 24px); /* Scales between 20px and 22px based on viewport width */
+    font-size: clamp(20px, 3.5vw, 24px); /* Scales between 20px and 22px based on viewport width */
+    cursor: pointer;
 }
 /* #endregion */
 

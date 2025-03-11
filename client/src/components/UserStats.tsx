@@ -1,27 +1,25 @@
 import { EnergyFact } from './EnergyStats';
 import useSimulationData from './Dashboard/hooks/useSimulationData';
+import { useOutletContext } from 'react-router-dom';
 
-interface DashboardContext {
+interface ProfileContext {
   userData: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+      password: string;
   } | null;
-  logout: () => void;
-}
-
-interface UserStatsProps {
-  userData: { firstName: string } | null;
 }
 
 export default function UserStats(/*{ userData }: UserStatsProps*/) {
   // Use the hook inside the component
   const { humidity, temperature } = useSimulationData();
+  const {userData } = useOutletContext<ProfileContext>();
 
   return (
     <div className="userStatsContainer">
-      <h1 className="userWelcome">Hi {/*userData?.firstName ||*/ "Guest"}!</h1>
+      <h1 className="userWelcome">Hi {userData?.firstName}!</h1>
       <h3 className="introducingStats">Your current household statistics:</h3>
       <div className="stats-container">
         <span className="stat">
