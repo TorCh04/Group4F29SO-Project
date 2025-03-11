@@ -114,8 +114,38 @@
   }
 }
 
+@media (max-height: 800px) {
+  .menu-button {
+    display: block;
+  }
+
+  .sidebar__container {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    z-index: 1000;
+  }
+
+  .sidebar__container.open {
+    transform: translateX(0);
+  }
+
+  .sidebar__container.open + .overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}
+
 /* Ensure menu button shows on smaller screens */
-@media (max-width: 375px) and (max-height: 667px) {
+@media (max-width: 375px) and (max-height: 600px) {
   .menu-button {
     display: block;
   }

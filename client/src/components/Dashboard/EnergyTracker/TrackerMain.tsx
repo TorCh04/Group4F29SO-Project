@@ -17,7 +17,7 @@ export default function TrackerMain() {
 
                 {currentChart === 'totalEnergyUsage' && <EnergyUsageChart timeRange={timeRange} />}
                 {currentChart === 'totalEnergyGenerated' && <EnergyGeneratedChart timeRange={timeRange} />}
-
+                        
                 <div className="et_button_container">
                     <div className="et_button" onClick={() => setTimeRange('today')}>Today</div>
                     <div className="et_button" onClick={() => setTimeRange('last7Days')}>Last 7 Days</div>
