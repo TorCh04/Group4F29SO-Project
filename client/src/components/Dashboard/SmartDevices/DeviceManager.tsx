@@ -176,10 +176,14 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
                     <img src={Plus} className="manager__close__image" />
                 </button>
             </div>
-            <label>
-                Name:
-                <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
+            <input
+                type="text"
+                name="name"
+                className="manager__name__input"
+                placeholder="Schedule Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
             <label>
                 Device:
                 <input type="text" name="device" value={device} onChange={(e) => setDevice(e.target.value)} />
@@ -188,7 +192,7 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
                 Instructions:
                 <textarea name="instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>
             </label>
-            <button type="submit">Add Schedule</button>
+            <button type="submit" className="manager__submit__button">Add Schedule</button>
         </form>
     );
 }
