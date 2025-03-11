@@ -10,6 +10,7 @@ export default function SmartDevices() {
     const [isDeviceManagerVisible, setDeviceManagerVisible] = useState(false);
     const [formType, setFormType] = useState<'device' | 'schedule' | 'energyProduction'>('device');
     const fetchDevicesRef = useRef<() => void>(() => {});
+    const fetchEnergySourcesRef = useRef<() => void>(() => {});
 
     const handleAddDeviceClick = () => {
         setFormType('device');
@@ -38,6 +39,13 @@ export default function SmartDevices() {
         fetchDevicesRef.current = fetchDevices;
     };
 
+    const handleEnergySourceAdded = () => {
+        fetchEnergySourcesRef.current();
+    };
+
+    const setFetchEnergySources = (fetchEnergySources: () => void) => {
+        fetchEnergySourcesRef.current = fetchEnergySources;
+    };
     return (
         <div className="devices__dashboard__main__container">
             <UserStats />
@@ -49,12 +57,12 @@ export default function SmartDevices() {
                 <SchedulesSection onAddSchedulesClick={handleAddScheduleClick} />
 
                 {/* Energy Source */}
-                <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} />
+                <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} setFetchEnergySources={setFetchEnergySources} />
             </div>
             <div className="devices__dashboard__right__container">
                 {isDeviceManagerVisible && (
                     <>
-                        <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} />
+                        <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} onEnergySourceAdded={handleEnergySourceAdded} />
                     </>
                 )}
             </div>

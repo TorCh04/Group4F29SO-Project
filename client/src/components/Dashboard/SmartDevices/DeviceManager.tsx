@@ -9,9 +9,10 @@ interface DeviceManagerProps {
     formType: 'device' | 'schedule' | 'energyProduction';
     onClose: () => void;
     onDeviceAdded: () => void;
+    onEnergySourceAdded: () => void;
 }
 
-export default function DeviceManager({ formType, onClose, onDeviceAdded }: DeviceManagerProps) {
+export default function DeviceManager({ formType, onClose, onDeviceAdded, onEnergySourceAdded }: DeviceManagerProps) {
     const renderForm = () => {
         switch (formType) {
             case 'device':
@@ -19,7 +20,7 @@ export default function DeviceManager({ formType, onClose, onDeviceAdded }: Devi
             case 'schedule':
                 return <ScheduleForm onClose={onClose} />;
             case 'energyProduction':
-                return <EnergyProductionForm onClose={onClose} />;
+                return <EnergyProductionForm onClose={onClose} onEnergySourceAdded={onEnergySourceAdded} />;
             default:
                 return null;
         }
@@ -197,28 +198,99 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
     );
 }
 
-function EnergyProductionForm({ onClose }: { onClose: () => void }) {
+
+interface EnergyProductionFormProps {
+    onClose: () => void;
+    onEnergySourceAdded: () => void;
+}
+
+function EnergyProductionForm({ onClose, onEnergySourceAdded }: EnergyProductionFormProps) {
+    const [energySourceTypeIndex, setEnergySourceTypeIndex] = useState(0);
+    const [status, setStatus] = useState('Not Connected');
+    const [energySourceName, setEnergySourceName] = useState('');
+
+    const energySourceTypes = [
+        { name: 'Roomba', image: Outlet },
+        { name: 'Light Switch', image: Roomba },
+        { name: 'Outlet', image: LightSwitch }
+    ];
+
+    const handlePrevious = () => {
+        setEnergySourceTypeIndex((prevIndex) => (prevIndex === 0 ? energySourceTypes.length - 1 : prevIndex - 1));
+    };
+
+    const handleNext = () => {
+        setEnergySourceTypeIndex((prevIndex) => (prevIndex === energySourceTypes.length - 1 ? 0 : prevIndex + 1));
+    };
+
+    const handleSync = () => {
+        setStatus('Connected');
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch('http://localhost:8080/addEnergySource', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name: energySourceName,
+                    type: energySourceTypes[energySourceTypeIndex].name,
+                    status
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Energy Source added successfully:', data);
+                onEnergySourceAdded(); // Call the callback to update the devices list
+                onClose();
+            } else {
+                console.error('Error adding energy source:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding energy source:', error);
+        }
+    };
+
     return (
-        <form>
+        <>
             <div className="manager__heading">
-                <h2 className="devices__heading">Add Energy Source</h2>
+                <h2 className="devices__heading">Add Enery Source</h2>
                 <button onClick={onClose} className="manager__close">
                     <img src={Plus} className="manager__close__image" />
                 </button>
             </div>
-            <label>
-                Name:
-                <input type="text" name="name" />
-            </label>
-            <label>
-                Type:
-                <input type="text" name="type" />
-            </label>
-            <label>
-                Capacity:
-                <input type="text" name="capacity" />
-            </label>
-            <button type="submit">Add Energy Source</button>
-        </form>
+            <form className="manager__form" onSubmit={handleSubmit}>
+                <img src={energySourceTypes[energySourceTypeIndex].image} className="manager__image" alt={energySourceTypes[energySourceTypeIndex].name} />
+                <div className="manager__type__selector">
+                    <button type="button" className="manager__direction__button" onClick={handlePrevious}>
+                        <img src={Arrow} className="manager__arrow" alt="Arrow" />
+                    </button>
+                    <p className="device__block__text manager__type__text">{energySourceTypes[energySourceTypeIndex].name}</p>
+                    <button type="button" className="manager__direction__button" onClick={handleNext}>
+                        <img src={Arrow} className="manager__arrow manager__arrow__right" alt="Arrow" />
+                    </button>
+                </div>
+                <input
+                    type="text"
+                    name="device"
+                    className="manager__name__input"
+                    placeholder="Device Name"
+                    value={energySourceName}
+                    onChange={(e) => setEnergySourceName(e.target.value)}
+                />
+                <div className="manager__sync__container">
+                    <button type="button" className="manager__sync__button" onClick={handleSync}>Sync</button>
+                    <p className="manager__sync__text">Status: {status}</p>
+                </div>
+                <button type="submit" className="manager__submit__button">Add Device</button>
+            </form>
+        </>
     );
 }

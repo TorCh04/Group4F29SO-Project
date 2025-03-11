@@ -20,7 +20,19 @@ export interface Device {
     status: string;
 }
 
-export default interface DevicesSectionProps {
+export interface EnergySource {
+    _id: string;
+    name: string;
+    type: string;
+    status: string;
+}
+
+export interface DevicesSectionProps {
     onAddDeviceClick: () => void;
     setFetchDevices: (fetchDevices: () => void) => void;
+}
+
+export interface EnergyProductionSectionProps {
+    onAddEnergySourceClick: () => void;
+    setFetchEnergySources: (fetchEnergySources: () => void) => void;
 }

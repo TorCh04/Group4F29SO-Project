@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import AddDeviceBlock from './AddDeviceBlock';
 import DeviceBlock from './DeviceBlock';
-import { Device } from '../../../types/index';
-import DevicesSectionProps from '../../../types/index.ts';
+import { Device, DevicesSectionProps } from '../../../types/index';
 
 export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: DevicesSectionProps) {
     const [devices, setDevices] = useState<Device[]>([]);

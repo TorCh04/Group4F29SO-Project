@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
   humidity: { type: Number, required: false },
   temperature: { type: Number, required: false },
   devices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }],
-  schedules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Schedule' }]
+  schedules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Schedule' }],
+  energysources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'EnergySource' }]
 });
 
 // Hash password before saving
