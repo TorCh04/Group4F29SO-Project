@@ -16,7 +16,9 @@ export default function ForgotPasswordForm() {
         email: '',
         firstName: '',
         lastName: '',
-        securityAnswer: ''
+        securityAnswer: '',
+        newPassword: '',
+        confirmPassword: ''
     });
     const [errors, setErrors] = useState({
                                                 email: '',
@@ -80,19 +82,7 @@ export default function ForgotPasswordForm() {
           }
           };
 
-      const verifyAnswer = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (formData.securityAnswer !== data.securityAnswer) 
-        {
-          console.log("WRong")
-        }
-
-        else {
-          console.log("Right")
-          setStep(3);
-        }
-        
-      };
+      
 
       const handleClick = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -130,42 +120,77 @@ export default function ForgotPasswordForm() {
           console.error('Error fetching simulation data:', error);
         }
       };
-    
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     if (formData.password !== formData.confirmPassword) {
-    //       setError('Passwords do not match');
-    //       return;
-    //     }
       
-    //     try {
-    //       const registerResponse = await axios.post('http://localhost:8080/register', formData);
-    //       if (registerResponse.status === 201) {
-    //         // Registration succeeded. Now attempt auto-login.
-    //         try {
-    //           const loginResponse = await axios.post('http://localhost:8080/login', {
-    //             email: formData.email,
-    //             password: formData.password
-    //           });
-    //           if (loginResponse.status === 200) {
-    //             // Store token and navigate to dashboard
-    //             localStorage.setItem('token', loginResponse.data.token);
-    //             navigate('/devices');
-    //           }
-    //         } catch (loginError) {
-    //           setError('Auto-login failed. Please try logging in manually.');
-    //           console.error('Login error:', loginError);
-    //         }
-    //       }
-    //     } catch (registerError) {
-    //       setError('Registration failed - please check your details');
-    //       console.error('Registration error:', registerError);
-    //     }
-    //   };
+
+    const verifyAnswer = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (formData.securityAnswer !== data.securityAnswer) 
+        {
+          console.log("WRong")
+        }
+
+        else {
+          console.log("Right")
+          setStep(3);
+        }
+        
+      };
+    
+
+      const updatePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Reset success message
+        setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
+        setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
+
+        // Checks if current password entered is correct
+
+        // If current password entered is incorrect
+
+        // Checks if new password and confirm password match
+        if (formData.newPassword !== formData.confirmPassword) {
+            console.log("Passwords do not match");
+            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            return;
+            } 
+
+        // Checks if either newPassword or confirmPassword is the same as current password
+        // if (curPassword === newPassword || curPassword == confirmPassword) {
+        //     setErrors(prevErrors => ({ ...prevErrors, samePassword: 'New password cannot be the same as current password' }));
+        //     return;
+        // }
+
+        // Checks if either newPassword or confirmPassword is empty
+        // if (curPassword && (newPassword == '' || confirmPassword == '')) 
+        //     {
+        //         setErrors(prevErrors => ({ ...prevErrors, newPassword: 'No new password entered' }));
+        //         return;
+        //     } 
+
+        console.log('Sending update password request...');
+
+        try {
+            // Get token from local storage
+            // Make a POST request to update the password
+            const response = await axios.post(
+            'http://localhost:8080/resetPassword', 
+            { password: formData.confirmPassword, email: formData.email },
+        );     
+        console.log('Response reached');
+        console.log(response.data);
+        } catch (error) {
+            // If there's an error, log it
+            console.error("Error updating password:", error);
+        } 
+    };
 
 
       console.log("Email:" + formData.email);
       console.log("Answer:" + formData.securityAnswer);
+      console.log("Newp :" + formData.newPassword);
+      console.log("Conp:" + formData.confirmPassword);
+      
 
     return (
         <div className="password__center">
@@ -209,29 +234,30 @@ export default function ForgotPasswordForm() {
                             required
                         />
                         <input type="submit" value="Submit Answer" className="password__submit__button" />
-                        <div className="password__submit__grouping">
-                            
-                            {/* {errors && <p className="error__message">{errors.email}</p>} */}
-                            <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
-                        </div>
                     </form>
                 </div>
               )}
               
               
               {step === 3 && (
-                <div className="" style={{ display: showForm ? 'none' : 'block' }}>
-                <h2 className="password__heading">Security Question: {data.securityQuestion}</h2>
-                  <form className="password__form__container" onSubmit={verifyAnswer}>
-                      <input 
-                          type="text" 
-                          placeholder="Enter Answer" 
-                          className="password__input"
-                          value={formData.securityAnswer}
-                          onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
-                          required
-                      />
-                      <input type="submit" value="Submit Answer" className="password__submit__button" />
+                <div className="">
+                <h2 className="password__heading">Reset Your Password</h2>
+                  <form className="password__form__container" onSubmit={updatePassword}>
+                  <input
+                            type="password"
+                            placeholder="New Password"
+                            className="profile__input"
+                            value={formData.newPassword}
+                            onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            className="profile__input"
+                            value={formData.confirmPassword}
+                            onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                        />
+                        <input type="submit" value="Submit" className="profile__button" />
                       <div className="password__submit__grouping">
                           
                           {/* {errors && <p className="error__message">{errors.email}</p>} */}

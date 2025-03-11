@@ -144,30 +144,43 @@ router.get('/getSecurityQA', async (req, res) => {
 });
 
 
-router.post('/verifyAnswer', 
-  [
-    body('email').isEmail().normalizeEmail(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-    try {
-      const { email } = req.body;
-      
-      if (await User.findOne({ email })) {
-        return res.status(201).json({ message: 'Email already exists' });
-      }
+router.post('/resetPassword', async (req, res) => {
+  try {
+    // Get the new password
+    const { email } = req.body.email;
+    const { password } = req.body.password;
 
-
-    } catch (error) {
-      console.error('Email verification error:', error);
-      res.status(500).json({ message: 'Server error during email verification' });
+    // Check if the new password is provided
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required' });
     }
+
+    if (await User.findOne({ email })) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Set the update object
+      const filter = { _id: req.user.id };
+      const update = { password: hashedPassword };
+
+      const user = await User.findOneAndUpdate(filter, update, { new: true });
+
+      return res.status(201).json({ message: 'Email already exists' });
+    }
+    // Hash the password before updating
+    
+
+    
+
+    // Update the user
+    
+
+    res.json({ message: 'Password updated successfully', user });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({ message: 'Server error while updating password' });
   }
-);
-
-
+});
 
 
 module.exports = router;
