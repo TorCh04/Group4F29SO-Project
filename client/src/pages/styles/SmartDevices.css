@@ -296,7 +296,7 @@
     display: flex;
     justify-content: left;
     align-items: left;
-    margin-top: 30px;
+    margin-top: 10px;
     height: 30px;
     overflow: hidden; /* Hide overflowing text */
     min-width: 600px;
@@ -306,6 +306,7 @@
     display: flex;
     flex-direction: column;
     animation: rotateFacts 20s linear infinite; /* Smooth scrolling */
+    transform: translateY(0);
   }
   
   .energy-fact {
@@ -323,12 +324,11 @@
   .energy-fact:nth-child(6) { animation-delay: 20s; }
   
   @keyframes rotateFacts {
-    0%, 20% { transform: translateY(0); }
-    25%, 45% { transform: translateY(-32px); } /* Move to second fact */
-    50%, 70% { transform: translateY(-64px); } /* Move to third fact */
-    75%, 95% { transform: translateY(-96px); } /* Move to fourth fact */
-    100% { transform: translateY(-128px); } /* Move to fifth fact */
-}
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-30px); }  /* First transition */
+    50% { transform: translateY(-64px); }  /* Second transition */
+    75% { transform: translateY(-96px); }  /* Third transition */
+    100% { transform: translateY(-128px); } /* End of animation */
 }
   
 .stats-container {
