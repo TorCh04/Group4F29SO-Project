@@ -62,7 +62,7 @@ export default function Sidebar() {
           <p>🌡️ {temperature !== null ? temperature : 'Loading...'}°C</p>
           <p>💧 {humidity !== null ? humidity : 'Loading...'}%</p>
         </div>
-        <button onClick={logout}>Logout</button>
+        <button className="sidebar__logout" onClick={logout}>Logout</button>
       </div>
     </div>
   );
