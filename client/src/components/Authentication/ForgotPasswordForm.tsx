@@ -24,6 +24,52 @@ export default function ForgotPasswordForm() {
       setShowForm(!showForm);
     };
 
+    
+    const handleResetPassword = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/resetPassword', { email: formData.email });
+            if (response.status === 200) {
+                setError('Password reset email sent');
+            }
+        } catch (error) {
+            console.error('Error sending password reset email:', error);
+            setError('Failed to send password reset email');
+        }
+    };
+
+
+    const verifyEmail = async (e: React.FormEvent) => {
+            e.preventDefault();
+            // Resets Error and Success Messages
+            console.log('Sending update email request...');
+            // Checks if email is provided
+            if (!formData.email) 
+            {
+                return;
+            }
+            // Checks if emails match
+            
+            try {
+                // Get token from local storage
+                const token = localStorage.getItem('token');
+                // Make a POST request to update email
+                const response = await axios.post(
+                'http://localhost:8080/verifyEmail', 
+                { email: formData.email },  
+                { headers: { Authorization: `Bearer ${token}` } } 
+            );     
+    
+            if (response.status === 201) {
+                console.log("email verified!");
+                return true;
+            }
+          }
+          catch (error) {
+            console.error('Error updating email:', error);
+    
+          }
+          };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
@@ -56,6 +102,9 @@ export default function ForgotPasswordForm() {
         }
       };
 
+
+      console.log("Email:" + formData.email);
+
     return (
         <div className="password__center">
           <div className="password__container" id="register__container__override">
@@ -66,18 +115,19 @@ export default function ForgotPasswordForm() {
               <div>
                 <form className="password__form__container" onSubmit={handleSubmit}>
                       <input 
-                          type="password" 
-                          placeholder="Password" 
+                          type="text" 
+                          placeholder="Please Enter Your Email" 
                           className="password__input"
-                          value={formData.password}
-                          onChange={(e) => setFormData({...formData, password: e.target.value})}
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
                           required
                       />
                 </form>
               </div>
               
+              <button onClick={verifyEmail} className="password__button">Show Form</button>
               <div className="" style={{ display: showForm ? 'block' : 'none' }}>
-                <button onClick={handleClick} className="password__button">Show Form</button>
+                
                   <form className="password__form__container" onSubmit={handleSubmit}>
                       <input 
                           type="password" 

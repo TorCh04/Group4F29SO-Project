@@ -98,24 +98,29 @@ router.get('/dashboard', verifyToken, async (req, res) => {
 });
 
 // Forgot password endpoint
-router.post('/forgotPassword', async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
+router.post('/verifyEmail', 
+  [
+    body('email').isEmail().normalizeEmail(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    try {
+      const { email } = req.body;
+      
+      if (await User.findOne({ email })) {
+        return res.status(201).json({ message: 'Email already exists' });
+      }
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-
-    const resetLink = `http://localhost:3000/resetPassword/${user._id}/${token}`;
-
-    // Send email with reset link
-    // ...
-
-    res.json({ message: 'Reset link sent to email' });
-  } catch (error) {
-    console.error('Error sending reset link:', error);
-    res.status(500).json({ message: 'Server error while sending reset link' });
+      const user = new User({ email, firstName, lastName, password, securityQuestion, securityAnswer });
+      await user.save();
+      res.status(201).json({ message: 'Registration successful' });
+    } catch (error) {
+      console.error('Registration error:', error);
+      res.status(500).json({ message: 'Server error during registration' });
+    }
   }
-});
+);
 
 module.exports = router;
