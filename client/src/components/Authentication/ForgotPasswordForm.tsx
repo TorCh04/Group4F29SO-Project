@@ -20,87 +20,73 @@ export default function ForgotPasswordForm() {
         newPassword: '',
         confirmPassword: ''
     });
+    const [success, setSuccess] = useState('');
     const [errors, setErrors] = useState({
                                                 email: '',
                                                 answer: '',
+                                                password: '',
                                             });
     const navigate = useNavigate();
 
     const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
     const [step, setStep] = useState(1);
-    
-    const [showForm, setShowForm] = useState(true);
 
 
 
-    
-    // const handleResetPassword = async () => {
-    //     try {
-    //         const response = await axios.post('http://localhost:8080/resetPassword', { email: formData.email });
-    //         if (response.status === 200) {
-    //           setErrors(prevErrors => ({ ...prevErrors, name: 'A name is required' })'Password reset email sent');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error sending password reset email:', error);
-    //         setErrors("Failed to send password reset email");
-    //     }
-    // };
+    const verifyEmail = async () => {
+      setErrors(prevErrors => ({ ...prevErrors, email: '' }))
+      // Resets Error and Success Messages
+      console.log('Sending update email request...');
+      // Checks if email is provided
+      if (!formData.email) 
+      {
+          return;
+      }
+      // Checks if emails match
+      
+      try {
+          // Get token from local storage
+          // Make a POST request to update email
+          const response = await axios.post(
+          'http://localhost:8080/verifyEmail', 
+          { email: formData.email }
+      );     
 
+      if (response.status === 201) {
+          console.log("email verified!");
+          return true;
+      }
 
-    const verifyEmail = async (email: string) => {
-            setErrors(prevErrors => ({ ...prevErrors, email: '' }))
-            // Resets Error and Success Messages
-            console.log('Sending update email request...');
-            // Checks if email is provided
-            if (!formData.email) 
-            {
-                return;
-            }
-            // Checks if emails match
-            
-            try {
-                // Get token from local storage
-                // Make a POST request to update email
-                const response = await axios.post(
-                'http://localhost:8080/verifyEmail', 
-                { email: formData.email },  
-            );     
-    
-            if (response.status === 201) {
-                console.log("email verified!");
-                return true;
-            }
+      else {
+          console.log('email not verified');
+          return false;
+      }
+    }
+    catch (error) {
+      console.error('Error updating email:', error);
 
-            else {
-                console.log('email not verified');
-                return false;
-            }
-          }
-          catch (error) {
-            console.error('Error updating email:', error);
-    
-          }
-          };
+    }
+    };
 
       
 
-      const handleClick = async (e: React.FormEvent) => {
-        e.preventDefault();
-        // Checks if current password entered is correct
-        const verifiedEmail = await verifyEmail(formData.email);
-        if (verifiedEmail)
-        {
-          setStep(2);
-          await fetchSecurityQA();
-          
-          // setShowForm(!showForm);
-        }
+    const handleClick = async (e: React.FormEvent) => {
+      e.preventDefault();
+      // Checks if current password entered is correct
+      const verifiedEmail = await verifyEmail();
+      if (verifiedEmail)
+      {
+        setStep(2);
+        await fetchSecurityQA();
+        
+        // setShowForm(!showForm);
+      }
 
-        if (!verifiedEmail)
-        {
-          setErrors(prevErrors => ({ ...prevErrors, email: 'Incorrect Email!' }))
-        }
-      };
+      if (!verifiedEmail)
+      {
+        setErrors(prevErrors => ({ ...prevErrors, email: 'Email not recognised!' }))
+      }
+    };
 
 
       const fetchSecurityQA = async () => {
@@ -126,7 +112,7 @@ export default function ForgotPasswordForm() {
         e.preventDefault();
         if (formData.securityAnswer !== data.securityAnswer) 
         {
-          console.log("WRong")
+          setErrors(prevErrors => ({ ...prevErrors, answer: 'Answer is incorrect' }))
         }
 
         else {
@@ -140,18 +126,11 @@ export default function ForgotPasswordForm() {
       const updatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
         // Reset success message
-        setErrors(prevErrors => ({ ...prevErrors, newPassword: '' }));
-        setErrors(prevErrors => ({ ...prevErrors, curPassword: '' }));
-        setErrors(prevErrors => ({ ...prevErrors, samePassword: '' }));
-
-        // Checks if current password entered is correct
-
-        // If current password entered is incorrect
-
+        setErrors(prevErrors => ({ ...prevErrors, password: '' }));
         // Checks if new password and confirm password match
         if (formData.newPassword !== formData.confirmPassword) {
             console.log("Passwords do not match");
-            setErrors(prevErrors => ({ ...prevErrors, newPassword: 'Passwords do not match' }));
+            setErrors(prevErrors => ({ ...prevErrors, password: 'Passwords do not match' }));
             return;
             } 
 
@@ -179,6 +158,7 @@ export default function ForgotPasswordForm() {
         );     
         console.log('Response reached');
         console.log(response.data);
+        setSuccess("Password updated successfully!");
         } catch (error) {
             // If there's an error, log it
             console.error("Error updating password:", error);
@@ -213,7 +193,6 @@ export default function ForgotPasswordForm() {
                       {errors && <p className="error__message">{errors.email}</p>}
                       <input type="submit" value="Submit Email" className="password__submit__button" />
                 </form>
-                {errors && <p className="error__message">{errors.email}</p>}
               </div>
               )}
               
@@ -233,6 +212,7 @@ export default function ForgotPasswordForm() {
                             onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
                             required
                         />
+                        {errors && <p className="error__message">{errors.answer}</p>}
                         <input type="submit" value="Submit Answer" className="password__submit__button" />
                     </form>
                 </div>
@@ -246,22 +226,25 @@ export default function ForgotPasswordForm() {
                   <input
                             type="password"
                             placeholder="New Password"
-                            className="profile__input"
+                            className="password__input"
                             value={formData.newPassword}
                             onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
+                            required
                         />
                         <input
                             type="password"
                             placeholder="Confirm Password"
-                            className="profile__input"
+                            className="password__input"
                             value={formData.confirmPassword}
                             onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                            required
                         />
+                        {errors && <p className="error__message">{errors.password}</p>}
+                        {success && <p className="success__message">{success}</p>}
                         <input type="submit" value="Submit" className="profile__button" />
                       <div className="password__submit__grouping">
-                          
                           {/* {errors && <p className="error__message">{errors.email}</p>} */}
-                          <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
+                          <p>Back to Login <a href="/login" className="register__link">Login here</a></p>
                       </div>
                   </form>
               </div>
