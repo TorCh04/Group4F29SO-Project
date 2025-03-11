@@ -1,15 +1,16 @@
 body, html {
     margin: 0;
     padding: 0;
-  }
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
 
 /* Main Leaderboard region */
 /* #region */
 .leaderboard-container {
-    width: 80vw;  /* 80% of the viewport width */
+    width: 90vw;  /* 90% of the viewport width */
     max-width: 1100px; /* Prevents it from being too wide on large screens */
-    height: 95vh; /* Adjust height to leave space around it */
-    max-height: 750px; /* Prevents it from taking up too much vertical space */
+    height: auto; /* Adjust height to fit content */
+    max-height: 95vh; /* Prevents it from taking up too much vertical space */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,20 +21,18 @@ body, html {
     border-radius: 12px; /* Rounded edges */
     border: 5px solid #1a1a2a; /* Subtle border to separate from background */
     overflow: hidden;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 100px); /* Shifted slightly to the right */
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin: 2rem auto; /* Centered horizontally */
     font-family: 'Inter', system-ui;
     font-size: clamp(14px, 3vw, 16px); 
-  }
+}
 
-  .leaderboard-title{
+.leaderboard-title {
     font-family: 'Afacad', system-ui;
-    font-size: clamp(40px, 4vw, 24px);
-  }
+    font-size: clamp(24px, 4vw, 40px); /* Responsive font size */
+}
 
-  /* Leaderboard row - Increase spacing */
+/* Leaderboard row - Increase spacing */
 .leaderboard-row {
     display: flex;
     align-items: center;
@@ -42,7 +41,7 @@ body, html {
     margin-bottom: 0.5rem;
     background-color: #111827;
     transition: 0.3s;
-  }
+}
 
 /* #endregion */
   
@@ -56,10 +55,10 @@ body, html {
     width: 100%;
     max-width: 800px;
     margin-bottom: 1.5rem;
-  }
+}
   
-  /* Base style for top 3 */
-  .top-three-card {
+/* Base style for top 3 */
+.top-three-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,56 +69,56 @@ body, html {
     width: 120px;
     min-height: 160px;
     font-weight: bold;
-  }
+}
 
-  /* 🥇 Top 1 - Gold */
-  .top-one {
+/* 🥇 Top 1 - Gold */
+.top-one {
     background-color: #FFD700; /* Gold */
     color: rgb(255, 255, 255);
     border: 2px solid #EAC117;
     transform: translateY(-15px);
-  }
+}
   
-  /* 🥈 Top 2 - Silver */
-  .top-two {
+/* 🥈 Top 2 - Silver */
+.top-two {
     background-color: #C0C0C0; /* Silver */
     color: rgb(255, 255, 255);
     border: 2px solid #B0B0B0;
-  }
+}
   
-  /* 🥉 Top 3 - Bronze */
-  .top-three {
+/* 🥉 Top 3 - Bronze */
+.top-three {
     background-color: #CD7F32; /* Bronze */
     color: white;
     border: 2px solid #B87333;
-  }
+}
 
-  .top-three-card .user-name {
+.top-three-card .user-name {
     margin-bottom: -2px; /* Move name closer to points */
-  }
+}
 /* #endregion */
 
 /* Scrollable bottom section*/
 /* #region */
-  /* Keep the top section fixed */
-  .top-section {
+/* Keep the top section fixed */
+.top-section {
     width: 100%;
     max-width: 800px;
     text-align: center;
     margin-bottom: 1rem;
-  }
+}
   
-  /* Top 3 section stays when scrolling */
-  .top-three-container {
+/* Top 3 section stays when scrolling */
+.top-three-container {
     display: flex;
     justify-content: center;
     gap: 1rem;
     width: 100%;
     max-width: 800px;
-  }
+}
 
-  /* Scrollable leaderboard section */
-  .leaderboard-list {
+/* Scrollable leaderboard section */
+.leaderboard-list {
     width: 100%;
     max-width: 800px;
     background-color: #111723;
@@ -129,32 +128,32 @@ body, html {
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.15);
     max-height: 300px; /* Ensure it remains scrollable */
     overflow-y: auto; /* Enables scrolling */
-  }
+}
 
 /* Custom Scrollbar - WebKit Browsers (Chrome, Edge, Safari) */
 .leaderboard-list::-webkit-scrollbar {
     width: 7px; /* Thin scrollbar */
-  }
+}
   
-  /* Remove the arrows */
-  .leaderboard-list::-webkit-scrollbar-button {
+/* Remove the arrows */
+.leaderboard-list::-webkit-scrollbar-button {
     display: none;
-  }
+}
   
-  .leaderboard-list::-webkit-scrollbar-track {
+.leaderboard-list::-webkit-scrollbar-track {
     background: #2C2F36;
     border-radius: 10px;
-  }
+}
   
-  .leaderboard-list::-webkit-scrollbar-thumb {
+.leaderboard-list::-webkit-scrollbar-thumb {
     background: #bdc3e0;
     border-radius: 10px;
     transition: background 0.3s ease-in-out;
-  }
+}
   
-  .leaderboard-list::-webkit-scrollbar-thumb:hover {
+.leaderboard-list::-webkit-scrollbar-thumb:hover {
     background: #a1a7c1;
-  }
+}
   
 /* Leaderboard row - Align everything inline */
 .leaderboard-row {
@@ -166,64 +165,64 @@ body, html {
     margin-bottom: 0.5rem;
     background-color: #1e273d;
     transition: 0.3s;
-  }
+}
   
-  /* Rank number - Adds spacing */
-  .rank-number {
+/* Rank number - Adds spacing */
+.rank-number {
     font-size: 1.2rem;
     font-weight: bold;
     width: 2rem;
     text-align: center;
     margin-right: 15px; /* Space between rank and avatar */
-  }
+}
   
-  /* User info - Avatar, Name, and Score in a row */
-  .user-info {
+/* User info - Avatar, Name, and Score in a row */
+.user-info {
     display: flex;
     align-items: center;
     gap: 12px; /* Space between avatar and text */
     flex: 1;
-  }
+}
   
-  /* User avatar */
-  .user-avatar {
+/* User avatar */
+.user-avatar {
     width: 40px; /* Adjust size */
     height: 40px;
     border-radius: 50%;
     border: 2px solid white;
-  }
+}
   
-  /* User text - Name and Score in the same row */
-  .user-text {
+/* User text - Name and Score in the same row */
+.user-text {
     display: flex;
     align-items: center; /* Ensures inline text */
     gap: 10px;
     font-size: 14px;
-  }
+}
   
-  /* Progress bar container - Smaller size */
-  .progress-bar-container {
+/* Progress bar container - Smaller size */
+.progress-bar-container {
     width: 50%; /* Make progress bar smaller */
     background-color: #374151;
     border-radius: 6px;
     height: 5px; /* Reduce height */
     margin-left: 20px;
     margin-top: 4px;
-  }
+}
   
-  /* Progress bar fill */
-  .progress-bar-fill {
+/* Progress bar fill */
+.progress-bar-fill {
     background-color: #bdc3e0;
     height: 6px;
     border-radius: 6px;
     transition: width 0.4s ease-in-out;
-  }
+}
 
 /* #endregion */
 
 /* Users section */
 /* #region */
-  /* Avatar - Ensure smooth rendering */
+/* Avatar - Ensure smooth rendering */
 .user-avatar {
     width: 50px; /* Adjust size for better quality */
     height: 50px;
@@ -232,40 +231,108 @@ body, html {
     margin-right: 1rem; /* Increase spacing from text */
     margin-left: 1rem;
     image-rendering: auto; /* Makes the image less pixelated */
-  }
+}
 
-  /* User avatar */
-  .user-avatar {
+/* User avatar */
+.user-avatar {
     width: 56px;
     height: 56px;
     border-radius: 50%;
     border: 2px solid white;
     margin-top: 0.5rem;
-  }
-
+}
   
-  /* User details */
-  .user-name {
+/* User details */
+.user-name {
     margin-top: 0.5rem;
     font-weight: bold;
-  }
+}
   
-  .user-score {
+.user-score {
     font-size: 0.9rem;
     color: #ebeff3;
-  }
+}
 
 /* #endregion */
 
 /* Logged in User */
 /* #region */
-  /* Highlight the logged-in user */
-  .logged-in-user {
+/* Highlight the logged-in user */
+.logged-in-user {
     background-color: #FFD700 !important;
     color: black !important;
     font-weight: bold;
-  }
+}
 /* #endregion */
 
-  
-  
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .leaderboard-container {
+        width: 100%; /* Increase width for smaller screens */
+        height: auto; /* Adjust height */
+        padding: 1rem;
+    }
+
+    .top-three-card {
+        width: 100px; /* Adjust size */
+        min-height: 140px;
+    }
+
+    .leaderboard-row {
+        padding: 0.5rem;
+    }
+
+    .rank-number {
+        font-size: 1rem;
+        width: 1.5rem;
+    }
+
+    .user-avatar {
+        width: 30px; /* Adjust size */
+        height: 30px;
+    }
+
+    .user-text {
+        font-size: 12px;
+    }
+
+    .progress-bar-container {
+        width: 40%; /* Adjust size */
+    }
+}
+
+@media (max-width: 480px) {
+    .leaderboard-container {
+        width: 100%; /* Full width for very small screens */
+        padding: 0.5rem;
+    }
+
+    .top-three-card {
+        width: 80px; /* Adjust size */
+        min-height: 120px;
+    }
+
+    .leaderboard-row {
+        padding: 0.25rem;
+    }
+
+    .rank-number {
+        font-size: 0.8rem;
+        width: 1rem;
+    }
+
+    .user-avatar {
+        width: 25px; /* Adjust size */
+        height: 25px;
+    }
+
+    .user-text {
+        font-size: 10px;
+    }
+
+    .progress-bar-container {
+        width: 30%; /* Adjust size */
+    }
+}
+
+
