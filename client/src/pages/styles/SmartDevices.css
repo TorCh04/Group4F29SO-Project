@@ -12,6 +12,7 @@
 
 /* General Device Block Styles */
 .device__block {
+    flex: 0 0 auto; /* Prevent shrinking and ensure it takes up its width */
     width: 170px;
     height: 200px;
     cursor: pointer;
@@ -222,9 +223,9 @@
     align-items:flex-start;
     justify-content: flex-start;
     gap: 25px;
-    max-width: 560px;
-    width: 100%;
+    width: 100%; /* Ensure it takes up the full width */
     padding-top: 10px;
+    overflow-x: auto; /* Allow horizontal scrolling */
 }
 
 .toggle__switch {
