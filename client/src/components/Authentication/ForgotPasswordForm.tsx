@@ -4,14 +4,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-
-
-
-export default function ForgotPasswordForm() {
-  interface SecurityQA {
+interface SecurityQA {
     securityQuestion: string | '';
     securityAnswer: string | '';
   }
+
+
+export default function ForgotPasswordForm() {
+  
     const [formData, setFormData] = useState({
         email: '',
         firstName: '',
@@ -24,9 +24,9 @@ export default function ForgotPasswordForm() {
                                                 answer: '',
                                             });
     const navigate = useNavigate();
-    const useSimulationData = () => {
-      const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
-    }
+
+    const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
+    
     
     const [showForm, setShowForm] = useState(true);
 
@@ -100,18 +100,17 @@ export default function ForgotPasswordForm() {
 
 
       const fetchSecurityQA = async () => {
-        const token = localStorage.getItem('token');
         try {
-          const response = await fetch('http://localhost:8080/getSimulationData', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ${token}` }
+          const response = await axios.get('http://localhost:8080/getSecurityQA', {
+            params: {
+              email: formData.email
+            }
           });
-          const result = await response.json();
-          console.log('Fetched simulation data:', result);
-          if (response.ok) {
-            setData(result);
+          console.log('Fetched security questions:', response.data);
+          if (response.status === 200) {
+            setData(response.data);
           } else {
-            console.error('Error fetching simulation data:', result.message);
+            // console.error('Error fetching simulation data:', result.message);
           }
         } catch (error) {
           console.error('Error fetching simulation data:', error);
