@@ -25,7 +25,7 @@ export default function ForgotPasswordForm() {
     const navigate = useNavigate();
 
     const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
-    
+    const [step, setStep] = useState(1);
     
     const [showForm, setShowForm] = useState(true);
 
@@ -80,27 +80,30 @@ export default function ForgotPasswordForm() {
           }
           };
 
-          const verifyAnswer = async (e: React.FormEvent) => {
-            e.preventDefault();
-            if (formData.securityAnswer !== data.securityAnswer) 
-            {
-              console.log("WRong")
-            }
+      const verifyAnswer = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (formData.securityAnswer !== data.securityAnswer) 
+        {
+          console.log("WRong")
+        }
 
-            else {
-              console.log("Right")
-              navigate('/resetPassword');
-            }
-            
-          }
+        else {
+          console.log("Right")
+          setStep(3);
+        }
+        
+      };
+
       const handleClick = async (e: React.FormEvent) => {
         e.preventDefault();
         // Checks if current password entered is correct
         const verifiedEmail = await verifyEmail(formData.email);
         if (verifiedEmail)
         {
+          setStep(2);
           await fetchSecurityQA();
-          setShowForm(!showForm);
+          
+          // setShowForm(!showForm);
         }
 
         if (!verifiedEmail)
@@ -171,7 +174,8 @@ export default function ForgotPasswordForm() {
                   <img src={logo} alt="Moogle Logo" />
                   <h2 className="password__heading">Forgot Password</h2>
               </div>
-              <div className="" style={{ display: showForm ? 'block' : 'none' }}>
+              {step === 1 && (
+                <div className="" >
                 <form className="password__form__container" onSubmit={handleClick}>
                       <input 
                           type="text" 
@@ -186,10 +190,37 @@ export default function ForgotPasswordForm() {
                 </form>
                 {errors && <p className="error__message">{errors.email}</p>}
               </div>
+              )}
               
-              <button onClick={handleClick} className="password__button">Show Form</button>
+              
+              {/* <button onClick={handleClick} className="password__button">Show Form</button> */}
               {/* <button onClick={fetchSecurityQA} className="password__button">Get QA</button> */}
-              <div className="" style={{ display: showForm ? 'none' : 'block' }}>
+
+              {step === 2 && (
+                <div className="" >
+                  <h2 className="password__heading">Security Question: {data.securityQuestion}</h2>
+                    <form className="password__form__container" onSubmit={verifyAnswer}>
+                        <input 
+                            type="text" 
+                            placeholder="Enter Answer" 
+                            className="password__input"
+                            value={formData.securityAnswer}
+                            onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
+                            required
+                        />
+                        <input type="submit" value="Submit Answer" className="password__submit__button" />
+                        <div className="password__submit__grouping">
+                            
+                            {/* {errors && <p className="error__message">{errors.email}</p>} */}
+                            <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
+                        </div>
+                    </form>
+                </div>
+              )}
+              
+              
+              {step === 3 && (
+                <div className="" style={{ display: showForm ? 'none' : 'block' }}>
                 <h2 className="password__heading">Security Question: {data.securityQuestion}</h2>
                   <form className="password__form__container" onSubmit={verifyAnswer}>
                       <input 
@@ -200,13 +231,16 @@ export default function ForgotPasswordForm() {
                           onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
                           required
                       />
+                      <input type="submit" value="Submit Answer" className="password__submit__button" />
                       <div className="password__submit__grouping">
-                          <input type="submit" value="Submit Answer" className="password__submit__button" />
+                          
                           {/* {errors && <p className="error__message">{errors.email}</p>} */}
                           <p>Already have an account? <a href="/login" className="register__link">Login here</a></p>
                       </div>
                   </form>
               </div>
+              )}
+              
           </div>
         </div>
 
