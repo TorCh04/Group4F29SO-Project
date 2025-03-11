@@ -44,12 +44,17 @@
   display: none;
   background: none;
   border: none;
+  color: white; /* Make the button white */
   font-size: 24px;
   cursor: pointer;
   position: fixed;
   top: 20px;
-  left: 20px;
+  left: 20px; /* Align to the left */
   z-index: 1001;
+}
+
+.overlay {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -68,6 +73,17 @@
 
   .sidebar__container.open {
     transform: translateX(0);
+  }
+
+  .sidebar__container.open + .overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
   }
 }
 
