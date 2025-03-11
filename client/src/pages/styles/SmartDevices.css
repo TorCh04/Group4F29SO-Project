@@ -296,7 +296,8 @@
     display: flex;
     justify-content: left;
     align-items: left;
-    height: 22px;
+    margin-top: 30px;
+    height: 30px;
     overflow: hidden; /* Hide overflowing text */
     min-width: 600px;
   }
@@ -308,7 +309,7 @@
   }
   
   .energy-fact {
-    margin: 0;
+    margin-bottom: 0;
     padding: 5px 0;
     width: 100%;
     animation: showFact 20s ease-in-out infinite; /* Fade in and out */
@@ -319,21 +320,16 @@
   .energy-fact:nth-child(3) { animation-delay: 8s; }
   .energy-fact:nth-child(4) { animation-delay: 12s; }
   .energy-fact:nth-child(5) { animation-delay: 16s; }
+  .energy-fact:nth-child(6) { animation-delay: 20s; }
   
   @keyframes rotateFacts {
-    0%, 20%, 100% {
-      transform: translateY(0); /* Keep the first fact visible */
-    }
-    25%, 45% {
-      transform: translateY(-22%); /* Move to the second fact */
-    }
-    50%, 70% {
-      transform: translateY(-44%); /* Move to the third fact */
-    }
-    75%, 95% {
-      transform: translateY(-66%); /* Move to the fourth fact */
-    }
-  }
+    0%, 20% { transform: translateY(0); }
+    25%, 45% { transform: translateY(-32px); } /* Move to second fact */
+    50%, 70% { transform: translateY(-64px); } /* Move to third fact */
+    75%, 95% { transform: translateY(-96px); } /* Move to fourth fact */
+    100% { transform: translateY(-128px); } /* Move to fifth fact */
+}
+}
   
 .stats-container {
     display: flex;

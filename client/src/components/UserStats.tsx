@@ -25,13 +25,13 @@ export default function UserStats(/*{ userData }: UserStatsProps*/) {
       <h3 className="introducingStats">Your current household statistics:</h3>
       <div className="stats-container">
         <span className="stat">
-          <span className="icon">🌡️</span> {temperature !== null ? temperature : 'Loading...'}°C
+          <span className="icon">🌡️</span>{temperature !== null ? temperature : 'Loading...'}°C
         </span>
         <span className="stat">
-          <span className="icon">💧</span> {humidity !== null ? humidity : 'Loading...'}%
+          <span className="icon">💧</span>{humidity !== null ? humidity : 'Loading...'}%
         </span>
         <span className="stat">
-          <span className="icon">⭐</span> 12,000
+          <span className="icon"> ⭐</span>12,000
         </span>
       </div>
 
