@@ -38,7 +38,7 @@ export default function EnergyProductionSection({ onAddEnergySourceClick, setFet
 
     return (
         <>
-            <h1 className="devices__heading">Smart Devices</h1>
+            <h1 className="devices__heading">Energy Production Devices</h1>
             <div className="devices__container">
                 {energySources.map(energySource => (
                     <EnergyProductionBlock
