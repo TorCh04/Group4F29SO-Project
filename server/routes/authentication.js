@@ -23,13 +23,13 @@ router.post('/register',
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { email, firstName, lastName, password } = req.body;
+      const { email, firstName, lastName, password, securityQuestion, securityAnswer } = req.body;
       
       if (await User.findOne({ email })) {
         return res.status(400).json({ message: 'Email already exists' });
       }
 
-      const user = new User({ email, firstName, lastName, password });
+      const user = new User({ email, firstName, lastName, password, securityQuestion, securityAnswer });
       await user.save();
       res.status(201).json({ message: 'Registration successful' });
     } catch (error) {
@@ -97,25 +97,81 @@ router.get('/dashboard', verifyToken, async (req, res) => {
   }
 });
 
+
 // Forgot password endpoint
-router.post('/forgotPassword', async (req, res) => {
+router.post('/verifyEmail', 
+  [
+    body('email').isEmail().normalizeEmail(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+    try {
+      const { email } = req.body;
+      
+      if (await User.findOne({ email })) {
+        return res.status(201).json({ message: 'Email already exists' });
+      }
+
+
+    } catch (error) {
+      console.error('Email verification error:', error);
+      res.status(500).json({ message: 'Server error during email verification' });
+    }
+  }
+);
+
+router.get('/getSecurityQA', async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.query.email });
+    
+    // .select('securityQuestion securityAnswer'); 
 
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-
-    const resetLink = `http://localhost:3000/resetPassword/${user._id}/${token}`;
-
-    // Send email with reset link
-    // ...
-
-    res.json({ message: 'Reset link sent to email' });
+    res.json({ 
+      message: 'Security questions retrieved successfully',
+      securityQuestion: user.securityQuestion,
+      securityAnswer: user.securityAnswer
+    });
   } catch (error) {
-    console.error('Error sending reset link:', error);
-    res.status(500).json({ message: 'Server error while sending reset link' });
+    console.error('Error fetching security questions:', error);
+    res.status(500).json({ message: 'Server error while fetching security question' });
   }
 });
+
+
+
+router.post('/resetPassword', async (req, res) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required' });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const update = { password: hashedPassword };
+
+    await User.findOneAndUpdate({ _id: user._id }, update);
+
+    return res.status(201).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({ message: 'Server error while updating password' });
+  }
+});
+
 
 module.exports = router;

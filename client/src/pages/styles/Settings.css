@@ -170,4 +170,5 @@ margin-right: 10px; /* Add spacing between image and text */
 .success__message {
     float: right;
     margin-top: 12px;
+    color: var(--mutedText);
 }
