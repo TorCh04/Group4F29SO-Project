@@ -177,10 +177,13 @@ export default function ForgotPasswordForm() {
           <div className="password__container" id="register__container__override">
               <div className="password__logo__container">
                   <img src={logo} alt="Moogle Logo" />
-                  <h2 className="password__heading">Forgot Password</h2>
               </div>
+              <h2 className="login__heading">Password Reset</h2>
               {step === 1 && (
-                <div className="" >
+                
+                <div className="password__container" >
+                
+                <h3 className="password__subheading">Please Enter your account Email</h3>
                 <form className="password__form__container" onSubmit={handleClick}>
                       <input 
                           type="text" 
@@ -202,7 +205,7 @@ export default function ForgotPasswordForm() {
 
               {step === 2 && (
                 <div className="" >
-                  <h2 className="password__heading">Security Question: {data.securityQuestion}</h2>
+                  <h3 className="password__subheading">{data.securityQuestion}</h3>
                     <form className="password__form__container" onSubmit={verifyAnswer}>
                         <input 
                             type="text" 
@@ -221,7 +224,7 @@ export default function ForgotPasswordForm() {
               
               {step === 3 && (
                 <div className="">
-                <h2 className="password__heading">Reset Your Password</h2>
+                <h2 className="password__subheading">Reset Your Password</h2>
                   <form className="password__form__container" onSubmit={updatePassword}>
                   <input
                             type="password"
@@ -241,7 +244,7 @@ export default function ForgotPasswordForm() {
                         />
                         {errors && <p className="error__message">{errors.password}</p>}
                         {success && <p className="success__message">{success}</p>}
-                        <input type="submit" value="Submit" className="profile__button" />
+                        <input type="submit" value="Submit" className="password__submit__button" />
                       <div className="password__submit__grouping">
                           {/* {errors && <p className="error__message">{errors.email}</p>} */}
                           <p>Back to Login <a href="/login" className="register__link">Login here</a></p>
