@@ -3,13 +3,32 @@ import logo from "../../assets/logo_vertical.svg";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const securityQ = [
+    'What was the name of your first pet',
+    'What is the middle name of your oldest sibling',
+    'What was the make and model of your first car',
+    'What is the name of the street you grew up on',
+    'What was the name of your favorite childhood teacher',
+    'What was the first concert you attended',
+    'What is the name of your favorite childhood toy',
+    'What is the title of the first book you ever read',
+    'What was the name of your first best friend',
+    'What is the name of the town where your parents met'
+];
+
+
+
+
+
 export default function RegisterForm() {
     const [formData, setFormData] = useState({
         email: '',
         firstName: '',
         lastName: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        securityQuestion: '',
+        securityAnswer: ''
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -46,6 +65,15 @@ export default function RegisterForm() {
         }
       };
 
+
+      // Solely for Testing
+      console.log("Security Question:",formData.securityQuestion);
+      console.log("Security Answer:",formData.securityAnswer);
+    // console.log("Updating Name:", firstName);
+    // console.log("Updating Email:", email);
+    // console.log("Updating Password:", curPassword);
+    // console.log("Updating New Password:", newPassword);
+    // console.log("Updating Confirm Password:", confirmPassword);
     return (
         <div className="login__center">
             <div className="login__container" id="register__container__override">
@@ -95,6 +123,22 @@ export default function RegisterForm() {
                             onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                             required
                         />
+                        <select aria-label="Select an option" className='login__input' 
+                        value={formData.securityQuestion} 
+                        onChange={(e) => setFormData({...formData, securityQuestion: e.target.value})}>
+                        <option selected disabled>Please choose...</option>
+                          {securityQ.map((question, index) => (
+                            <option key={index} value={question}>{question}</option>
+                          ))}
+                        </select>  
+                        <input 
+                          type="text" 
+                          placeholder="Answer" 
+                          className="login__input"
+                          value={formData.securityAnswer}
+                          onChange={(e) => setFormData({...formData, securityAnswer: e.target.value})}
+                          required
+                          />
                         <div className="login__submit__grouping">
                             <input type="submit" value="Register" className="login__button" />
                             {error && <p className="error__message">{error}</p>}
