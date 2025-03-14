@@ -125,7 +125,7 @@ function DeviceForm({ onClose, onDeviceAdded }: DeviceFormProps) {
                     onChange={(e) => setDeviceName(e.target.value)}
                 />
                 <div className="manager__sync__container">
-                    <button type="button" className="manager__sync__button" onClick={handleSync}>Sync</button>
+                    <button type="button" className="manager__sync__button" onClick={handleSync}>Connect</button>
                     <p className="manager__sync__text">Status: {status}</p>
                 </div>
                 <button type="submit" className="manager__submit__button">Add Device</button>
@@ -299,7 +299,7 @@ function EnergyProductionForm({ onClose, onEnergySourceAdded }: EnergyProduction
                     onChange={(e) => setEnergySourceName(e.target.value)}
                 />
                 <div className="manager__sync__container">
-                    <button type="button" className="manager__sync__button" onClick={handleSync}>Sync</button>
+                    <button type="button" className="manager__sync__button" onClick={handleSync}>Connect</button>
                     <p className="manager__sync__text">Status: {status}</p>
                 </div>
                 <button type="submit" className="manager__submit__button">Add Device</button>
