@@ -3,7 +3,8 @@
 
 .et-background {
     background-color: var(--background);
-    justify-content: center; /* Center align the main container */
+    justify-content: center;
+    /* Center align the main container */
     min-height: 100vh;
     display: flex;
     margin: 0;
@@ -19,14 +20,15 @@
     flex-direction: column;
     flex: 2;
     justify-content: flex-start;
-    align-items: center; /* Center align the content */
+    align-items: center;
+    /* Center align the content */
     margin-left: auto;
     margin-right: auto;
 }
 
 .et_title {
     font-family: 'Inter', system-ui;
-    font-weight: 500; 
+    font-weight: 500;
     color: var(--text);
     float: left;
 }
@@ -40,31 +42,39 @@
 }
 
 .et__teu_graph__container {
-    width: 80vw;  /* 80% of the viewport width */
-    max-width: 1100px; /* Prevents it from being too wide on large screens */
-    height: 70vh; /* Adjust height to leave space around it */
-    max-height: 750px; /* Prevents it from taking up too much vertical space */
+    width: 80vw;
+    /* 80% of the viewport width */
+    max-width: 1100px;
+    /* Prevents it from being too wide on large screens */
+    height: 70vh;
+    /* Adjust height to leave space around it */
+    max-height: 750px;
+    /* Prevents it from taking up too much vertical space */
     display: flex;
     margin-top: 10px;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center align the chart */
+    justify-content: center;
+    /* Center align the chart */
     padding: 2rem;
-    background-color: #1e273d; 
+    background-color: #1e273d;
     color: white;
-    border-radius: 12px; /* Rounded edges */
-    border: 5px solid #1a1a2a; /* Subtle border to separate from background */
+    border-radius: 12px;
+    /* Rounded edges */
+    border: 5px solid #1a1a2a;
+    /* Subtle border to separate from background */
     overflow: hidden;
     position: relative;
     font-family: 'Inter', system-ui;
-    font-size: clamp(14px, 3vw, 16px); 
+    font-size: clamp(14px, 3vw, 16px);
 }
 
 .et__teu_graph__container h1 {
     font-family: 'Afacad', system-ui;
     text-align: center;
     color: var(--text);
-    font-size: clamp(24px, 4vw, 40px); /* Responsive font size */
+    font-size: clamp(24px, 4vw, 40px);
+    /* Responsive font size */
 }
 
 .et__teg_graph__container {
@@ -82,7 +92,8 @@
     font-family: 'Afacad', system-ui;
     text-align: center;
     color: var (--text);
-    font-size: clamp(24px, 4vw, 40px); /* Responsive font size */
+    font-size: clamp(24px, 4vw, 40px);
+    /* Responsive font size */
 }
 
 .et_graph {
@@ -106,25 +117,78 @@
     border-radius: 10px;
     padding: 10px 15px;
     background-color: var(--background);
-    font-size: clamp(14px, 2vw, 18px); /* Responsive font size */
+    cursor: pointer;
+    font-size: clamp(14px, 2vw, 18px);
+    /* Responsive font size */
 }
 
 .et_button:hover {
     background-color: var(--backgroundContrastGreen);
 }
 
+.et_custom {
+    color: var(--text);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: clamp(14px, 2vw, 18px);
+
+    /* Responsive font size */
+}
+
+select {
+    background-color: var(--background);
+    /* Change this to your preferred color */
+    color: var(--text);
+    /* Ensures text is visible */
+}
+
+.et_button_customAdd {
+    margin: 5px;
+    color: var(--text);
+    font-family: 'Afacad', system-ui;
+    padding: 10px;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px 15px;
+    background-color: var(--background);
+    cursor: pointer;
+    font-size: clamp(14px, 2vw, 18px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centers text horizontally */
+    text-align: center;
+    /* Ensures text alignment */
+    /* Responsive font size */
+}
+
+.et_button_customAdd:hover {
+    background-color: var(--backgroundContrastGreen);
+}
+
 .et_graph_selector {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align the buttons */
-    justify-content: center; /* Center align the buttons */
-    width: 80vw; /* Match the width of the graph container */
-    max-width: 1100px; /* Match the max-width of the graph container */
-    margin-top: 20px; /* Add some space between the graph and the selector */
+    align-items: center;
+    /* Center align the buttons */
+    justify-content: center;
+    /* Center align the buttons */
+    width: 80vw;
+    /* Match the width of the graph container */
+    max-width: 1100px;
+    /* Match the max-width of the graph container */
+    margin-top: 20px;
+    /* Add some space between the graph and the selector */
 }
 
 .et_graph_selector::-webkit-scrollbar {
-    width: 7px; /* Thin scrollbar */
+    width: 7px;
+    /* Thin scrollbar */
 }
 
 /* Remove the arrows */
@@ -150,50 +214,62 @@
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     .et__main {
-        margin-left: 0; /* Remove margin for smaller screens */
+        margin-left: 0;
+        /* Remove margin for smaller screens */
     }
 
     .et__teu_graph__container {
-        width: 90vw; /* Increase width for smaller screens */
-        height: auto; /* Adjust height */
+        width: 90vw;
+        /* Increase width for smaller screens */
+        height: auto;
+        /* Adjust height */
         padding: 1rem;
     }
 
     .et__teg_graph__container {
-        width: 90vw; /* Increase width for smaller screens */
-        height: auto; /* Adjust height */
+        width: 90vw;
+        /* Increase width for smaller screens */
+        height: auto;
+        /* Adjust height */
     }
 
     .et_button {
-        font-size: clamp(12px, 2vw, 16px); /* Adjust font size */
+        font-size: clamp(12px, 2vw, 16px);
+        /* Adjust font size */
     }
 
     .et_graph_selector {
-        min-width: 90vw; /* Increase width for smaller screens */
+        min-width: 90vw;
+        /* Increase width for smaller screens */
     }
 }
 
 @media (max-width: 480px) {
     .et__main {
-        margin-left: 0; /* Remove margin for very small screens */
+        margin-left: 0;
+        /* Remove margin for very small screens */
     }
 
     .et__teu_graph__container {
-        width: 100%; /* Full width for very small screens */
+        width: 100%;
+        /* Full width for very small screens */
         padding: 0.5rem;
     }
 
     .et__teg_graph__container {
-        width: 100%; /* Full width for very small screens */
+        width: 100%;
+        /* Full width for very small screens */
         padding: 0.5rem;
     }
 
     .et_button {
-        font-size: clamp(10px, 2vw, 14px); /* Adjust font size */
+        font-size: clamp(10px, 2vw, 14px);
+        /* Adjust font size */
     }
 
     .et_graph_selector {
-        min-width: 100%; /* Full width for very small screens */
+        min-width: 100%;
+        /* Full width for very small screens */
     }
 }
 
