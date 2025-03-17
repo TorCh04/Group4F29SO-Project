@@ -11,6 +11,7 @@ export default function SmartDevices() {
     const [formType, setFormType] = useState<'device' | 'schedule' | 'energyProduction'>('device');
     const fetchDevicesRef = useRef<() => void>(() => {});
     const fetchEnergySourcesRef = useRef<() => void>(() => {});
+    const fetchSchedulesRef = useRef<() => void>(() => {});
 
     const handleAddDeviceClick = () => {
         setFormType('device');
@@ -46,6 +47,10 @@ export default function SmartDevices() {
     const setFetchEnergySources = (fetchEnergySources: () => void) => {
         fetchEnergySourcesRef.current = fetchEnergySources;
     };
+
+    const setFetchSchedules = (fetchSchedules: () => void) => {
+        fetchSchedulesRef.current = fetchSchedules;
+    };
     return (
         <div className="devices__dashboard__main__container">
             <UserStats />
@@ -54,7 +59,7 @@ export default function SmartDevices() {
                 <DevicesSection onAddDeviceClick={handleAddDeviceClick} setFetchDevices={setFetchDevices} />
 
                 {/* Schedules */}
-                <SchedulesSection onAddSchedulesClick={handleAddScheduleClick} />
+                <SchedulesSection onAddScheduleClick={handleAddScheduleClick} setFetchSchedules={setFetchSchedules} />
 
                 {/* Energy Source */}
                 <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} setFetchEnergySources={setFetchEnergySources} />

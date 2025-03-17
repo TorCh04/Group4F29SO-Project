@@ -4,7 +4,6 @@ export { default as AddScheduleBlock } from '../components/Dashboard/SmartDevice
 export { default as DeviceManager } from '../components/Dashboard/SmartDevices/DeviceManager';
 export { default as AddBlock } from '../components/Dashboard/SmartDevices/AddBlock';
 
-
 export type FormType = 'device' | 'schedule' | 'energyProduction';
 
 export interface AddBlockProps {
@@ -27,6 +26,20 @@ export interface EnergySource {
     status: string;
 }
 
+export interface Instruction {
+    action: string;
+    hour: number;
+    minute: number;
+}
+
+export interface Schedule {
+    _id: string;
+    name: string;
+    device: Device;
+    instructions: Instruction[];
+    status: string;
+}
+
 export interface DevicesSectionProps {
     onAddDeviceClick: () => void;
     setFetchDevices: (fetchDevices: () => void) => void;
@@ -35,4 +48,9 @@ export interface DevicesSectionProps {
 export interface EnergyProductionSectionProps {
     onAddEnergySourceClick: () => void;
     setFetchEnergySources: (fetchEnergySources: () => void) => void;
+}
+
+export interface SchedulesSectionProps {
+    onAddScheduleClick: () => void;
+    setFetchSchedules: (fetchSchedules: () => void) => void;
 }

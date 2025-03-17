@@ -53,11 +53,17 @@ router.post('/removeSchedule', verifyToken, async (req, res) => {
 
 router.get('/getSchedules', verifyToken, async (req, res) => {
   try {
-      const user = await User.findById(req.user.id).populate('schedules');
-      res.json({ schedules: user.schedules });
+    const user = await User.findById(req.user.id).populate({
+      path: 'schedules',
+      populate: {
+        path: 'device',
+        model: 'Device'
+      }
+    });
+    res.json({ schedules: user.schedules });
   } catch (error) {
-      console.error('Error fetching schedules:', error);
-      res.status(500).json({ message: 'Server error while fetching schedules' });
+    console.error('Error fetching schedules:', error);
+    res.status(500).json({ message: 'Server error while fetching schedules' });
   }
 });
 
