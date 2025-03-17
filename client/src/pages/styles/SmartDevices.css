@@ -1,15 +1,3 @@
-/* Page Structure Styles */
-.devices__dashboard__main__container {
-    
-}
-
-.devices__dashboard__left__container {
-
-}
-
-.devices__dashboard__right__container {
-}
-
 /* General Device Block Styles */
 .device__block {
     flex: 0 0 auto; /* Prevent shrinking and ensure it takes up its width */
@@ -214,6 +202,35 @@
     font-family: 'Inter', system-ui;
     font-size: clamp(20px, 3.5vw, 24px); /* Scales between 20px and 22px based on viewport width */
     cursor: pointer;
+}
+
+
+/* Schedule Specific Styles */
+.schedule__instruction__list {
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.list__spinner__box::-webkit-outer-spin-button,
+.list__spinner__box::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.list__spinner__box {
+    appearance: textfield;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: var(--backgroundContrastGreen);
+    color: white;
+    font-size: clamp(16px, 2vw, 18px);
+    font-family: 'Inter', system-ui;
+    height: 40px;
+    width: 40px;
+    text-align: center;
 }
 /* #endregion */
 

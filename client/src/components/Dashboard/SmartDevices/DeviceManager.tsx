@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Roomba from '../../../assets/roomba.svg';
 import LightSwitch from '../../../assets/light_switch.svg';
 import Outlet from '../../../assets/outlet.svg';
 import Arrow from '../../../assets/arrow.svg';
 import Plus from '../../../assets/plus.svg';
+import ScheduleInstructionList from './ScheduleInstructionList';
 
 interface DeviceManagerProps {
     formType: 'device' | 'schedule' | 'energyProduction';
@@ -136,12 +137,46 @@ function DeviceForm({ onClose, onDeviceAdded }: DeviceFormProps) {
 
 function ScheduleForm({ onClose }: { onClose: () => void }) {
     const [name, setName] = useState('');
-    const [device, setDevice] = useState('');
-    const [instructions, setInstructions] = useState('');
+    const [deviceIndex, setDeviceIndex] = useState(0);
+    const [instructions, setInstructions] = useState<{ id: number; action: string; hour: number; minute: number }[]>([]);
+    const [devices, setDevices] = useState<{ _id: string; name: string; type: string }[]>([]);
+
+    useEffect(() => {
+        const fetchDevices = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch('http://localhost:8080/getDevices', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                setDevices(data.devices);
+            } catch (error) {
+                console.error('Error fetching devices:', error);
+            }
+        };
+
+        fetchDevices();
+    }, []);
+
+    const handlePrevious = () => {
+        setDeviceIndex((prevIndex) => (prevIndex === 0 ? devices.length - 1 : prevIndex - 1));
+    };
+
+    const handleNext = () => {
+        setDeviceIndex((prevIndex) => (prevIndex === devices.length - 1 ? 0 : prevIndex + 1));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
+
+        // Validation: Check if there are instructions and if all instructions have a valid action
+        if (instructions.length === 0 || instructions.some(instruction => instruction.action === 'Action')) {
+            alert('Please add valid instructions before submitting.');
+            return;
+        }
 
         try {
             const response = await fetch('http://localhost:8080/addSchedule', {
@@ -152,7 +187,7 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
                 },
                 body: JSON.stringify({
                     name,
-                    device,
+                    device: devices[deviceIndex]._id,
                     instructions
                 })
             });
@@ -170,47 +205,55 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <>
             <div className="manager__heading">
                 <h2 className="devices__heading">Add Schedule</h2>
                 <button onClick={onClose} className="manager__close">
                     <img src={Plus} className="manager__close__image" />
                 </button>
             </div>
-            <input
-                type="text"
-                name="name"
-                className="manager__name__input"
-                placeholder="Schedule Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-            <label>
-                Device:
-                <input type="text" name="device" value={device} onChange={(e) => setDevice(e.target.value)} />
-            </label>
-            <label>
-                Instructions:
-                <select
-                    name="instructions"
-                    className="manager__instructions__select"
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                >
-                    <option value="">Select an instruction</option>
-                    <option value="Turn On">Turn On</option>
-                    <option value="Turn Off">Turn Off</option>
-                    <option value="Increase Temperature">Increase Temperature</option>
-                    <option value="Decrease Temperature">Decrease Temperature</option>
-                    <option value="Start Cleaning">Start Cleaning</option>
-                    <option value="Stop Cleaning">Stop Cleaning</option>
-                </select>
-            </label>
-            <button type="submit" className="manager__submit__button">Add Schedule</button>
-        </form>
+            <form className="manager__form" onSubmit={handleSubmit}>
+                {devices.length > 0 && (
+                    <img src={getDeviceImage(devices[deviceIndex].type)} className="manager__image" alt={devices[deviceIndex].name} />
+                )}
+                <div className="manager__type__selector">
+                    <button type="button" className="manager__direction__button" onClick={handlePrevious}>
+                        <img src={Arrow} className="manager__arrow" alt="Arrow" />
+                    </button>
+                    {devices.length > 0 && (
+                        <p className="device__block__text manager__type__text">{devices[deviceIndex].name}</p>
+                    )}
+                    <button type="button" className="manager__direction__button" onClick={handleNext}>
+                        <img src={Arrow} className="manager__arrow manager__arrow__right" alt="Arrow" />
+                    </button>
+                </div>
+                <input
+                    type="text"
+                    name="name"
+                    className="manager__name__input"
+                    placeholder="Schedule Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <ScheduleInstructionList instructions={instructions} setInstructions={setInstructions} />
+                <button type="submit" className="manager__submit__button">Add Schedule</button>
+            </form>
+        </>
     );
 }
 
+function getDeviceImage(type: string) {
+    switch (type) {
+        case 'Roomba':
+            return Roomba;
+        case 'Light Switch':
+            return LightSwitch;
+        case 'Outlet':
+            return Outlet;
+        default:
+            return '';
+    }
+}
 
 interface EnergyProductionFormProps {
     onClose: () => void;
