@@ -29,7 +29,7 @@
     max-width: 360px;
     max-height: 500px;
     height: 100%;
-    background-color: var(--backgroundContrastBlue);
+    background-color: var(--backgroundContrastGrey);
     padding: 30px;
     margin: 50px;
     border-radius: 10px;

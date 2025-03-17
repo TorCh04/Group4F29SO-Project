@@ -15,16 +15,16 @@ html {
   /* --------------- COLORS --------------- */
   /* #region */
   :root {
-    --background: #1A1A2A;
+    --background: #13131E;
     --primary: #356F9E;
     --secondary: #37309A;
     --accent: #A5B4F8;
     --text: #DAD6F8;
     --mutedText: #7781B5;
-    --backgroundContrastGrey: #242435;
-    --backgroundContrastBlue: #201F41;
-    --backgroundContrastGreen: #1F2B41;
-    --backgroundContrastRed: #411F1F;
+    --backgroundContrastGrey: #1B1B2C;
+    --backgroundContrastBlue: #1B234C;
+    --backgroundContrastGreen: #1B2D4D;
+    --backgroundContrastRed: #4C211B;
     --white: #FFFFFF;
     --infoRed: #BE4646;
     --infoGreen: #46BE5C;

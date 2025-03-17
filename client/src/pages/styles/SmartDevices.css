@@ -3,13 +3,14 @@
     flex: 0 0 auto; /* Prevent shrinking and ensure it takes up its width */
     width: 170px;
     height: 200px;
-    cursor: pointer;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; 
+    padding: 10px;
+    overflow: hidden;
+    gap: 10px;
 }
 
 
@@ -235,6 +236,7 @@
 /* #endregion */
 
 /* Devices Section Styles*/
+/* #region */
 .devices__container {
     display: flex;
     flex-wrap: wrap;
@@ -280,7 +282,58 @@
   .toggle__switch--off .toggle__switch__slider {
     transform: translateX(0);
   }
+/* #endregion */
 
+/* Schedules Section Styles */
+/* #region */
+
+.schedule__block--on {
+    background-color: var(--backgroundContrastBlue);
+}
+
+.schedule__block--off {
+    background-color: var(--backgroundContrastRed);
+}
+
+
+
+.schedule__table {
+    background-color: var(--backgroundContrastGrey);
+    width: 100%;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.schedule__table__header {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(16px, 3vw, 18px);
+    background-color: var(--backgroundContrastGreen);
+    color: var(--white);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.instructions__list {
+
+
+}
+
+.instructions__list__item {
+    color: var(--text);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 3vw, 16px);
+    padding: 0;
+    margin: 0;
+}
+
+/* #endregion */
 
 /*User Stats*/
 /* #region */
@@ -371,6 +424,7 @@
 /* #endregion */
 
 /* Schedule Form Styles */
+/* #region */
 .schedule-form {
     display: flex;
     flex-direction: column;
@@ -417,8 +471,10 @@
 .submit-button:hover {
     background-color: var(--backgroundContrastGreenHover);
 }
+/* #endregion */
 
 /* Media Queries for Responsive Design */
+/* #region */
 @media (max-width: 1200px) {
     .devices__dashboard__main__container {
         flex-direction: column;
@@ -477,3 +533,4 @@
         font-size: clamp(18px, 3.5vw, 20px);
     }
 }
+/* #endregion */
