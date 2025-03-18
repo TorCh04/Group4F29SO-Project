@@ -10,7 +10,6 @@ import {
   Legend,
   ChartOptions,
 } from 'chart.js';
-import axios from 'axios';
 
 ChartJS.register(
   CategoryScale,
