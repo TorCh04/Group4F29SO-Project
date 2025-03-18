@@ -29,7 +29,7 @@ export default function UserStats(/*{ userData }: UserStatsProps*/) {
           <span className="icon">💧</span>{humidity !== null ? humidity : 'Loading...'}%
         </span>
         <span className="stat">
-          <span className="icon"> ⭐</span>12,000
+          <span className="icon"> ⭐</span>1,200
         </span>
       </div>
 

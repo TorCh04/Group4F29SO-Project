@@ -45,11 +45,10 @@ export default function Leaderboard() {
             id: userData.id,
             userId: userData.userId,
             name: userData.firstName, // Assign firstName to name
-            avatar: `https://api.dicebear.com/7.x/thumbs/svg?seed=${userData.firstName}`,
+            avatar: `https://api.dicebear.com/7.x/thumbs/svg?seed=${userData.avatar}`,
             points: 1200,
           });
         }
-
         sortedUsers = sortedUsers.sort((a, b) => b.points - a.points);
         setUsers(sortedUsers);
       })
@@ -87,7 +86,8 @@ export default function Leaderboard() {
         {others.map((user, index) => (
           <div
             key={user.id}
-            className={`leaderboard-row ${user.id === loggedInUserId ? "logged-in-user" : ""}`}
+            className={`leaderboard-row`}
+            //${user.id === userData.id ? "logged-in-user" : ""}
           >
             <span className="rank-number">{index + 4}</span>
             <div className="user-info">
