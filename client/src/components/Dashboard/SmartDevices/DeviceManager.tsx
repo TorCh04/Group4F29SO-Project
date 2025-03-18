@@ -4,6 +4,8 @@ import LightSwitch from '../../../assets/light_switch.svg';
 import Outlet from '../../../assets/outlet.svg';
 import Arrow from '../../../assets/arrow.svg';
 import Plus from '../../../assets/plus.svg';
+import SolarPanel from '../../../assets/solar_panel.svg';
+import WindTurbine from '../../../assets/wind_turbine.svg';
 import ScheduleInstructionList from './ScheduleInstructionList';
 
 interface DeviceManagerProps {
@@ -266,9 +268,8 @@ function EnergyProductionForm({ onClose, onEnergySourceAdded }: EnergyProduction
     const [energySourceName, setEnergySourceName] = useState('');
 
     const energySourceTypes = [
-        { name: 'Roomba', image: Outlet },
-        { name: 'Light Switch', image: Roomba },
-        { name: 'Outlet', image: LightSwitch }
+        { name: 'Solar Panel', image: SolarPanel },
+        { name: 'Wind Turbine', image: WindTurbine },
     ];
 
     const handlePrevious = () => {

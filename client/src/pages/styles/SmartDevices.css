@@ -17,6 +17,7 @@
 /* Specific Device Block Styles */
 .add__device__block {
     background-color: var(--backgroundContrastGrey);
+    cursor: pointer;
 }
 
 .add__device__block__image {

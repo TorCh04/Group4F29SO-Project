@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import Roomba from '../../../assets/outlet.svg';
-import LightSwitch from '../../../assets/roomba.svg';
-import Outlet from '../../../assets/light_switch.svg';
+import SolarPanel from '../../../assets/solar_panel.svg';
+import WindTurbine from '../../../assets/wind_turbine.svg';
 import ToggleSwitch from './ToggleSwitch';
 
 interface EnergyProductionBlockProps {
@@ -12,9 +11,8 @@ interface EnergyProductionBlockProps {
 }
 
 const energySourceImages: { [key: string]: string } = {
-  'Roomba': Roomba,
-  'Light Switch': LightSwitch,
-  'Outlet': Outlet
+  'Solar Panel': SolarPanel,
+  'Wind Turbine': WindTurbine
 };
 
 export default function EnergyProductionBlock({ name, type, status, onToggleStatus }: EnergyProductionBlockProps) {
