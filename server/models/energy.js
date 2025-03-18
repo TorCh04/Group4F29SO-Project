@@ -13,16 +13,5 @@ const energyUsageSchema = new mongoose.Schema({
 
 const EnergyUsage = mongoose.model("EnergyUsage", energyUsageSchema);
 
-// EnergyGenerated schema and model
-const energyGeneratedSchema = new mongoose.Schema({
-  device: { type: String, required: true },
-  data: [
-    {
-      timestamp: { type: Date, default: Date.now },
-      energyGenerated: { type: Number, required: true },
-    },
-  ],
-});
 
-const EnergyGenerated = mongoose.model("EnergyGenerated", energyGeneratedSchema);
-module.exports = EnergyUsage, EnergyGenerated;
+module.exports = EnergyUsage;
