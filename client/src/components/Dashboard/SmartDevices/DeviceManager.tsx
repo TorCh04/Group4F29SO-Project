@@ -317,7 +317,7 @@ function EnergyProductionForm({ onClose, onEnergySourceAdded }: EnergyProduction
     return (
         <>
             <div className="manager__heading">
-                <h2 className="devices__heading">Add Enery Source</h2>
+                <h2 className="devices__heading">Add Energy Source</h2>
                 <button onClick={onClose} className="manager__close">
                     <img src={Plus} className="manager__close__image" />
                 </button>
