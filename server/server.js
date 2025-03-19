@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const connectionURI = process.env.MONGODB_URI || "mongodb://localhost:27017/f29so";
+const PORT = process.env.PORT || 8080;
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const authRoutes = require("./routes/authentication"); // Import the authentication routes
@@ -26,7 +28,7 @@ app.use(
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://localhost:27017/f29so")
+  .connect(connectionURI)
   .then(() => {
     console.log("MongoDB connected");
     startSimulation(); // Start simulating temp + humidity
@@ -45,7 +47,6 @@ app.use("/", schedulesRoutes); // addSchedule / removeSchedule / getSchedules
 app.use("/", energyRoutes); // getEnergyData
 
 // Start server
-const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

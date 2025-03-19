@@ -21,7 +21,6 @@ async function updateUserData() {
     const energyUsages = await EnergyUsage.find();
     for (const energyUsage of energyUsages) {
       const check = await Device.findById(energyUsage.device);
-      console.log("Energy usage device: " + energyUsage.device);
       if (check && check.status === "Connected") {
         energyUsage.data.push({
           timestamp: Date.now(),
@@ -30,7 +29,6 @@ async function updateUserData() {
         await energyUsage.save();
       }
     }
-    console.log("Energy data updated successfully");
   } catch (error) {
     console.error("Error updating energy data:", error);
   }
@@ -51,7 +49,6 @@ async function updateUserDataEG() {
     const energyGeneratedRecords = await EnergyGenerated.find();
     for (const energyGenerated of energyGeneratedRecords) {
       const check = await EnergySource.findById(energyGenerated.device);
-      console.log("Energy generated device: " + energyGenerated.device);
       if (check && check.status === "Connected") {
         energyGenerated.data.push({
           timestamp: Date.now(),
@@ -60,7 +57,6 @@ async function updateUserDataEG() {
         await energyGenerated.save();
       }
     }
-    console.log("Energy generated data updated successfully");
   } catch (error) {
     console.error("Error updating energy production data:", error);
   }
