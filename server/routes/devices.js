@@ -1,11 +1,11 @@
 const express = require("express");
-const EnergyUsage = require("../models/energy");
+const EnergyUsage = require("../models/Energy");
 const verifyToken = require("../middleware/verifyToken");
 const Device = require("../models/Device");
-const EnergySource = require("../models/energySource");
-const EnergyGenerated = require("../models/energyG");
+const EnergySource = require("../models/EnergySource");
+const EnergyGenerated = require("../models/EnergyG");
 const User = require("../models/User");
-const Schedule = require("../models/schedule");
+const Schedule = require("../models/Schedule");
 
 const router = express.Router();
 

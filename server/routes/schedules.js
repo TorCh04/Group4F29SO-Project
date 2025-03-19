@@ -1,6 +1,6 @@
 const express = require('express');
 const verifyToken = require('../middleware/verifyToken'); // Adjust the path as necessary
-const Schedule = require('../models/schedule'); // Adjust the path as necessary
+const Schedule = require('../models/Schedule'); // Adjust the path as necessary
 const User = require('../models/User'); // Adjust the path as necessary
 
 const router = express.Router();
