@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const LeaderboardStats = require("../models/Leaderboard"); // Import the leaderboard model
+const LeaderboardStats = require("../models/LeaderboardStats"); // Import the leaderboard model
 
 router.get("/leaderboard", async (req, res) => {
   try {
