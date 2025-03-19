@@ -6,6 +6,6 @@ const energySourceSchema = new mongoose.Schema({
   status: { type: String, required: true },
 });
 
-const EnergySource = mongoose.model('EnergySource', energySourceSchema);
+const EnergySource = mongoose.models.EnergySource || mongoose.model('EnergySource', energySourceSchema);
 
 module.exports = EnergySource;

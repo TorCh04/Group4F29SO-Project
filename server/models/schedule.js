@@ -13,6 +13,6 @@ const scheduleSchema = new mongoose.Schema({
   status: { type: String, default: 'Active' }
 });
 
-const Schedule = mongoose.model('Schedule', scheduleSchema);
+const Schedule = mongoose.models.Schedule || mongoose.model('Schedule', scheduleSchema);
 
 module.exports = Schedule;

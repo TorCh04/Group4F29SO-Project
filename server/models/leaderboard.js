@@ -7,5 +7,7 @@ const LeaderboardSchema = new mongoose.Schema({
   points: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model("LeaderboardStats", LeaderboardSchema, "leaderboard_stats");
+const LeaderboardStats = mongoose.models.LeaderboardStats || mongoose.model("LeaderboardStats", LeaderboardSchema, "leaderboard_stats");
+
+module.exports = LeaderboardStats;
 

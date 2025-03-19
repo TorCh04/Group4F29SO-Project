@@ -11,7 +11,7 @@ const energyUsageSchema = new mongoose.Schema({
   ],
 });
 
-const EnergyUsage = mongoose.model("EnergyUsage", energyUsageSchema);
+const EnergyUsage = mongoose.models.EnergyUsage || mongoose.model("EnergyUsage", energyUsageSchema);
 
 
 module.exports = EnergyUsage;

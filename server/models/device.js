@@ -6,6 +6,6 @@ const deviceSchema = new mongoose.Schema({
   status: { type: String, required: true },
 });
 
-const Device = mongoose.model('Device', deviceSchema);
+const Device = mongoose.models.Device || mongoose.model('Device', deviceSchema);
 
 module.exports = Device;

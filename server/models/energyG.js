@@ -11,5 +11,6 @@ const energyGeneratedSchema = new mongoose.Schema({
   ],
 });
 
-const EnergyGenerated = mongoose.model("EnergyGenerated", energyGeneratedSchema);
+const EnergyGenerated = mongoose.models.EnergyGenerated || mongoose.model("EnergyGenerated", energyGeneratedSchema);
+
 module.exports = EnergyGenerated;
