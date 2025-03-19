@@ -1,1 +1,1 @@
-web: npm install --prefix server && npm run server --prefix server
+web: node server/server.js
