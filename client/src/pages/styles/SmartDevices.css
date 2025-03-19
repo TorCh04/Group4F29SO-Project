@@ -404,11 +404,11 @@
   }
   
   .energy-fact:nth-child(1) { animation-delay: 0s; }
-  .energy-fact:nth-child(2) { animation-delay: 4s; }
-  .energy-fact:nth-child(3) { animation-delay: 8s; }
-  .energy-fact:nth-child(4) { animation-delay: 12s; }
-  .energy-fact:nth-child(5) { animation-delay: 16s; }
-  .energy-fact:nth-child(6) { animation-delay: 20s; }
+  .energy-fact:nth-child(2) { animation-delay: 1s; }
+  .energy-fact:nth-child(3) { animation-delay: 2s; }
+  .energy-fact:nth-child(4) { animation-delay: 3s; }
+  .energy-fact:nth-child(5) { animation-delay: 4s; }
+  .energy-fact:nth-child(6) { animation-delay: 5s; }
   
   @keyframes rotateFacts {
     0% { transform: translateY(0); }
