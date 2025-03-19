@@ -52,6 +52,7 @@ export default function UpdateProfileForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const {userData } = useOutletContext<ProfileContext>();
     const [usersData, setUserData] = useState({});
+    console.log("Satisfy the error for compilation reasons:", usersData);
     const resetForm = () => {
         setFirstName('');
         setLastName('');

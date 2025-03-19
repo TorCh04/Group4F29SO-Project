@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ChartOptions,
+  ChartData,
 } from 'chart.js';
 
 ChartJS.register(
@@ -30,14 +31,14 @@ const options: ChartOptions<'bar'> = {
       position: 'top',
       labels: {
         color: '#DAD6F8',
-      }
+      },
     },
     title: {
       display: false,
       text: 'Bar Chart Example',
     },
-  }, // Close the plugins object here
-  scales: { // Move scales to the top level
+  },
+  scales: {
     x: {
       ticks: {
         color: '#DAD6F8',
@@ -49,8 +50,8 @@ const options: ChartOptions<'bar'> = {
       },
       title: {
         display: true,
-        text: 'Energy Usage (Wh)', // Y-axis label
-        color: '#DAD6F8'
+        text: 'Energy Usage (Wh)',
+        color: '#DAD6F8',
       },
     },
   },
@@ -73,49 +74,37 @@ async function getdataToday() {
   }
 }
 
-async function getdataLast7Days() {
-  try {
-    const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/energyData/week', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      // If the data is an array of day-energyUsage objects, extract energy usage for each day
-      const energyUsageData = data.map(item => item.energyUsage);
-      return energyUsageData;
-    } else {
-      console.log('Error fetching data:', response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error('Error during fetch operation:', error);
-    return [];
-  }
-}
-
-
-async function getdatalastMonth() {
+async function getdataLast7Days(): Promise<number[]> {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyData/month', {
+  const response = await fetch('http://localhost:8080/energyData/week', {
     method: 'GET',
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
   });
-  console.log("API Response Status:", response.status); // Log response status
   if (response.ok) {
-    const data = await response.json();
-    console.log(data);
-    return data;
-  }
-  else {
+    const data: { energyUsage: number }[] = await response.json();
+    return data.map((item) => item.energyUsage);
+  } else {
     console.log('Error fetching data');
     return [];
   }
 }
 
-const getDataForTimeRange = async (timeRange: TimeRange) => {
+async function getdatalastMonth(): Promise<number[]> {
+  const token = localStorage.getItem('token');
+  const response = await fetch('http://localhost:8080/energyData/month', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (response.ok) {
+    const data: { energyUsage: number }[] = await response.json();
+    return data.map((item) => item.energyUsage);
+  } else {
+    console.log('Error fetching data');
+    return [];
+  }
+}
+
+const getDataForTimeRange = async (timeRange: TimeRange): Promise<ChartData<'bar'>> => {
   switch (timeRange) {
     case 'today':
       return {
@@ -133,7 +122,6 @@ const getDataForTimeRange = async (timeRange: TimeRange) => {
     case 'last7Days':
       return {
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        //labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Today'],
         datasets: [
           {
             label: 'Energy Usage',
@@ -183,9 +171,12 @@ interface TrackerChartProps {
 }
 
 const EnergyUsageChart: React.FC<TrackerChartProps> = ({ timeRange }) => {
-  const [data, setData] = React.useState<any>({ labels: [], datasets: [] });
+  const [data, setData] = useState<ChartData<'bar'>>({
+    labels: [],
+    datasets: [],
+  });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const result = await getDataForTimeRange(timeRange);
       setData(result);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import logo from "../../assets/logo_vertical.svg";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 interface SecurityQA {
@@ -26,7 +26,7 @@ export default function ForgotPasswordForm() {
                                                 answer: '',
                                                 password: '',
                                             });
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [data, setData] = useState<SecurityQA>({ securityQuestion: '', securityAnswer: '' });
     const [step, setStep] = useState(1);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ChartOptions,
+  ChartData,
 } from 'chart.js';
 
 ChartJS.register(
@@ -30,14 +31,14 @@ const options: ChartOptions<'bar'> = {
       position: 'top',
       labels: {
         color: '#DAD6F8',
-      }
+      },
     },
     title: {
       display: false,
       text: 'Bar Chart Example',
     },
-  }, // Close the plugins object here
-  scales: { // Move scales to the top level
+  },
+  scales: {
     x: {
       ticks: {
         color: '#DAD6F8',
@@ -49,8 +50,8 @@ const options: ChartOptions<'bar'> = {
       },
       title: {
         display: true,
-        text: 'Energy Generated (kWh)', // Y-axis label
-        color: '#DAD6F8'
+        text: 'Energy Generated (kWh)',
+        color: '#DAD6F8',
       },
     },
   },
@@ -60,133 +61,100 @@ async function getdataToday() {
   const token = localStorage.getItem('token');
   const response = await fetch('http://localhost:8080/energyData/todayEG', {
     method: 'GET',
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
   });
   if (response.ok) {
-    const data = await response.json();
-    console.log(data);
-    return data;
-  }
-  else {
+    const data: { energyGenerated: number }[] = await response.json();
+    return data.map((item) => item.energyGenerated);
+  } else {
     console.log('Error fetching data');
     return [];
   }
 }
 
 async function getdataLast7Days() {
-  try {
-    const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/energyData/weekEG', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      // If the data is an array of day-energyUsage objects, extract energy usage for each day
-      const energyUsageData = data.map(item => item.energyUsage);
-      return energyUsageData;
-    } else {
-      console.log('Error fetching data:', response.statusText);
-      return [];
-    }
-  } catch (error) {
-    console.error('Error during fetch operation:', error);
-    return [];
-  }
-}
-
-
-async function getdatalastMonth() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyData/monthEG', {
+  const response = await fetch('http://localhost:8080/energyData/weekEG', {
     method: 'GET',
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
   });
-  console.log("API Response Status:", response.status); // Log response status
   if (response.ok) {
-    const data = await response.json();
-    console.log(data);
-    return data;
-  }
-  else {
+    const data: { energyUsage: number }[] = await response.json();
+    return data.map((item) => item.energyUsage);
+  } else {
     console.log('Error fetching data');
     return [];
   }
 }
 
-const getDataForTimeRange = (timeRange: TimeRange) => {
-  switch (timeRange) {
-    case 'today':
-      return {
-        labels: ['12AM-3AM', '3AM-6AM', '6AM-9AM', '9AM-12PM', '12PM-3PM', '3PM-6PM', '6PM-9PM', '9PM-12AM'],
+async function getdatalastMonth() {
+  const token = localStorage.getItem('token');
+  const response = await fetch('http://localhost:8080/energyData/monthEG', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (response.ok) {
+    const data: { energyGenerated: number }[] = await response.json();
+    return data.map((item) => item.energyGenerated);
+  } else {
+    console.log('Error fetching data');
+    return [];
+  }
+}
+
+const EnergyGeneratedChart: React.FC<{ timeRange: TimeRange }> = ({ timeRange }) => {
+  const [chartData, setChartData] = useState<ChartData<'bar'>>({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let data: number[] = [];
+      let labels: string[] = [];
+
+      switch (timeRange) {
+        case 'today':
+          data = await getdataToday();
+          labels = ['12AM-3AM', '3AM-6AM', '6AM-9AM', '9AM-12PM', '12PM-3PM', '3PM-6PM', '6PM-9PM', '9PM-12AM'];
+          break;
+        case 'last7Days':
+          data = await getdataLast7Days();
+          labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
+          break;
+        case 'lastMonth':
+          data = await getdatalastMonth();
+          labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+          break;
+        case 'custom':
+          data = [10, 20, 30, 40];
+          labels = ['Custom 1', 'Custom 2', 'Custom 3', 'Custom 4'];
+          break;
+        default:
+          data = [];
+          labels = [];
+      }
+
+      setChartData({
+        labels,
         datasets: [
           {
             label: 'Energy Generated',
-            data: getdataToday(),
+            data,
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
           },
         ],
-      };
-    case 'last7Days':
-      return {
-        labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-        datasets: [
-          {
-            label: 'Energy Generated',
-            data: getdataLast7Days(),
-            backgroundColor: 'rgba(153, 102, 255, 0.6)',
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1,
-          },
-        ],
-      };
-    case 'lastMonth':
-      return {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        datasets: [
-          {
-            label: 'Energy Generated',
-            data: getdatalastMonth(),
-            backgroundColor: 'rgba(255, 159, 64, 0.6)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-            borderWidth: 1,
-          },
-        ],
-      };
-    case 'custom':
-      return {
-        labels: ['Custom 1', 'Custom 2', 'Custom 3', 'Custom 4'],
-        datasets: [
-          {
-            label: 'Energy Generated',
-            data: [10, 20, 30, 40],
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1,
-          },
-        ],
-      };
-    default:
-      return {
-        labels: [],
-        datasets: [],
-      };
-  }
-};
+      });
+    };
 
-interface TrackerChartProps {
-  timeRange: TimeRange;
-}
-
-const EnergyGeneratedChart: React.FC<TrackerChartProps> = ({ timeRange }) => {
-  const data = getDataForTimeRange(timeRange);
+    fetchData();
+  }, [timeRange]);
 
   return (
     <div className="et_graph">
-      <Bar data={data} options={options} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 };
