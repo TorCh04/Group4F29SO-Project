@@ -19,12 +19,27 @@ const app = express();
 
 // Middleware setup
 app.use(express.json()); // Allow parsing of JSON request bodies
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Localhosting Port
-    methods: ["POST", "GET"], // Allow needed methods
-  })
-);
+const corsOptions = {
+  origin: process.env.NODE_ENV === "production"
+    ? "https://moogle-expo-fc7f4aee8a60.herokuapp.com/"  // Heroku app URL in production
+    : "http://localhost:5173",  // Localhost for dev
+  methods: ["POST", "GET"],
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+
+// Allow backend to server frontend files in production
+const path = require("path");
+
+// Serve static frontend files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
+}
 
 // MongoDB connection
 mongoose
