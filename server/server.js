@@ -34,10 +34,10 @@ const path = require("path");
 
 // Serve static frontend files in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build"), { maxAge: "1d" }));
+  app.use(express.static(path.join(__dirname, "../client/dist"), { maxAge: "1d" }));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+    res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
   });
 }
 
