@@ -10,7 +10,7 @@ const simulationDataRoutes = require("./routes/simulationData"); // Import the s
 const schedulesRoutes = require('./routes/schedules'); // Import the schedules routes
 const energyRoutes = require("./routes/energyData"); // Import the energy data routes
 const { startSimulation } = require("./dataSimulator");
-const { startEnergySimulation } = require("./energySimulator");
+const { startEnergySimulation, startEnergySimulationEG } = require("./energySimulator");
 
 // Initialize Express app
 const app = express();
@@ -29,8 +29,9 @@ mongoose
   .connect("mongodb://localhost:27017/f29so")
   .then(() => {
     console.log("MongoDB connected");
-    startSimulation(); // Start simulating data (temp / humidity / energy generation + usage)
-    startEnergySimulation(); // Start simulating
+    startSimulation(); // Start simulating temp + humidity
+    startEnergySimulation(); // Start simulating energy usage
+    startEnergySimulationEG(); // Start simulating energy generation
   })
   .catch((err) => console.error("MongoDB connection error:", err));
 

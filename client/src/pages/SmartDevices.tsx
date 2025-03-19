@@ -6,71 +6,82 @@ import DeviceManager from '../components/Dashboard/SmartDevices/DeviceManager';
 import UserStats from '../components/UserStats';
 import './styles/SmartDevices.css';
 
+// Extend the Window interface to include fetchSchedulesRef
+declare global {
+  interface Window {
+    fetchSchedulesRef: React.MutableRefObject<() => void>;
+  }
+}
+
 export default function SmartDevices() {
-    const [isDeviceManagerVisible, setDeviceManagerVisible] = useState(false);
-    const [formType, setFormType] = useState<'device' | 'schedule' | 'energyProduction'>('device');
-    const fetchDevicesRef = useRef<() => void>(() => {});
-    const fetchEnergySourcesRef = useRef<() => void>(() => {});
-    const fetchSchedulesRef = useRef<() => void>(() => {});
+  const [isDeviceManagerVisible, setDeviceManagerVisible] = useState(false);
+  const [formType, setFormType] = useState<'device' | 'schedule' | 'energyProduction'>('device');
+  const fetchDevicesRef = useRef<() => void>(() => {});
+  const fetchEnergySourcesRef = useRef<() => void>(() => {});
+  const fetchSchedulesRef = useRef<() => void>(() => {});
 
-    const handleAddDeviceClick = () => {
-        setFormType('device');
-        setDeviceManagerVisible(true);
-    };
+  // Assign fetchSchedulesRef to the window object with proper typing
+  window.fetchSchedulesRef = fetchSchedulesRef;
 
-    const handleAddScheduleClick = () => {
-        setFormType('schedule');
-        setDeviceManagerVisible(true);
-    };
+  const handleAddDeviceClick = () => {
+    setFormType('device');
+    setDeviceManagerVisible(true);
+  };
 
-    const handleAddEnergySourceClick = () => {
-        setFormType('energyProduction');
-        setDeviceManagerVisible(true);
-    };
+  const handleAddScheduleClick = () => {
+    setFormType('schedule');
+    setDeviceManagerVisible(true);
+  };
 
-    const handleCloseDeviceManager = () => {
-        setDeviceManagerVisible(false);
-    };
+  const handleAddEnergySourceClick = () => {
+    setFormType('energyProduction');
+    setDeviceManagerVisible(true);
+  };
 
-    const handleDeviceAdded = () => {
-        fetchDevicesRef.current();
-    };
+  const handleCloseDeviceManager = () => {
+    setDeviceManagerVisible(false);
+  };
 
-    const setFetchDevices = (fetchDevices: () => void) => {
-        fetchDevicesRef.current = fetchDevices;
-    };
+  const handleDeviceAdded = () => {
+    fetchDevicesRef.current();
+  };
 
-    const handleEnergySourceAdded = () => {
-        fetchEnergySourcesRef.current();
-    };
+  const setFetchDevices = (fetchDevices: () => void) => {
+    fetchDevicesRef.current = fetchDevices;
+  };
 
-    const setFetchEnergySources = (fetchEnergySources: () => void) => {
-        fetchEnergySourcesRef.current = fetchEnergySources;
-    };
+  const handleEnergySourceAdded = () => {
+    fetchEnergySourcesRef.current();
+  };
 
-    const setFetchSchedules = (fetchSchedules: () => void) => {
-        fetchSchedulesRef.current = fetchSchedules;
-    };
-    return (
-        <div className="devices__dashboard__main__container">
-            <UserStats />
-            <div className="devices__dashboard__left__container">
-                {/* Smart Devices */}
-                <DevicesSection onAddDeviceClick={handleAddDeviceClick} setFetchDevices={setFetchDevices} />
+  const setFetchEnergySources = (fetchEnergySources: () => void) => {
+    fetchEnergySourcesRef.current = fetchEnergySources;
+  };
 
-                {/* Schedules */}
-                <SchedulesSection onAddScheduleClick={handleAddScheduleClick} setFetchSchedules={setFetchSchedules} />
+  const setFetchSchedules = (fetchSchedules: () => void) => {
+    fetchSchedulesRef.current = fetchSchedules;
+  };
 
-                {/* Energy Source */}
-                <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} setFetchEnergySources={setFetchEnergySources} />
-            </div>
-            <div className="devices__dashboard__right__container">
-                {isDeviceManagerVisible && (
-                    <>
-                        <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} onEnergySourceAdded={handleEnergySourceAdded} />
-                    </>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <div className="devices__dashboard__main__container">
+      <UserStats />
+      <div className="devices__dashboard__left__container">
+        {/* Smart Devices */}
+        <DevicesSection onAddDeviceClick={handleAddDeviceClick} setFetchDevices={setFetchDevices} />
+
+        {/* Schedules */}
+        <SchedulesSection onAddScheduleClick={handleAddScheduleClick} setFetchSchedules={setFetchSchedules} />
+
+        {/* Energy Source */}
+        <EnergyProductionSection onAddEnergySourceClick={handleAddEnergySourceClick} setFetchEnergySources={setFetchEnergySources} />
+      </div>
+      <div className="devices__dashboard__right__container">
+        {isDeviceManagerVisible && (
+          <>
+            <DeviceManager formType={formType} onClose={handleCloseDeviceManager} onDeviceAdded={handleDeviceAdded} onEnergySourceAdded={handleEnergySourceAdded} />
+          </>
+        )}
+      </div>
+    </div>
+  );
 }

@@ -33,10 +33,25 @@
     background-color: var(--backgroundContrastRed);
 }
 
+.device__block__settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+
 .device__block__toggle {
     margin-top: 10px;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+.device__block__remove {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: auto;
+    width: 35px;
 }
 
 

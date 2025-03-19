@@ -42,6 +42,8 @@ router.post('/removeSchedule', verifyToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    // Delete the schedule from the database
     await Schedule.findByIdAndDelete(scheduleId);
 
     res.status(200).json({ message: 'Schedule removed successfully', user });

@@ -1,56 +1,89 @@
 import { useEffect, useState } from 'react';
 import AddDeviceBlock from './AddDeviceBlock';
 import DeviceBlock from './DeviceBlock';
-import { Device, DevicesSectionProps } from '../../../types/index';
+import { Device, DevicesSectionProps } from '../../../types';
+
+// Extend the Window interface to include fetchSchedulesRef
+declare global {
+  interface Window {
+    fetchSchedulesRef: React.MutableRefObject<() => void>;
+  }
+}
 
 export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: DevicesSectionProps) {
-    const [devices, setDevices] = useState<Device[]>([]);
+  const [devices, setDevices] = useState<Device[]>([]);
 
-    const fetchDevices = async () => {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:8080/getDevices', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        const data = await response.json();
-        setDevices(data.devices);
-    };
+  const fetchDevices = async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/getDevices', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    setDevices(data.devices);
+  };
 
-    useEffect(() => {
-        fetchDevices();
-        setFetchDevices(fetchDevices);
-    }, []);
+  useEffect(() => {
+    fetchDevices();
+    setFetchDevices(fetchDevices);
+  }, [setFetchDevices]);
 
-    const handleToggleStatus = async (deviceId: string) => {
-        const token = localStorage.getItem('token');
-        await fetch(`http://localhost:8080/toggleDeviceStatus/${deviceId}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+  const handleToggleStatus = async (deviceId: string) => {
+    const token = localStorage.getItem('token');
+    await fetch(`http://localhost:8080/toggleDeviceStatus/${deviceId}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
 
-        setDevices(devices.map(device => 
-            device._id === deviceId ? { ...device, status: device.status === 'Connected' ? 'Not Connected' : 'Connected' } : device
-        ));
-    };
-
-    return (
-        <>
-            <h1 className="devices__heading">Smart Devices</h1>
-            <div className="devices__container">
-                {devices.map(device => (
-                    <DeviceBlock
-                        key={device._id}
-                        name={device.name}
-                        type={device.type}
-                        status={device.status}
-                        onToggleStatus={() => handleToggleStatus(device._id)}
-                    />
-                ))}
-                <AddDeviceBlock onClick={onAddDeviceClick} />
-            </div>
-        </>
+    setDevices(
+      devices.map((device) =>
+        device._id === deviceId
+          ? { ...device, status: device.status === 'Connected' ? 'Not Connected' : 'Connected' }
+          : device
+      )
     );
+  };
+
+  const handleRemove = async (deviceId: string) => {
+    const token = localStorage.getItem('token');
+    await fetch('http://localhost:8080/removeDevice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ deviceId }),
+    });
+
+    setDevices(devices.filter((device) => device._id !== deviceId));
+
+    // Trigger fetchSchedules to update the schedules list
+    const fetchSchedules = window.fetchSchedulesRef?.current;
+    if (fetchSchedules) {
+      fetchSchedules();
+    }
+  };
+
+  return (
+    <>
+      <h1 className="devices__heading">Smart Devices</h1>
+      <div className="devices__container">
+        {devices.map((device) => (
+          <DeviceBlock
+            key={device._id}
+            _id={device._id}
+            name={device.name}
+            type={device.type}
+            status={device.status}
+            onToggleStatus={() => handleToggleStatus(device._id)}
+            onRemove={handleRemove} // Pass the remove handler
+          />
+        ))}
+        <AddDeviceBlock onClick={onAddDeviceClick} />
+      </div>
+    </>
+  );
 }

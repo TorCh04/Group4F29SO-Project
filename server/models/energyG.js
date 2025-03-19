@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // EnergyGenerated schema and model
 const energyGeneratedSchema = new mongoose.Schema({
-  device: { type: String, required: true },
+  device: { type: mongoose.Schema.Types.ObjectId, ref: "EnergySource" }, // Updated to use ObjectId
   data: [
     {
       timestamp: { type: Date, default: Date.now },
@@ -12,4 +12,4 @@ const energyGeneratedSchema = new mongoose.Schema({
 });
 
 const EnergyGenerated = mongoose.model("EnergyGenerated", energyGeneratedSchema);
-module.exports =  EnergyGenerated;
+module.exports = EnergyGenerated;
