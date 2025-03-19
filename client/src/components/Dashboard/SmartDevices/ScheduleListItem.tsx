@@ -43,17 +43,25 @@ const ScheduleListItem: React.FC<ScheduleListItemProps> = ({ item, removeItem, u
   };
 
   const handleBlurHour = () => {
-    if (hour === '') {
-      setHour('0');
-      updateItem(item.id, { ...item, hour: 0 });
+    let parsedHour = parseInt(hour, 10);
+    if (isNaN(parsedHour) || parsedHour < 0) {
+      parsedHour = 0;
+    } else if (parsedHour >= 24) {
+      parsedHour = 23;
     }
+    setHour(parsedHour.toString());
+    updateItem(item.id, { ...item, hour: parsedHour });
   };
-
+  
   const handleBlurMinute = () => {
-    if (minute === '') {
-      setMinute('0');
-      updateItem(item.id, { ...item, minute: 0 });
+    let parsedMinute = parseInt(minute, 10);
+    if (isNaN(parsedMinute) || parsedMinute < 0) {
+      parsedMinute = 0;
+    } else if (parsedMinute >= 60) {
+      parsedMinute = 59;
     }
+    setMinute(parsedMinute.toString());
+    updateItem(item.id, { ...item, minute: parsedMinute });
   };
 
   const incrementHour = () => {
@@ -89,9 +97,8 @@ const ScheduleListItem: React.FC<ScheduleListItemProps> = ({ item, removeItem, u
   };
 
   return (
-    <div>
-      <span>Perform</span>
-      <select value={item.action} onChange={handleActionChange}>
+    <div className="schedule__instruction__list__item">
+      <select className="schedule__instruction__dropdown" value={item.action} onChange={handleActionChange}>
         <option value="Action" disabled>Action</option>
         <option value="Turn On">Turn On</option>
         <option value="Turn Off">Turn Off</option>
@@ -106,8 +113,11 @@ const ScheduleListItem: React.FC<ScheduleListItemProps> = ({ item, removeItem, u
         ref={hourInputRef}
         className="list__spinner__box no-spinner"
       />
-      <button type="button" onClick={incrementHour}>▲</button>
-      <button type="button" onClick={decrementHour}>▼</button>
+      <div className="spinner__container">
+        <button type="button" onClick={incrementHour}>▲</button>
+        <button type="button" onClick={decrementHour}>▼</button>
+      </div>
+      <span>At</span>
       <input
         type="number"
         value={minute}
@@ -117,9 +127,11 @@ const ScheduleListItem: React.FC<ScheduleListItemProps> = ({ item, removeItem, u
         ref={minuteInputRef}
         className="list__spinner__box no-spinner"
       />
-      <button type="button" onClick={incrementMinute}>▲</button>
-      <button type="button" onClick={decrementMinute}>▼</button>
-      <button type="button" onClick={() => removeItem(item.id)}>X</button>
+      <div className="spinner__container">
+        <button type="button" onClick={incrementMinute}>▲</button>
+        <button type="button" onClick={decrementMinute}>▼</button>
+      </div>
+      <button className="schedule__list__remove" type="button" onClick={() => removeItem(item.id)}>X</button>
     </div>
   );
 };

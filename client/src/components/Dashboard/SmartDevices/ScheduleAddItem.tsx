@@ -5,7 +5,7 @@ interface ScheduleAddItemProps {
 }
 
 const ScheduleAddItem: React.FC<ScheduleAddItemProps> = ({ addItem }) => {
-  return <button type="button" onClick={addItem}>Add Item</button>;
+  return <button type="button" className="schedule__table__add__button" onClick={addItem}>Add Item</button>;
 };
 
 export default ScheduleAddItem;

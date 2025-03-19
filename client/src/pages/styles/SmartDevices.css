@@ -124,6 +124,8 @@
     width: 100%;
     height: 100%;
     margin: 30px;
+    gap: 10px;
+    overflow: auto;
 }
 
 .manager__image {
@@ -347,6 +349,91 @@
     font-size: clamp(14px, 3vw, 16px);
     padding: 0;
     margin: 0;
+}
+
+.schedule__instruction__dropdown {
+    background-color: var(--backgroundContrastGreen);
+    border: none;
+    outline: none;
+    width: fit-content;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 3vw, 16px); /* Scales between 14px and 16px based on viewport width */
+}
+  
+.schedule__instruction__dropdown::placeholder {
+    color: var(--mutedText);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(14px, 3vw, 16px); /* Scales between 14px and 16px based on viewport width */
+    margin: 0;
+    padding: 0;
+}
+
+.schedule__instruction__list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule__table__add__button {
+    width: 100%;
+    background-color: var(--backgroundContrastGrey);
+    font-family: 'Inter', system-ui;
+    font-size: clamp(16px, 3vw, 18px);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.spinner__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    flex-direction: column;
+}
+
+.spinner__container button {
+    background-color: var(--backgroundContrastGreen);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.schedule__instruction__list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schedule__instruction__list__item span {
+    font-family: 'Inter', system-ui;
+    font-size: clamp(16px, 3vw, 18px);
+    color: var(--white);
+}
+
+.schedule__list__remove {
+    background-color: var(--backgroundContrastRed);
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 40px;
+    width: 40px;
 }
 
 /* #endregion */
