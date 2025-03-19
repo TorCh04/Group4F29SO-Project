@@ -32,15 +32,6 @@ app.use(cors(corsOptions));
 // Allow backend to server frontend files in production
 const path = require("path");
 
-// Serve static frontend files in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist"), { maxAge: "1d" }));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-  });
-}
-
 // MongoDB connection
 mongoose
   .connect(connectionURI)
@@ -60,6 +51,15 @@ app.use("/", leaderboardRoutes); // leaderboard
 app.use("/", simulationDataRoutes); // getSimulationData
 app.use("/", schedulesRoutes); // addSchedule / removeSchedule / getSchedules
 app.use("/", energyRoutes); // getEnergyData
+
+// Serve static frontend files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist"), { maxAge: "1d" }));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+  });
+}
 
 // Start server
 app.listen(PORT, () => {
