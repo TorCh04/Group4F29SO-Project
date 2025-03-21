@@ -57,21 +57,18 @@ const options: ChartOptions<'bar'> = {
   },
 };
 
-// Add this function at the top of your file, before the component or inside the component if you prefer.
+
 function generateFakeData(timeRange: TimeRange): number[] {
   let intervals: number;
   switch (timeRange) {
     case 'today':
-      intervals = 8; // 8 intervals for 3-hour segments in a day
+      intervals = 8;
       break;
     case 'last7Days':
-      intervals = 7; // one value per day for a week
+      intervals = 7;
       break;
     case 'lastMonth':
-      intervals = 4; // one value per week for a month (approx.)
-      break;
-    case 'custom':
-      intervals = 4; // for example purposes
+      intervals = 4;
       break;
     default:
       intervals = 0;
@@ -133,7 +130,7 @@ async function getdatalastMonth(): Promise<number[]> {
 
 const getDataForTimeRange = async (timeRange: TimeRange): Promise<ChartData<'bar'>> => {
   // Example flag to switch between actual API calls and fake data.
-  const useFakeData = false;  // Set this to `false` when using real data from the API.
+  const useFakeData = false;  //change this to true to use fake data
 
   if (useFakeData) {
     // If using fake data, call generateFakeData based on the time range.
@@ -144,7 +141,7 @@ const getDataForTimeRange = async (timeRange: TimeRange): Promise<ChartData<'bar
           ? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
           : timeRange === 'lastMonth'
             ? ['Week 1', 'Week 2', 'Week 3', 'This Week']
-            : ['Custom 1', 'Custom 2', 'Custom 3', 'Custom 4'],
+            : [],
       datasets: [
         {
           label: 'Energy Usage',

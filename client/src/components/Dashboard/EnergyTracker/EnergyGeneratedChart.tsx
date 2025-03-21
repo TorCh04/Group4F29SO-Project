@@ -59,12 +59,13 @@ const options: ChartOptions<'bar'> = {
 
 async function getdataToday() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyData/todayEG', {
+  const response = await fetch('http://localhost:8080/energyDataG/todayEG', {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
   if (response.ok) {
     const data: { energyGenerated: number }[] = await response.json();
+    console.log(data);
     return data.map((item) => item.energyGenerated);
   } else {
     console.log('Error fetching data');
@@ -74,13 +75,14 @@ async function getdataToday() {
 
 async function getdataLast7Days() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyData/weekEG', {
+  const response = await fetch('http://localhost:8080/energyDataG/weekEG', {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
   if (response.ok) {
-    const data: { energyUsage: number }[] = await response.json();
-    return data.map((item) => item.energyUsage);
+    const data: { energyGenerated: number }[] = await response.json();
+    console.log(data);
+    return data.map((item) => item.energyGenerated);
   } else {
     console.log('Error fetching data');
     return [];
@@ -89,12 +91,13 @@ async function getdataLast7Days() {
 
 async function getdatalastMonth() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyData/monthEG', {
+  const response = await fetch('http://localhost:8080/energyDataG/monthEG', {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
   if (response.ok) {
     const data: { energyGenerated: number }[] = await response.json();
+    console.log(data);
     return data.map((item) => item.energyGenerated);
   } else {
     console.log('Error fetching data');
@@ -125,10 +128,6 @@ const EnergyGeneratedChart: React.FC<{ timeRange: TimeRange }> = ({ timeRange })
         case 'lastMonth':
           data = await getdatalastMonth();
           labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-          break;
-        case 'custom':
-          data = [10, 20, 30, 40];
-          labels = ['Custom 1', 'Custom 2', 'Custom 3', 'Custom 4'];
           break;
         default:
           data = [];
