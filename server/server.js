@@ -10,7 +10,8 @@ const leaderboardRoutes = require("./routes/leaderboard"); // Import leaderboard
 const settingsRoutes = require("./routes/settings"); // Import the settings routes
 const simulationDataRoutes = require("./routes/simulationData"); // Import the simulation data routes
 const schedulesRoutes = require('./routes/schedules'); // Import the schedules routes
-const energyRoutes = require("./routes/energyData"); // Import the energy data routes
+const energyRoutesUsage = require("./routes/energyData"); // Import the energy data routes
+const energyRoutesGenerated = require("./routes/energyDataG"); // Import the energy data routes
 const { startSimulation } = require("./dataSimulator");
 const { startEnergySimulation, startEnergySimulationEG } = require("./energySimulator");
 
@@ -50,7 +51,8 @@ app.use("/", settingsRoutes); // updateName / updateEmail / updatePassword / ver
 app.use("/", leaderboardRoutes); // leaderboard
 app.use("/", simulationDataRoutes); // getSimulationData
 app.use("/", schedulesRoutes); // addSchedule / removeSchedule / getSchedules
-app.use("/", energyRoutes); // getEnergyData
+app.use("/", energyRoutesUsage); // getEnergyData
+app.use("/", energyRoutesGenerated); // getEnergyData
 
 // Serve static frontend files in production
 if (process.env.NODE_ENV === "production") {

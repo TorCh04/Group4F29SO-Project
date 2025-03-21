@@ -82,6 +82,7 @@ async function getdataLast7Days(): Promise<number[]> {
   });
   if (response.ok) {
     const data: { energyUsage: number }[] = await response.json();
+    console.log(data);
     return data.map((item) => item.energyUsage);
   } else {
     console.log('Error fetching data');
@@ -97,6 +98,7 @@ async function getdatalastMonth(): Promise<number[]> {
   });
   if (response.ok) {
     const data: { energyUsage: number }[] = await response.json();
+    console.log(data);
     return data.map((item) => item.energyUsage);
   } else {
     console.log('Error fetching data');

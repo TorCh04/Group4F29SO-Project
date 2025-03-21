@@ -2,7 +2,7 @@ const User = require("./models/User");
 const EnergyUsage = require("./models/Energy");
 const EnergyGenerated = require("./models/EnergyG");
 const Device = require("./models/Device");
-const EnergySource = require("./models/EnergySource");
+const EnergySource = require("./models/energySource");
 
 // Function to generate random energy usage data for users
 function generateRandomData(deviceType) {
@@ -27,6 +27,7 @@ async function updateUserData() {
           energyUsage: generateRandomData(check.type),
         });
         await energyUsage.save();
+        console.log("Energy usage data updated successfully");
       }
     }
   } catch (error) {
@@ -55,6 +56,7 @@ async function updateUserDataEG() {
           energyGenerated: generateRandomDataEG(check.type),
         });
         await energyGenerated.save();
+        console.log("Energy Generated data updated successfully");
       }
     }
   } catch (error) {
