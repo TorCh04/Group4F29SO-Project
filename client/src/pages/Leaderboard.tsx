@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./styles/Leaderboard.css";
 import { useOutletContext } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface ProfileContext {
   userData: {
@@ -29,7 +30,7 @@ export default function Leaderboard() {
 
   useEffect(() => {
     axios
-      .get<User[]>("http://localhost:8080/leaderboard")
+      .get<User[]>(`${API_BASE_URL}/leaderboard`)
       .then(response => {
         let sortedUsers = response.data
           .map(user => ({

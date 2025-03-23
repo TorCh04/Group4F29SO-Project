@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import logo from "../../assets/logo_vertical.svg";
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 interface SecurityQA {
@@ -48,7 +48,7 @@ export default function ForgotPasswordForm() {
           // Get token from local storage
           // Make a POST request to update email
           const response = await axios.post(
-          'http://localhost:8080/verifyEmail', 
+          `${API_BASE_URL}/verifyEmail`, 
           { email: formData.email }
       );     
 
@@ -91,7 +91,7 @@ export default function ForgotPasswordForm() {
 
       const fetchSecurityQA = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/getSecurityQA', {
+          const response = await axios.get(`${API_BASE_URL}/getSecurityQA`, {
             params: {
               email: formData.email
             }
@@ -153,7 +153,7 @@ export default function ForgotPasswordForm() {
             // Get token from local storage
             // Make a POST request to update the password
             const response = await axios.post(
-            'http://localhost:8080/resetPassword', 
+            `${API_BASE_URL}/resetPassword`, 
             { password: formData.confirmPassword, email: formData.email },
         );     
         console.log('Response reached');

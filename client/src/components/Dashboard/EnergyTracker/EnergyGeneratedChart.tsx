@@ -11,6 +11,7 @@ import {
   ChartOptions,
   ChartData,
 } from 'chart.js';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 ChartJS.register(
   CategoryScale,
@@ -59,7 +60,7 @@ const options: ChartOptions<'bar'> = {
 
 async function getdataToday() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyDataG/todayEG', {
+  const response = await fetch(`${API_BASE_URL}/energyDataG/todayEG`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -75,7 +76,7 @@ async function getdataToday() {
 
 async function getdataLast7Days() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyDataG/weekEG', {
+  const response = await fetch(`${API_BASE_URL}/energyDataG/weekEG`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -91,7 +92,7 @@ async function getdataLast7Days() {
 
 async function getdatalastMonth() {
   const token = localStorage.getItem('token');
-  const response = await fetch('http://localhost:8080/energyDataG/monthEG', {
+  const response = await fetch(`${API_BASE_URL}/energyDataG/monthEG`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });

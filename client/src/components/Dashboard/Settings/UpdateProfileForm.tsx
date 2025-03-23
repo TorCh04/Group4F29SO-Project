@@ -4,6 +4,7 @@ import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import axios from 'axios';
 import React from 'react';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const seeds = ['Mason', 'Leo', 'Adrian', 'Jessica', 'Brian', 'Robert', 'Chase', 'Brooklyn', 'Jocelyn',
             'Liam', 'Mackenzie', 'Eliza', 'Caleb', 'Luis', 'Nolan', 'Alexander', 'Vivian', 'Christian', 
@@ -83,7 +84,7 @@ export default function UpdateProfileForm() {
             const token = localStorage.getItem('token');
             // Make a POST request to the server to update the user's name
             const response = await axios.post(
-                'http://localhost:8080/updateName', 
+                `${API_BASE_URL}/updateName`, 
                 { firstName, lastName },  
                 { headers: { Authorization: `Bearer ${token}` } } 
             );    
@@ -133,7 +134,7 @@ export default function UpdateProfileForm() {
             const token = localStorage.getItem('token');
             // Make a POST request to update email
             const response = await axios.post(
-            'http://localhost:8080/updateEmail', 
+            `${API_BASE_URL}/updateEmail`, 
             { email },  
             { headers: { Authorization: `Bearer ${token}` } } 
         );     
@@ -164,7 +165,7 @@ export default function UpdateProfileForm() {
             const token = localStorage.getItem('token');
             // Make a POST request to verify password
             const response = await axios.post(
-                'http://localhost:8080/verifyPassword', 
+                `${API_BASE_URL}/verifyPassword`, 
                 { curPassword },
                 { headers: { Authorization: `Bearer ${token}` } } 
             );
@@ -232,7 +233,7 @@ export default function UpdateProfileForm() {
             const token = localStorage.getItem('token');
             // Make a POST request to update the password
             const response = await axios.post(
-            'http://localhost:8080/updatePassword', 
+            `${API_BASE_URL}/updatePassword`, 
             { confirmPassword },
             { headers: { Authorization: `Bearer ${token}` } } 
         );     

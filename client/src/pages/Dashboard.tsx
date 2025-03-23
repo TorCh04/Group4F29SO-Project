@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../components/Dashboard/Sidebar';
 import './styles/Dashboard.css';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface User {
   email: string;
@@ -25,7 +26,7 @@ export default function Dashboard() {
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/dashboard', {
+        const response = await axios.get(`${API_BASE_URL}/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserData(response.data.userData);

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface SimulationData {
   humidity: number | null;
@@ -11,7 +12,7 @@ const useSimulationData = () => {
   const fetchSimulationData = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:8080/getSimulationData', {
+      const response = await fetch(`${API_BASE_URL}/getSimulationData`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` }
       });

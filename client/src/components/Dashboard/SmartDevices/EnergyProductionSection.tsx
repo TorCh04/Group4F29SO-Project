@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import AddEnergySourceBlock from './AddEnergySourceBlock';
 import EnergyProductionBlock from './EnergyProductionBlock';
 import { EnergySource, EnergyProductionSectionProps } from '../../../types';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function EnergyProductionSection({ onAddEnergySourceClick, setFetchEnergySources }: EnergyProductionSectionProps) {
   const [energySources, setEnergySources] = useState<EnergySource[]>([]);
 
   const fetchEnergySources = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/getEnergySources', {
+    const response = await fetch(`${API_BASE_URL}/getEnergySources`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +25,7 @@ export default function EnergyProductionSection({ onAddEnergySourceClick, setFet
 
   const handleToggleStatus = async (energySourceId: string) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:8080/toggleEnergySourceStatus/${energySourceId}`, {
+    await fetch(`${API_BASE_URL}/toggleEnergySourceStatus/${energySourceId}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -42,7 +43,7 @@ export default function EnergyProductionSection({ onAddEnergySourceClick, setFet
 
   const handleRemove = async (energySourceId: string) => {
     const token = localStorage.getItem('token');
-    await fetch('http://localhost:8080/removeEnergySource', {
+    await fetch(`${API_BASE_URL}/removeEnergySource`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

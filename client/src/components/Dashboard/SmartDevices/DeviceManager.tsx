@@ -7,6 +7,7 @@ import Plus from '../../../assets/plus.svg';
 import SolarPanel from '../../../assets/solar_panel.svg';
 import WindTurbine from '../../../assets/wind_turbine.svg';
 import ScheduleInstructionList from './ScheduleInstructionList';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface DeviceManagerProps {
     formType: 'device' | 'schedule' | 'energyProduction';
@@ -74,7 +75,7 @@ function DeviceForm({ onClose, onDeviceAdded }: DeviceFormProps) {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:8080/addDevice', {
+            const response = await fetch(`${API_BASE_URL}/addDevice`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,7 +148,7 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
         const fetchDevices = async () => {
             const token = localStorage.getItem('token');
             try {
-                const response = await fetch('http://localhost:8080/getDevices', {
+                const response = await fetch(`${API_BASE_URL}/getDevices`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -181,7 +182,7 @@ function ScheduleForm({ onClose }: { onClose: () => void }) {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/addSchedule', {
+            const response = await fetch(`${API_BASE_URL}/addSchedule`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -289,7 +290,7 @@ function EnergyProductionForm({ onClose, onEnergySourceAdded }: EnergyProduction
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:8080/addEnergySource', {
+            const response = await fetch(`${API_BASE_URL}/addEnergySource`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

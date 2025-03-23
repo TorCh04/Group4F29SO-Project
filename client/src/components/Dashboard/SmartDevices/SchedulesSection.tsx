@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import AddScheduleBlock from './AddScheduleBlock';
 import ScheduleBlock from './ScheduleBlock';
 import { Schedule, SchedulesSectionProps } from '../../../types';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function SchedulesSection({ onAddScheduleClick, setFetchSchedules }: SchedulesSectionProps) {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
 
   const fetchSchedules = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/getSchedules', {
+    const response = await fetch(`${API_BASE_URL}/getSchedules`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -24,7 +25,7 @@ export default function SchedulesSection({ onAddScheduleClick, setFetchSchedules
 
   const handleToggleStatus = async (scheduleId: string) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:8080/toggleScheduleStatus/${scheduleId}`, {
+    await fetch(`${API_BASE_URL}/toggleScheduleStatus/${scheduleId}`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -42,7 +43,7 @@ export default function SchedulesSection({ onAddScheduleClick, setFetchSchedules
 
   const handleRemove = async (scheduleId: string) => {
     const token = localStorage.getItem('token');
-    await fetch('http://localhost:8080/removeSchedule', {
+    await fetch(`${API_BASE_URL}/removeSchedule`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

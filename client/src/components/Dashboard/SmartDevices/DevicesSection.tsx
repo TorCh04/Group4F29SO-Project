@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AddDeviceBlock from './AddDeviceBlock';
 import DeviceBlock from './DeviceBlock';
 import { Device, DevicesSectionProps } from '../../../types';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Extend the Window interface to include fetchSchedulesRef
 declare global {
@@ -15,7 +16,7 @@ export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: De
 
   const fetchDevices = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/getDevices', {
+    const response = await fetch(`${API_BASE_URL}/getDevices`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -31,7 +32,7 @@ export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: De
 
   const handleToggleStatus = async (deviceId: string) => {
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:8080/toggleDeviceStatus/${deviceId}`, {
+    await fetch(`${API_BASE_URL}/toggleDeviceStatus/${deviceId}`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -49,7 +50,7 @@ export default function DevicesSection({ onAddDeviceClick, setFetchDevices }: De
 
   const handleRemove = async (deviceId: string) => {
     const token = localStorage.getItem('token');
-    await fetch('http://localhost:8080/removeDevice', {
+    await fetch(`${API_BASE_URL}/removeDevice`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

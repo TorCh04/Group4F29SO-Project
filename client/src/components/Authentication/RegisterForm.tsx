@@ -2,6 +2,7 @@ import { useState } from 'react';
 import logo from "../../assets/logo_vertical.svg";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const securityQ = [
     'What was the name of your first pet',
@@ -41,11 +42,11 @@ export default function RegisterForm() {
         }
       
         try {
-          const registerResponse = await axios.post('http://localhost:8080/register', formData);
+          const registerResponse = await axios.post(`${API_BASE_URL}/register`, formData);
           if (registerResponse.status === 201) {
             // Registration succeeded. Now attempt auto-login.
             try {
-              const loginResponse = await axios.post('http://localhost:8080/login', {
+              const loginResponse = await axios.post(`${API_BASE_URL}/login`, {
                 email: formData.email,
                 password: formData.password
               });
