@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User'); // Adjust the path as necessary
 const verifyToken = require('../middleware/verifyToken'); // Adjust the path as necessary
-const JWT_SECRET = 'super_secret_key'; // In production, use an environment variable
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_key';
 
 const router = express.Router();
 
