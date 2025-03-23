@@ -8,7 +8,7 @@
     "dev:server": "nodemon server/server.js",
     "dev:client": "vite client",
     "build:client": "tsc -b client/tsconfig.json && vite build client",
-    "heroku-postbuild": "npm install && npm run build:client"
+    "heroku-postbuild": "NODE_ENV=development npm install && npm run build:client"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.2",
@@ -46,7 +46,7 @@
     "vite": "^6.0.5"
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": "18.x",
+    "npm": "9.x"
   }
 }
