@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import EnergyUsageChart from './EnergyUsageChart.tsx';
-import EnergyGeneratedChart from './EnergyGeneratedChart.tsx';
+import EnergyUsageChart from './EnergyUsageChart';
+import EnergyGeneratedChart from './EnergyGeneratedChart';
 
 export default function TrackerMain() {
     const [currentChart, setCurrentChart] = useState('totalEnergyUsage');

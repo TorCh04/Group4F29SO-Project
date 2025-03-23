@@ -1,4 +1,4 @@
-import TrackerMain from '../components/Dashboard/EnergyTracker/TrackerMain.tsx';
+import TrackerMain from '../components/Dashboard/EnergyTracker/TrackerMain';
 import './styles/EnergyTracker.css';
 
 export default function SmartDevices() {

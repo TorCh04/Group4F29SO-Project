@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
+    "outDir": "dist", // Output directory for compiled files
+    "rootDir": "src", // Root directory for source files
     "target": "ESNext",
     "module": "ESNext",
+    "moduleResolution": "node", // Ensure modules are resolved correctly
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "baseUrl": "../", // Set the base URL to the root directory
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["client/src/*"] // Adjust paths to reflect the client folder structure
     }
   },
   "include": ["src"],
