@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/User"); // Adjust the path as necessary
 const verifyToken = require("../middleware/verifyToken"); // Adjust the path as necessary
 const EnergyGenerated = require("../models/EnergyG");
-const Device = require("../models/energySource"); // Adjust the path as necessary
+const Device = require("../models/EnergySource"); // Adjust the path as necessary
 const router = express.Router();
 
 router.get("/energyDataG/todayEG", verifyToken, async (req, res) => {
