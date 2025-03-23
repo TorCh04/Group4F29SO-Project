@@ -25,12 +25,17 @@
 }
 
 .profile__container {
+    display: flex;
     background-color: var(--backgroundContrastBlue);
     border-radius: 10px;
     width: 300px;
-    padding-top: 10px;
+    padding: 10px;
     overflow: visible;
 }
+
+/* .profile__main__section {
+    
+} */
 
 .profile__heading {
     font-family: 'Inter', system-ui;

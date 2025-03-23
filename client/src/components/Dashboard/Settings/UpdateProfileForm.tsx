@@ -266,10 +266,8 @@ export default function UpdateProfileForm() {
                     height="40"
                     transform="scale(0.8)"
                 />
-                <div className="profile__section">
+                <div className="profile__main__section">
                     <h3 className="profile__info">{userData?.firstName} {userData?.lastName}</h3> 
-                </div>
-                <div className="profile__section">
                     <h3 className="profile__info">{userData?.email}</h3>
                 </div>
             </div>
