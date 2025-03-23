@@ -2,7 +2,7 @@ const User = require("./models/User");
 const EnergyUsage = require("./models/Energy");
 const EnergyGenerated = require("./models/EnergyG");
 const Device = require("./models/Device");
-const EnergySource = require("./models/energySource");
+const EnergySource = require("./models/EnergySource");
 
 // Function to generate random energy usage data for users
 function generateRandomData(deviceType) {
