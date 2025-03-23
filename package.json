@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon server/server.js",
     "dev:client": "vite client",
-    "build:client": "tsc -b && vite build client",
+    "build:client": "tsc -b client/tsconfig.json && vite build client",
     "heroku-postbuild": "npm install && npm run build:client"
   },
   "dependencies": {
@@ -42,5 +42,9 @@
     "nodemon": "^3.1.9",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"
-}
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  }
 }
