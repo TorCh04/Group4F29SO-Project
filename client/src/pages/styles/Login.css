@@ -59,18 +59,18 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    max-height: 211px;
+    max-height: 350px;
     height: 100%;
     width: 100%;
 }
 
 #register__container__override {
-    max-height: 665px;
+    max-height: 800px;
     height: 100%;
 }
 
 #register__form__override {
-    max-height: 372px;
+    max-height: 500px;
 }
 
 .login__input {
