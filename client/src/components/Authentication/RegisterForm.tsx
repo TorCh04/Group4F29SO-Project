@@ -37,6 +37,7 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+      setError('');
       if (formData.password !== formData.confirmPassword) {
         setError('Passwords do not match');
         return;
@@ -62,7 +63,8 @@ export default function RegisterForm() {
           }
         }
       } catch (registerError) {
-        setError('Registration failed - please check your details');
+        setError('');
+        setError(registerError.response.data.message);
         console.error('Registration error:', registerError);
       }
     };

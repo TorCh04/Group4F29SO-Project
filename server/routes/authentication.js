@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/register',
   [
     body('email').isEmail().normalizeEmail(),
-    body('password').isLength({ min: 6 }),
+    body('password'),
     body('confirmPassword').custom((value, { req }) => {
       if (value !== req.body.password) throw new Error('Passwords mismatch');
       return true;
@@ -25,6 +25,14 @@ router.post('/register',
     try {
       const { email, firstName, lastName, password, securityQuestion, securityAnswer } = req.body;
       
+      if (req.body.password.length < 6) {
+        return res.status(501).json({ message: 'Password must be at least 6 characters long' });
+      }
+
+      if (req.body.securityQuestion == "") {
+        return res.status(502).json({ message: 'Please choose a security question' });
+      }
+
       if (await User.findOne({ email })) {
         return res.status(400).json({ message: 'Email already exists' });
       }
