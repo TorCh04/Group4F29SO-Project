@@ -6,7 +6,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const securityQ = [
   'What was the name of your first pet',
-  'What was the name of your first pet',
   'What is the middle name of your oldest sibling',
   'What was the make and model of your first car',
   'What is the name of the street you grew up on',
