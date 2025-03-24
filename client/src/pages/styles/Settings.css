@@ -28,14 +28,23 @@
     display: flex;
     background-color: var(--backgroundContrastBlue);
     border-radius: 10px;
-    width: 300px;
+    max-width: 500px;
+    width: fit-content;
     padding: 10px;
     overflow: visible;
+    gap: 10px;
 }
 
-/* .profile__main__section {
-    
-} */
+.circle__img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.circle__img path {
+    height: 80
+}
 
 .profile__heading {
     font-family: 'Inter', system-ui;
@@ -156,17 +165,6 @@
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
-
-
-.circle__img {
-border-radius: 50%;
-width: 100px;
-height: 100px;
-overflow: hidden;
-float: left; /* Align to the left of profile subheading */
-margin-right: 10px; /* Add spacing between image and text */
-}
-
 
 .error__message {
     color: var(--infoRed);
