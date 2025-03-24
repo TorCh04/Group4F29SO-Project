@@ -30,7 +30,7 @@ export default function Leaderboard() {
 
   useEffect(() => {
     axios
-      .get<User[]>(`${API_BASE_URL}/leaderboard`)
+      .post<User[]>(`${API_BASE_URL}/leaderboard`)
       .then(response => {
         let sortedUsers = response.data
           .map(user => ({

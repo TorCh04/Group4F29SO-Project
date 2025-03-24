@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const LeaderboardStats = require("../models/LeaderboardStats"); // Import the leaderboard model
 
-router.get("/leaderboard", async (req, res) => {
+router.post("/leaderboard", async (req, res) => {
   try {
     const leaderboard = await LeaderboardStats.find({});
     console.log("Fetched Leaderboard Data:", leaderboard); // Debugging output
