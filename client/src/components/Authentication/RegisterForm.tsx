@@ -6,6 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const securityQ = [
   'What was the name of your first pet',
+  'What was the name of your first pet',
   'What is the middle name of your oldest sibling',
   'What was the make and model of your first car',
   'What is the name of the street you grew up on',
@@ -127,10 +128,10 @@ export default function RegisterForm() {
             <select aria-label="Select an option" className='login__input' 
             value={formData.securityQuestion} 
             onChange={(e) => setFormData({...formData, securityQuestion: e.target.value})}>
-            <option selected disabled>Please choose...</option>
-              {securityQ.map((question, index) => (
-                <option key={index} value={question}>{question}</option>
-              ))}
+            <option value="" selected disabled>Please choose a security question</option>
+            {securityQ.map((question, index) => (
+              <option key={index} value={question}>{question}</option>
+            ))}
             </select>  
             <input 
               type="text" 
