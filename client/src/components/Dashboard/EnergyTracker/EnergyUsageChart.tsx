@@ -131,7 +131,7 @@ async function getdatalastMonth(): Promise<number[]> {
 
 const getDataForTimeRange = async (timeRange: TimeRange): Promise<ChartData<'bar'>> => {
   // Example flag to switch between actual API calls and fake data.
-  const useFakeData = false;  //change this to true to use fake data
+  const useFakeData = true;  //change this to true to use fake data
 
   if (useFakeData) {
     // If using fake data, call generateFakeData based on the time range.
