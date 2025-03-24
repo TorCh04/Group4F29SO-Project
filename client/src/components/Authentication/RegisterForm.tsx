@@ -19,6 +19,14 @@ const securityQ = [
 ];
 
 
+function handleAxiosError(error: unknown): string {
+  if (axios.isAxiosError(error)) {
+    return error.response?.data?.message || 'An error occurred';
+  }
+  return 'An unexpected error occurred';
+}
+
+
 
 
 
@@ -63,10 +71,10 @@ export default function RegisterForm() {
           }
         }
       } catch (registerError) {
-        setError('');
-        setError(registerError.response.data.message);
-        console.error('Registration error:', registerError);
+          setError(handleAxiosError(registerError));
+          console.error('Registration error:', registerError);
       }
+      
     };
 
 
