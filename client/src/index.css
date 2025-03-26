@@ -19,15 +19,16 @@ html {
   --primary: #356F9E;
   --secondary: #37309A;
   --accent: #A5B4F8;
-  --text: #DAD6F8;
+  --text: #EBEFF3;
   --mutedText: #7781B5;
-  --backgroundContrastGrey: #1B1B2C;
+  --backgroundContrastGrey: #1A1A2A;
   --backgroundContrastBlue: #1B234C;
   --backgroundContrastGreen: #1B2D4D;
   --backgroundContrastRed: #4C211B;
+  --extraCOntrast: #5E6384;
   --white: #FFFFFF;
-  --infoRed: #BE4646;
-  --infoGreen: #46BE5C;
+  --infoRed: #BB2C2C;
+  --infoGreen: #22784E;
 }
 /* #endregion */
   

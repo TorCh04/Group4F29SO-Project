@@ -365,8 +365,8 @@ export default function UpdateProfileForm() {
                 </div>
             </div>
 
-
-            <h3 className="profile__heading">Privacy Settings</h3>
+            
+            {/* <h3 className="profile__heading">Privacy Settings</h3>
             <div className="privacy__container">
                 <div className="profile__section">
                     <div className="privacy__extra__links">
@@ -382,7 +382,7 @@ export default function UpdateProfileForm() {
                             </label>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
