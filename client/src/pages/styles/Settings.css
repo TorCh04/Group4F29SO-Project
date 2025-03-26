@@ -31,6 +31,7 @@
     max-width: 500px;
     width: fit-content;
     padding: 10px;
+    padding-right: 25px;
     overflow: visible;
     gap: 10px;
 }
@@ -43,6 +44,7 @@
     width: 100px;
     height: 100px;
     overflow: hidden;
+    border: 0;
 }
 
 
