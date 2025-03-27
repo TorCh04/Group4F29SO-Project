@@ -16,7 +16,7 @@ export default function UpdateProfileForm() {
                 
 
                 <div className="profile__section">
-                    <h3 className="profile__subheading">Current Password</h3>
+                    <h3 className="profile__subheading">Change Password</h3>
                     <input 
                         type="text" 
                         placeholder="Current Password" 
